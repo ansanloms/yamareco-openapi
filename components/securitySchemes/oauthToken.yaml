@@ -1,0 +1,9 @@
+type: apiKey
+in: header
+name: Authorization
+description: |
+  OAuth 認証フローで取得した access token を `OAuth <access_token>` 形式で `Authorization` ヘッダに付与する。
+
+  例: `Authorization: OAuth 5d393ec8c36122523baf7a966c21a647faeba8aa`
+
+  OAuth 2.0 の Bearer 形式ではなく、独自の `OAuth` プレフィックス付き形式である点に注意。
