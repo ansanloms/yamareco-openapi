@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   version: 0.0.1
-  title: ヤマレコ Web API。
+  title: ヤマレコ Web API
   description:
     $ref: ./README.md
 servers:

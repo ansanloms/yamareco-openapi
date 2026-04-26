@@ -16,7 +16,6 @@ module.exports = {
       keys: [
         "description",
         "summary",
-        "title",
       ],
     },
   },
