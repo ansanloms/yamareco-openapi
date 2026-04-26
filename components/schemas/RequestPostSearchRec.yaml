@@ -59,7 +59,7 @@ properties:
   max_days:
     type: integer
     description: |-
-      最大日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以下の記録。省略時は `0`。
+      最大日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以内の記録。省略時は `0`。
   ptid:
     type: integer
     description: |-

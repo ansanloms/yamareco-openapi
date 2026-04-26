@@ -11,7 +11,7 @@ get:
       name: userID
       required: true
       description: |-
-        ユーザ ID。`0`: 問い合わせを行ったユーザの計画、`1` 以上: 指定したユーザの計画。
+        ユーザ ID。`0`: リクエスト元のユーザの計画、`1` 以上: 指定したユーザの計画。
       schema:
         type: integer
         minimum: 0

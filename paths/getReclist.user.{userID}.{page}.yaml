@@ -11,7 +11,7 @@ get:
       name: userID
       required: true
       description: |-
-        ユーザ ID。`0`: 問い合わせを行ったユーザの記録、`1` 以上: 指定したユーザの記録。
+        ユーザ ID。`0`: リクエスト元のユーザの記録、`1` 以上: 指定したユーザの記録。
       schema:
         type: integer
         minimum: 0

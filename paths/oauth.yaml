@@ -39,7 +39,7 @@ get:
   responses:
     "302":
       description: |-
-        ユーザがログイン・許可した場合、`redirect_uri` に `?code=<CODE>` を付与してリダイレクトされる。
+        ユーザがログイン・許可した場合、`redirect_uri` のクエリパラメータ `code` に認可コードを付与してリダイレクトされる。
       headers:
         Location:
           description: 認可コード付きのリダイレクト先 URL。
