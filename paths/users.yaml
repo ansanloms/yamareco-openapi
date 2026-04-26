@@ -1,0 +1,80 @@
+get:
+  operationId: getUsers
+  summary: ユーザ一覧の取得
+  tags:
+    - users
+  description:
+    $ref: ./descriptions/getUsers.md
+  parameters:
+    - in: query
+      name: ids[]
+      description: 絞り込みユーザ ID
+      required: false
+      schema:
+        type: array
+        items:
+          type: integer
+          format: int64
+        example:
+          - 1
+          - 2
+          - 3
+  responses:
+    200:
+      description: 処理成功時
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseGetUsers.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseGetUsers.yaml
+    500:
+      description: 処理失敗時
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            processingFailed:
+              value:
+                $ref: ../examples/ResponseError.yaml
+post:
+  operationId: postUsers
+  summary: 新規ユーザ登録
+  tags:
+    - users
+  description:
+    $ref: ./descriptions/postUsers.md
+  requestBody:
+    description: 会員情報
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/RequestPostUsers.yaml
+        examples:
+          normal:
+            value:
+              $ref: ../examples/RequestPostUsers.yaml
+  responses:
+    200:
+      description: 処理成功時
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseEmpty.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseEmpty.yaml
+    500:
+      description: 処理失敗時
+      content:
+        application/problem+json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            processingFailed:
+              value:
+                $ref: ../examples/ResponseError.yaml
