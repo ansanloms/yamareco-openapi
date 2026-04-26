@@ -1,0 +1,32 @@
+post:
+  operationId: postEditNote
+  summary: 感想の編集。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/postEditNote.md
+  requestBody:
+    required: true
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: ../components/schemas/RequestPostEditNote.yaml
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponsePostEditNote.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml

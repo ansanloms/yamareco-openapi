@@ -1,0 +1,33 @@
+type: object
+required:
+  - rec_id
+  - pid
+  - order
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  pid:
+    type: string
+    description: 写真の ID。
+  order:
+    type: integer
+    minimum: 1
+    description: 写真の並び順 (小さい値から順に表示される)。
+  comment:
+    type: string
+    description: 写真のコメント。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      写真の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。
+  picked:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      代表写真。`0`: 代表写真ではない、`1`: 代表写真。

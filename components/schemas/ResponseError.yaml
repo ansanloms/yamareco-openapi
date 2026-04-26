@@ -1,27 +1,18 @@
 type: object
-description: RFC 9457 Problem Details for HTTP APIs
+description: |-
+  ヤマレコ API のエラーレスポンス。
+
+  サーバ処理失敗時は HTTP ステータス `200` で返り、`err: 1` と `errcode` でエラー要因を示す。
+  OAuth 認証エラー時のみ HTTP ステータス `403` が返る。
 required:
-  - type
-  - title
-  - status
+  - err
+  - errcode
 properties:
-  type:
-    type: string
-    format: uri
-    default: "about:blank"
-    description: 問題種別を識別する URI reference
-  title:
-    type: string
-    description: 問題種別の人間可読な簡潔な要約
-  status:
+  err:
     type: integer
-    minimum: 100
-    maximum: 599
-    description: HTTP ステータスコード
-  detail:
+    enum:
+      - 1
+    description: エラーの有無 (常に `1`)。
+  errcode:
     type: string
-    description: 当該インスタンス固有の問題の説明
-  instance:
-    type: string
-    format: uri-reference
-    description: 問題発生インスタンスを識別する URI reference
+    description: エラー要因のコード (文字列)。

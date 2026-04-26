@@ -1,0 +1,99 @@
+type: object
+description: 山行計画の概要情報 (一覧取得用)。
+required:
+  - plan_id
+  - uid
+  - place
+  - nodate
+  - area_id
+  - area
+  - genre_id
+  - genre
+  - group_id
+  - other_members
+  - is_track
+  - private
+properties:
+  plan_id:
+    type: integer
+    description: 計画の ID。
+  uid:
+    type: integer
+    description: 計画所有者のユーザ ID。
+  place:
+    type: string
+    description: 場所の名前。
+  nodate:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。`1` の場合は `start` / `end` / `days` / `add_date` の値は意味を持たない。
+  start:
+    type: string
+    format: date
+    description: 入山日 (YYYY-MM-DD)。
+  end:
+    type: string
+    format: date
+    description: 下山日 (YYYY-MM-DD)。
+  days:
+    type: integer
+    description: 日数。
+  add_date:
+    type: integer
+    description: 予備日。予備として確保している日数で、`days` には含まれない。
+  area_id:
+    type: integer
+    description: エリア ID。
+  area:
+    type: string
+    description: エリア名。
+  genre_id:
+    type: integer
+    description: ジャンル ID。
+  genre:
+    type: string
+    description: ジャンル名。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 個人の計画、`1` 以上: 当該グループの計画。
+  other_members:
+    type: integer
+    description: その他のメンバー人数。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      GPS ログの有無。`0`: なし、`1`: あり。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      公開設定。`0`: 公開状態、`1`: 非公開状態。
+  cheer:
+    type: integer
+    description: 拍手数。
+  comment:
+    type: integer
+    description: コメント数。
+  members:
+    type: array
+    description: 参加メンバーの一覧。
+    items:
+      $ref: ./Member.yaml
+  page_url:
+    type: string
+    format: uri
+    description: 山行計画の Web ページ URL。
+  updated:
+    type: integer
+    format: int64
+    description: |-
+      計画の更新日時 (Unix time)。情報更新の内容によっては更新されない可能性あり。

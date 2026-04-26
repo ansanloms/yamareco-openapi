@@ -1,0 +1,15 @@
+type: object
+description: 拍手をしたユーザの情報。
+required:
+  - uid
+  - uname
+properties:
+  uid:
+    type: integer
+    description: ユーザ ID。
+  uname:
+    type: string
+    description: ユーザ名。
+  avatar:
+    type: string
+    description: プロフィール画像の URL (未設定の場合は空欄)。

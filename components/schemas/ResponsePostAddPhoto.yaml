@@ -1,0 +1,39 @@
+allOf:
+  - $ref: ./ResponseBase.yaml
+  - type: object
+    required:
+      - rec_id
+      - pid
+      - order
+      - photo_url
+      - thumb_url
+    properties:
+      rec_id:
+        type: integer
+        description: 記録の ID。
+      pid:
+        type: string
+        description: 写真の ID。
+      order:
+        type: integer
+        description: 写真の並び順。
+      photo_url:
+        type: string
+        format: uri
+        description: 登録された写真のアドレス (オリジナルサイズ)。
+      thumb_url:
+        type: string
+        format: uri
+        description: 登録された写真のアドレス (小サイズ、最大辺の長さ 160px)。
+      thumb80_url:
+        type: string
+        format: uri
+        description: 登録された写真のアドレス (最大辺の長さ 80px)。
+      thumb450_url:
+        type: string
+        format: uri
+        description: 登録された写真のアドレス (最大辺の長さ 450px)。
+      thumb800_url:
+        type: string
+        format: uri
+        description: 登録された写真のアドレス (最大辺の長さ 800px)。

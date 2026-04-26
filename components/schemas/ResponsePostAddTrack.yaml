@@ -1,0 +1,13 @@
+allOf:
+  - $ref: ./ResponseBase.yaml
+  - type: object
+    required:
+      - rec_id
+    properties:
+      rec_id:
+        type: integer
+        description: 記録の ID。
+      gpx:
+        type: string
+        format: uri
+        description: GPX ログファイルのアドレス (間引き等の処理後のファイル)。

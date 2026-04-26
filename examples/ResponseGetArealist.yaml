@@ -1,0 +1,8 @@
+err: 0
+arealist:
+  - area_id: 100
+    area: 北海道
+  - area_id: 200
+    area: 東北
+  - area_id: 700
+    area: 富士・御坂

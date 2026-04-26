@@ -1,0 +1,7 @@
+type: object
+required:
+  - rec_id
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。

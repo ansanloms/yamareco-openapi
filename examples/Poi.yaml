@@ -1,0 +1,16 @@
+ptid: 4001
+name: 富士山
+other_names: 富士・芙蓉峰
+name_en: Mt. Fuji
+yomi: ふじさん
+elevation: 3776.12
+lat: 35.360635
+lon: 138.727362
+detail: 日本の最高峰
+area: 700
+types:
+  - type_id: 1
+    name: 山頂
+    detail: 標高 3776m の活火山
+page_url: "https://www.yamareco.com/modules/poi/4001.html"
+photo_url: "https://www.yamareco.com/modules/poi/4001.jpg"

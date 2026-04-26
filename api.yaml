@@ -1,37 +1,262 @@
 openapi: 3.1.0
 info:
   version: 0.0.1
-  title: OpenAPI Example
+  title: ヤマレコ Web API。
   description:
     $ref: ./README.md
 servers:
-  - url: "https://api.example.org"
-    description: Production Server
+  - url: "https://api.yamareco.com/api/v1"
+    description: 本番サーバ。
+tags:
+  - name: oauth
+    description: OAuth 認証関連。
+  - name: rec
+    description: 山行記録。
+  - name: plan
+    description: 山行計画。
+  - name: other
+    description: 共通／その他。
 paths:
-  /users:
-    $ref: ./paths/users.yaml
-  "/users/{id}":
-    $ref: "./paths/users.{id}.yaml"
+  /addCheer:
+    $ref: ./paths/addCheer.yaml
+  /addComment:
+    $ref: ./paths/addComment.yaml
+  /addNote:
+    $ref: ./paths/addNote.yaml
+  "/addPhoto/{rec_id}/{type}/{maxsize}/{rotate}":
+    $ref: "./paths/addPhoto.{rec_id}.{type}.{maxsize}.{rotate}.yaml"
+  "/addTrack/{rec_id}/{logtype}/{thinout}/{sensor}/{merge}":
+    $ref: "./paths/addTrack.{rec_id}.{logtype}.{thinout}.{sensor}.{merge}.yaml"
+  /createRec:
+    $ref: ./paths/createRec.yaml
+  /deleteCheer:
+    $ref: ./paths/deleteCheer.yaml
+  /deleteComment:
+    $ref: ./paths/deleteComment.yaml
+  /deleteNote:
+    $ref: ./paths/deleteNote.yaml
+  /deletePhote:
+    $ref: ./paths/deletePhote.yaml
+  /deleteRec:
+    $ref: ./paths/deleteRec.yaml
+  /deleteTrack:
+    $ref: ./paths/deleteTrack.yaml
+  /editNote:
+    $ref: ./paths/editNote.yaml
+  /editPhote:
+    $ref: ./paths/editPhote.yaml
+  /editRec:
+    $ref: ./paths/editRec.yaml
+  /getArealist:
+    $ref: ./paths/getArealist.yaml
+  "/getCheerlist/{type}/{id}":
+    $ref: "./paths/getCheerlist.{type}.{id}.yaml"
+  "/getCommentlist/{rec_id}":
+    $ref: "./paths/getCommentlist.{rec_id}.yaml"
+  /getGenrelist:
+    $ref: ./paths/getGenrelist.yaml
+  "/getPlan/{plan_id}":
+    $ref: "./paths/getPlan.{plan_id}.yaml"
+  "/getPlanCommentlist/{plan_id}":
+    $ref: "./paths/getPlanCommentlist.{plan_id}.yaml"
+  "/getPlanlist/user/{userID}/{page}":
+    $ref: "./paths/getPlanlist.user.{userID}.{page}.yaml"
+  "/getPlanlist/{page}":
+    $ref: "./paths/getPlanlist.{page}.yaml"
+  "/getRec/{rec_id}":
+    $ref: "./paths/getRec.{rec_id}.yaml"
+  "/getReclist/group/{groupID}/{page}":
+    $ref: "./paths/getReclist.group.{groupID}.{page}.yaml"
+  "/getReclist/user/{userID}/{page}":
+    $ref: "./paths/getReclist.user.{userID}.{page}.yaml"
+  "/getReclist/{page}":
+    $ref: "./paths/getReclist.{page}.yaml"
+  /getTypelist:
+    $ref: ./paths/getTypelist.yaml
+  "/getUserInfo/{uid}":
+    $ref: "./paths/getUserInfo.{uid}.yaml"
+  /nearbyPoi:
+    $ref: ./paths/nearbyPoi.yaml
+  /oauth:
+    $ref: ./paths/oauth.yaml
+  /oauth/access_token:
+    $ref: ./paths/oauth.access_token.yaml
+  /oauth/sign_out:
+    $ref: ./paths/oauth.sign_out.yaml
+  /relatePlanAndRec:
+    $ref: ./paths/relatePlanAndRec.yaml
+  /searchPlan:
+    $ref: ./paths/searchPlan.yaml
+  /searchPoi:
+    $ref: ./paths/searchPoi.yaml
+  /searchRec:
+    $ref: ./paths/searchRec.yaml
 components:
   schemas:
-    User:
-      $ref: ./components/schemas/User.yaml
-    EnumStatus:
-      $ref: ./components/schemas/EnumStatus.yaml
-    RequestPostUsers:
-      $ref: ./components/schemas/RequestPostUsers.yaml
-    RequestPutUserId:
-      $ref: ./components/schemas/RequestPutUserId.yaml
+    Area:
+      $ref: ./components/schemas/Area.yaml
+    CheerUser:
+      $ref: ./components/schemas/CheerUser.yaml
+    Comment:
+      $ref: ./components/schemas/Comment.yaml
+    Equip:
+      $ref: ./components/schemas/Equip.yaml
+    EquipItem:
+      $ref: ./components/schemas/EquipItem.yaml
+    Genre:
+      $ref: ./components/schemas/Genre.yaml
+    Member:
+      $ref: ./components/schemas/Member.yaml
+    MemberDetail:
+      $ref: ./components/schemas/MemberDetail.yaml
+    Note:
+      $ref: ./components/schemas/Note.yaml
+    Permission:
+      $ref: ./components/schemas/Permission.yaml
+    Photo:
+      $ref: ./components/schemas/Photo.yaml
+    PlanDetail:
+      $ref: ./components/schemas/PlanDetail.yaml
+    PlanSummary:
+      $ref: ./components/schemas/PlanSummary.yaml
+    Poi:
+      $ref: ./components/schemas/Poi.yaml
+    PoiType:
+      $ref: ./components/schemas/PoiType.yaml
+    RecDetail:
+      $ref: ./components/schemas/RecDetail.yaml
+    RecSummary:
+      $ref: ./components/schemas/RecSummary.yaml
+    UserInfo:
+      $ref: ./components/schemas/UserInfo.yaml
+    EnumCheerType:
+      $ref: ./components/schemas/EnumCheerType.yaml
+    EnumLogType:
+      $ref: ./components/schemas/EnumLogType.yaml
+    EnumPhotoType:
+      $ref: ./components/schemas/EnumPhotoType.yaml
+    EnumRank:
+      $ref: ./components/schemas/EnumRank.yaml
+    EnumRotate:
+      $ref: ./components/schemas/EnumRotate.yaml
+    RequestPostAddCheer:
+      $ref: ./components/schemas/RequestPostAddCheer.yaml
+    RequestPostAddComment:
+      $ref: ./components/schemas/RequestPostAddComment.yaml
+    RequestPostAddNote:
+      $ref: ./components/schemas/RequestPostAddNote.yaml
+    RequestPostCreateRec:
+      $ref: ./components/schemas/RequestPostCreateRec.yaml
+    RequestPostDeleteCheer:
+      $ref: ./components/schemas/RequestPostDeleteCheer.yaml
+    RequestPostDeleteComment:
+      $ref: ./components/schemas/RequestPostDeleteComment.yaml
+    RequestPostDeleteNote:
+      $ref: ./components/schemas/RequestPostDeleteNote.yaml
+    RequestPostDeletePhote:
+      $ref: ./components/schemas/RequestPostDeletePhote.yaml
+    RequestPostDeleteRec:
+      $ref: ./components/schemas/RequestPostDeleteRec.yaml
+    RequestPostDeleteTrack:
+      $ref: ./components/schemas/RequestPostDeleteTrack.yaml
+    RequestPostEditNote:
+      $ref: ./components/schemas/RequestPostEditNote.yaml
+    RequestPostEditPhote:
+      $ref: ./components/schemas/RequestPostEditPhote.yaml
+    RequestPostEditRec:
+      $ref: ./components/schemas/RequestPostEditRec.yaml
+    RequestPostNearbyPoi:
+      $ref: ./components/schemas/RequestPostNearbyPoi.yaml
+    RequestPostOauthAccessToken:
+      $ref: ./components/schemas/RequestPostOauthAccessToken.yaml
+    RequestPostRelatePlanAndRec:
+      $ref: ./components/schemas/RequestPostRelatePlanAndRec.yaml
+    RequestPostSearchPlan:
+      $ref: ./components/schemas/RequestPostSearchPlan.yaml
+    RequestPostSearchPoi:
+      $ref: ./components/schemas/RequestPostSearchPoi.yaml
+    RequestPostSearchRec:
+      $ref: ./components/schemas/RequestPostSearchRec.yaml
+    ResponseBase:
+      $ref: ./components/schemas/ResponseBase.yaml
     ResponseError:
       $ref: ./components/schemas/ResponseError.yaml
-    ResponseGetUsers:
-      $ref: ./components/schemas/ResponseGetUsers.yaml
-    ResponseGetUsersId:
-      $ref: ./components/schemas/ResponseGetUsersId.yaml
+    ResponseGetArealist:
+      $ref: ./components/schemas/ResponseGetArealist.yaml
+    ResponseGetCheerlist:
+      $ref: ./components/schemas/ResponseGetCheerlist.yaml
+    ResponseGetCommentlist:
+      $ref: ./components/schemas/ResponseGetCommentlist.yaml
+    ResponseGetGenrelist:
+      $ref: ./components/schemas/ResponseGetGenrelist.yaml
+    ResponseGetPlan:
+      $ref: ./components/schemas/ResponseGetPlan.yaml
+    ResponseGetPlanCommentlist:
+      $ref: ./components/schemas/ResponseGetPlanCommentlist.yaml
+    ResponseGetPlanlist:
+      $ref: ./components/schemas/ResponseGetPlanlist.yaml
+    ResponseGetRec:
+      $ref: ./components/schemas/ResponseGetRec.yaml
+    ResponseGetReclist:
+      $ref: ./components/schemas/ResponseGetReclist.yaml
+    ResponseGetTypelist:
+      $ref: ./components/schemas/ResponseGetTypelist.yaml
+    ResponseGetUserInfo:
+      $ref: ./components/schemas/ResponseGetUserInfo.yaml
+    ResponseOAuthError:
+      $ref: ./components/schemas/ResponseOAuthError.yaml
+    ResponsePostAddCheer:
+      $ref: ./components/schemas/ResponsePostAddCheer.yaml
+    ResponsePostAddComment:
+      $ref: ./components/schemas/ResponsePostAddComment.yaml
+    ResponsePostAddNote:
+      $ref: ./components/schemas/ResponsePostAddNote.yaml
+    ResponsePostAddPhoto:
+      $ref: ./components/schemas/ResponsePostAddPhoto.yaml
+    ResponsePostAddTrack:
+      $ref: ./components/schemas/ResponsePostAddTrack.yaml
+    ResponsePostCreateRec:
+      $ref: ./components/schemas/ResponsePostCreateRec.yaml
+    ResponsePostDeleteCheer:
+      $ref: ./components/schemas/ResponsePostDeleteCheer.yaml
+    ResponsePostDeleteComment:
+      $ref: ./components/schemas/ResponsePostDeleteComment.yaml
+    ResponsePostDeleteNote:
+      $ref: ./components/schemas/ResponsePostDeleteNote.yaml
+    ResponsePostDeletePhote:
+      $ref: ./components/schemas/ResponsePostDeletePhote.yaml
+    ResponsePostDeleteRec:
+      $ref: ./components/schemas/ResponsePostDeleteRec.yaml
+    ResponsePostDeleteTrack:
+      $ref: ./components/schemas/ResponsePostDeleteTrack.yaml
+    ResponsePostEditNote:
+      $ref: ./components/schemas/ResponsePostEditNote.yaml
+    ResponsePostEditPhote:
+      $ref: ./components/schemas/ResponsePostEditPhote.yaml
+    ResponsePostEditRec:
+      $ref: ./components/schemas/ResponsePostEditRec.yaml
+    ResponsePostNearbyPoi:
+      $ref: ./components/schemas/ResponsePostNearbyPoi.yaml
+    ResponsePostOauthAccessToken:
+      $ref: ./components/schemas/ResponsePostOauthAccessToken.yaml
+    ResponsePostRelatePlanAndRec:
+      $ref: ./components/schemas/ResponsePostRelatePlanAndRec.yaml
+    ResponsePostSearchPlan:
+      $ref: ./components/schemas/ResponsePostSearchPlan.yaml
+    ResponsePostSearchPoi:
+      $ref: ./components/schemas/ResponsePostSearchPoi.yaml
+    ResponsePostSearchRec:
+      $ref: ./components/schemas/ResponsePostSearchRec.yaml
   securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    oauthAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        OAuth 認証フローで取得した access token を `OAuth <access_token>` 形式で `Authorization` ヘッダに付与する。
+
+        例: `Authorization: OAuth 5d393ec8c36122523baf7a966c21a647faeba8aa`
+
+        OAuth 2.0 の Bearer 形式ではなく、独自の `OAuth` プレフィックス付き形式である点に注意。
 security:
-  - bearerAuth: []
+  - oauthAuth: []

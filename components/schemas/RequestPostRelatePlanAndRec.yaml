@@ -1,0 +1,11 @@
+type: object
+required:
+  - rec_id
+  - plan_id
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  plan_id:
+    type: integer
+    description: 計画の ID。

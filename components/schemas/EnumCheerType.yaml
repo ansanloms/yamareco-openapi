@@ -1,0 +1,5 @@
+type: string
+description: 拍手の対象種別。
+enum:
+  - "rec"
+  - "rec_photo"

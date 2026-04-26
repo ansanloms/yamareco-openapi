@@ -1,0 +1,12 @@
+type: object
+description: 山行記録／計画の参加メンバー (簡易情報)。
+required:
+  - uname
+  - uid
+properties:
+  uname:
+    type: string
+    description: ユーザ名。
+  uid:
+    type: integer
+    description: ユーザ ID。

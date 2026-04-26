@@ -1,0 +1,33 @@
+get:
+  operationId: getPlanCommentlistById
+  summary: 山行計画コメントリストの取得。
+  tags:
+    - plan
+  description:
+    $ref: ./descriptions/getPlanCommentlistById.md
+  parameters:
+    - in: path
+      name: plan_id
+      required: true
+      description: 計画の ID。
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponseGetPlanCommentlist.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml

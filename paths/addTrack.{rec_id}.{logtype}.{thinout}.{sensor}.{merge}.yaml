@@ -1,0 +1,79 @@
+post:
+  operationId: postAddTrack
+  summary: GPS ログの登録。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/postAddTrack.md
+  parameters:
+    - in: path
+      name: rec_id
+      required: true
+      description: 記録の ID。
+      schema:
+        type: integer
+    - in: path
+      name: logtype
+      required: true
+      description: |-
+        GPS ログの種別。`gpx`: GPX、`kml`: KML、`nmea`: NMEA、`gdb`: Garmin Mapsource (.gdb)、`gtrnctr`: Garmin Training Center (.tcx)。
+      schema:
+        $ref: ../components/schemas/EnumLogType.yaml
+    - in: path
+      name: thinout
+      required: true
+      description: |-
+        ルートの間引き量。`0`: 間引きなし、`1` 以上: 指定した数に間引き。
+
+        ヤマレコ Web では選択肢は 間引きなし / `500` / `1000` / `3000` だが、本 API では任意の数字を入力できる。
+      schema:
+        type: integer
+        minimum: 0
+    - in: path
+      name: sensor
+      required: true
+      description: |-
+        GPS で採取したログかどうか。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
+        手入力などで作成したログの場合は `0` 推奨。`1` を指定した場合はコースタイムが自動計算される (上書き)。
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+    - in: path
+      name: merge
+      required: true
+      description: |-
+        GPS ログの追記モード。`0`: 既存ルートがある場合は上書き保存、`1`: 既存ルートがある場合は追記。
+      schema:
+        type: integer
+        enum:
+          - 0
+          - 1
+  requestBody:
+    required: true
+    description: GPS ログデータ (バイナリ)。
+    content:
+      application/octet-stream:
+        schema:
+          type: string
+          format: binary
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponsePostAddTrack.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml

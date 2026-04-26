@@ -1,0 +1,73 @@
+post:
+  operationId: postAddPhoto
+  summary: 写真の追加登録。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/postAddPhoto.md
+  parameters:
+    - in: path
+      name: rec_id
+      required: true
+      description: 記録の ID。
+      schema:
+        type: integer
+    - in: path
+      name: type
+      required: true
+      description: 写真のファイルタイプ。
+      schema:
+        $ref: ../components/schemas/EnumPhotoType.yaml
+    - in: path
+      name: maxsize
+      required: true
+      description: |-
+        写真の長辺の長さ (px)。縦もしくは横のうち長い辺のサイズが指定したピクセル数で縮小される。
+        `0` 入力時はオリジナルの写真を維持する。
+
+        ヤマレコ Web では選択肢は `1600` / `1280` / `1024` / `640` / オリジナルだが、本 API では任意の数字を入力できる。
+      schema:
+        type: integer
+        minimum: 0
+    - in: path
+      name: rotate
+      required: true
+      description: |-
+        写真の回転指定。自動判別は JPEG の Exif データを利用する。
+      schema:
+        $ref: ../components/schemas/EnumRotate.yaml
+  requestBody:
+    required: true
+    description: 写真データ (バイナリ)。
+    content:
+      image/jpeg:
+        schema:
+          type: string
+          format: binary
+      image/png:
+        schema:
+          type: string
+          format: binary
+      image/gif:
+        schema:
+          type: string
+          format: binary
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponsePostAddPhoto.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml

@@ -1,0 +1,8 @@
+err: 0
+genrelist:
+  - genre_id: 1
+    genre: ハイキング
+  - genre_id: 2
+    genre: 無雪期ピークハント／縦走
+  - genre_id: 3
+    genre: 雪山ハイキング

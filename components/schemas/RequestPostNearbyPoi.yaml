@@ -1,0 +1,27 @@
+type: object
+required:
+  - page
+  - range
+  - type_id
+properties:
+  page:
+    type: integer
+    minimum: 1
+    description: 一覧のページ番号。1 ページあたり 20 件。
+  range:
+    type: integer
+    minimum: 1
+    maximum: 30
+    description: 検索したい範囲 (km、1〜30)。
+  lat:
+    type: number
+    format: float
+    description: 緯度。
+  lon:
+    type: number
+    format: float
+    description: 経度。
+  type_id:
+    type: integer
+    description: |-
+      検索したい地名のデータ種別。`0`: 検索条件に入れない、`1` 以上: 該当するデータ種別。

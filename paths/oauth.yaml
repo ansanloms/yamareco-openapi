@@ -1,0 +1,48 @@
+get:
+  operationId: getOauth
+  summary: OAuth 認可コードの取得。
+  tags:
+    - oauth
+  description:
+    $ref: ./descriptions/getOauth.md
+  security: []
+  parameters:
+    - in: query
+      name: client_id
+      required: true
+      description: アプリケーション登録時に取得したクライアント ID。
+      schema:
+        type: string
+    - in: query
+      name: redirect_uri
+      required: true
+      description: 登録済みのリダイレクト先 URL。
+      schema:
+        type: string
+        format: uri
+    - in: query
+      name: response_type
+      required: true
+      description: 固定値 `code`。
+      schema:
+        type: string
+        enum:
+          - "code"
+    - in: query
+      name: scope
+      required: true
+      description: 固定値 `all`。
+      schema:
+        type: string
+        enum:
+          - "all"
+  responses:
+    "302":
+      description: |-
+        ユーザがログイン・許可した場合、`redirect_uri` に `?code=<CODE>` を付与してリダイレクトされる。
+      headers:
+        Location:
+          description: 認可コード付きのリダイレクト先 URL。
+          schema:
+            type: string
+            format: uri

@@ -1,0 +1,51 @@
+type: object
+description: 山行記録／計画に登録された写真。
+required:
+  - pid
+  - order
+  - photo_url
+  - thumb_url
+properties:
+  pid:
+    type: string
+    description: 写真 ID。
+  comment:
+    type: string
+    description: 写真のコメント。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      写真の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。
+  picked:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      代表写真。`0`: 代表写真ではない、`1`: 代表写真。
+  order:
+    type: integer
+    description: 写真の並び順 (小さいものから順に並ぶ)。
+  photo_url:
+    type: string
+    format: uri
+    description: 写真のアドレス (オリジナルサイズ)。
+  thumb_url:
+    type: string
+    format: uri
+    description: 写真のアドレス (小サイズ、最大辺の長さ 160px)。
+  thumb80_url:
+    type: string
+    format: uri
+    description: 写真のアドレス (最大辺の長さ 80px)。
+  thumb450_url:
+    type: string
+    format: uri
+    description: 写真のアドレス (最大辺の長さ 450px)。
+  thumb800_url:
+    type: string
+    format: uri
+    description: 写真のアドレス (最大辺の長さ 800px)。

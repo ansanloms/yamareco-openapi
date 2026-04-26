@@ -1,0 +1,5 @@
+client_id: my_client_id
+client_secret: my_client_secret
+redirect_uri: "https://example.org/callback"
+code: AUTHORIZATION_CODE_HERE
+grant_type: authorization_code

@@ -1,0 +1,183 @@
+type: object
+description: 山行記録の詳細情報。
+required:
+  - rec_id
+  - uid
+  - place
+  - start
+  - end
+  - days
+  - area_id
+  - area
+  - genre_id
+  - genre
+  - group_id
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  uid:
+    type: integer
+    description: |-
+      記録所有者のユーザ ID。`0`: グループの記録、`1` 以上: 該当ユーザの記録。
+  place:
+    type: string
+    description: 場所の名前。
+  start:
+    type: string
+    format: date
+    description: 入山日 (YYYY-MM-DD)。
+  end:
+    type: string
+    format: date
+    description: 下山日 (YYYY-MM-DD)。
+  days:
+    type: integer
+    description: 日数。
+  area_id:
+    type: integer
+    description: エリア ID。
+  area:
+    type: string
+    description: エリア名。
+  genre_id:
+    type: integer
+    description: ジャンル ID。
+  genre:
+    type: string
+    description: ジャンル名。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 個人の記録、`1` 以上: 当該グループの記録。
+  time:
+    type: string
+    description: コースタイム。
+  weather:
+    type: string
+    description: 天気。
+  other_info:
+    type: string
+    description: コース状況。
+  other_info2:
+    type: string
+    description: その他情報。
+  other_members:
+    type: integer
+    description: その他のメンバー人数。
+  other_member_names:
+    type: string
+    description: その他メンバーの名前 (記録の参加メンバーのみ応答がある)。
+  commentopen:
+    type: string
+    description: |-
+      コメント受付状態。`0`: コメント禁止、`1`: コメント受付中。
+  access_train:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスに電車を利用したか。`0`: 利用していない、`1`: 利用した。
+  access_bus:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスにバスを利用したか。`0`: 利用していない、`1`: 利用した。
+  access_car:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスに車を利用したか。`0`: 利用していない、`1`: 利用した。
+  access_taxi:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスにタクシーを利用したか。`0`: 利用していない、`1`: 利用した。
+  access_cable:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスにケーブルカー／ロープウェイを利用したか。`0`: 利用していない、`1`: 利用した。
+  access_ship:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスに船を利用したか。`0`: 利用していない、`1`: 利用した。
+  access_air:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスに飛行機を利用したか。`0`: 利用していない、`1`: 利用した。
+  access_cycle:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      アクセスに自転車を利用したか。`0`: 利用していない、`1`: 利用した。
+  access_detail:
+    type: string
+    description: アクセスの詳細 (駐車場の情報など)。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      GPS ログの有無。`0`: なし、`1`: あり。
+  with_child:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。
+  draft:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      下書き状態。`0`: 公開状態、`1`: 下書き状態。
+  permission:
+    $ref: ./Permission.yaml
+  cheer:
+    type: integer
+    description: 拍手数。
+  comment:
+    type: integer
+    description: コメント数。
+  rank:
+    $ref: ./EnumRank.yaml
+  members:
+    type: array
+    description: 参加メンバーの一覧。
+    items:
+      $ref: ./MemberDetail.yaml
+  photodata:
+    type: array
+    description: 写真一覧。
+    items:
+      $ref: ./Photo.yaml
+  notedata:
+    type: array
+    description: 感想一覧。
+    items:
+      $ref: ./Note.yaml
+  gpx:
+    type: string
+    format: uri
+    description: GPS ログの URL (GPX フォーマット)。`is_track=1` のときのみ応答がある。

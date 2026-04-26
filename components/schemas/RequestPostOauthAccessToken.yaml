@@ -1,0 +1,26 @@
+type: object
+required:
+  - client_id
+  - client_secret
+  - redirect_uri
+  - code
+  - grant_type
+properties:
+  client_id:
+    type: string
+    description: アプリケーション登録時に取得したクライアント ID。
+  client_secret:
+    type: string
+    description: アプリケーション登録時に取得したクライアントシークレット。
+  redirect_uri:
+    type: string
+    format: uri
+    description: 登録済みのリダイレクト先 URL。
+  code:
+    type: string
+    description: 認可コード取得ステップで受け取った値。
+  grant_type:
+    type: string
+    enum:
+      - "authorization_code"
+    description: 固定文字列 `authorization_code`。

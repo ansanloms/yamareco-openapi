@@ -1,0 +1,44 @@
+get:
+  operationId: getCommentlistById
+  summary: コメントリストの取得。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/getCommentlistById.md
+  parameters:
+    - in: path
+      name: rec_id
+      required: true
+      description: 記録の ID。
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponseGetCommentlist.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseGetCommentlist.yaml
+            failed:
+              value:
+                $ref: ../examples/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            authError:
+              value:
+                $ref: ../examples/ResponseError.yaml

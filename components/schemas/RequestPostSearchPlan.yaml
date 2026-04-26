@@ -1,0 +1,39 @@
+type: object
+required:
+  - page
+  - place
+  - area_id
+  - genre_id
+  - is_track
+  - ptid
+properties:
+  page:
+    type: integer
+    minimum: 1
+    description: 一覧のページ番号。1 ページあたり 20 件。
+  place:
+    type: string
+    description: 検索したい計画の名称 (部分一致)。検索対象にしたくない場合は空欄。
+  area_id:
+    type: integer
+    description: |-
+      検索したい計画のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。
+  genre_id:
+    type: integer
+    description: |-
+      検索したい計画のジャンル ID。`0`: 検索条件に入れない、`1` 以上: 該当ジャンル。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      ルートの有無。`0`: 検索条件に入れない、`1`: ルートがある計画。
+  ptid:
+    type: integer
+    description: |-
+      地名 ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名の場所を通る計画。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 検索条件に入れない、`1` 以上: 該当グループに所属する山行計画。省略時は `0`。

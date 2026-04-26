@@ -1,0 +1,18 @@
+type: object
+required:
+  - rec_id
+  - text
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  text:
+    type: string
+    description: 感想本文。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。省略時は `0`。

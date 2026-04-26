@@ -1,0 +1,7 @@
+type: object
+required:
+  - com_id
+properties:
+  com_id:
+    type: string
+    description: コメント ID。

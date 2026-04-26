@@ -1,0 +1,47 @@
+rec_id: 8000001
+uid: 1
+place: 富士山
+start: "2026-04-01"
+end: "2026-04-02"
+days: 2
+area_id: 700
+area: 富士・御坂
+genre_id: 1
+genre: ハイキング
+group_id: 0
+time: "8:00 出発 / 16:00 下山"
+weather: 晴れ
+other_info: コース整備良好
+other_info2: 売店営業中
+other_members: 0
+commentopen: "1"
+access_train: 1
+access_bus: 1
+access_car: 0
+access_taxi: 0
+access_cable: 0
+access_ship: 0
+access_air: 0
+access_cycle: 0
+access_detail: 富士急行線で河口湖駅まで。
+is_track: 1
+with_child: 0
+draft: 0
+permission:
+  guest: 1
+  user: 1
+  friend: 0
+  following: 0
+cheer: 12
+comment: 3
+rank: A
+members:
+  - uname: yamareco_user
+    uid: 1
+    role_id: 1
+    role: リーダー
+photodata:
+  - $ref: ./Photo.yaml
+notedata:
+  - $ref: ./Note.yaml
+gpx: "https://www.yamareco.com/modules/yamareco/track/8000001.gpx"

@@ -1,0 +1,23 @@
+type: object
+description: 山行記録に登録された感想。
+required:
+  - uid
+  - uname
+  - text
+properties:
+  uid:
+    type: integer
+    description: ユーザ ID。
+  uname:
+    type: string
+    description: ユーザ名。
+  text:
+    type: string
+    description: 感想本文。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。

@@ -1,0 +1,110 @@
+type: object
+description: 山行記録の概要情報 (一覧取得用)。
+required:
+  - rec_id
+  - uid
+  - place
+  - start
+  - end
+  - days
+  - area_id
+  - area
+  - genre_id
+  - genre
+  - group_id
+  - other_members
+  - is_track
+  - with_child
+  - draft
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  uid:
+    type: integer
+    description: |-
+      記録所有者のユーザ ID。`0`: グループの記録、`1` 以上: 該当ユーザの記録。
+  place:
+    type: string
+    description: 場所の名前。
+  start:
+    type: string
+    format: date
+    description: 入山日 (YYYY-MM-DD)。
+  end:
+    type: string
+    format: date
+    description: 下山日 (YYYY-MM-DD)。
+  days:
+    type: integer
+    description: 日数。
+  area_id:
+    type: integer
+    description: エリア ID。
+  area:
+    type: string
+    description: エリア名。
+  genre_id:
+    type: integer
+    description: ジャンル ID。
+  genre:
+    type: string
+    description: ジャンル名。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 個人の記録、`1` 以上: 当該グループの記録。
+  other_members:
+    type: integer
+    description: その他のメンバー人数。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      GPS ログの有無。`0`: なし、`1`: あり。
+  with_child:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。
+  draft:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      下書き状態。`0`: 公開状態、`1`: 下書き状態。
+  permission:
+    $ref: ./Permission.yaml
+  cheer:
+    type: integer
+    description: 拍手数。
+  comment:
+    type: integer
+    description: コメント数。
+  rank:
+    $ref: ./EnumRank.yaml
+  members:
+    type: array
+    description: 参加メンバーの一覧。
+    items:
+      $ref: ./Member.yaml
+  thumb_url:
+    type: string
+    description: サムネイル画像の URL (画像がない場合は空欄)。
+  notes:
+    type: integer
+    minimum: 0
+    description: 登録されている感想の数。
+  photos:
+    type: integer
+    minimum: 0
+    description: 登録されている写真の数。
+  page_url:
+    type: string
+    format: uri
+    description: 山行記録の Web ページ URL。

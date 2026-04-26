@@ -1,0 +1,29 @@
+rec_id: 8000001
+uid: 1
+place: 富士山
+start: "2026-04-01"
+end: "2026-04-02"
+days: 2
+area_id: 700
+area: 富士・御坂
+genre_id: 1
+genre: ハイキング
+group_id: 0
+other_members: 0
+is_track: 1
+with_child: 0
+draft: 0
+permission:
+  guest: 1
+  user: 1
+  friend: 0
+  following: 0
+cheer: 12
+comment: 3
+rank: A
+members:
+  - $ref: ./Member.yaml
+thumb_url: "https://www.yamareco.com/modules/yamareco/img/8000001/thumb.jpg"
+notes: 1
+photos: 18
+page_url: "https://www.yamareco.com/modules/yamareco/detail-8000001.html"

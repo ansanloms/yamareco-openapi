@@ -1,0 +1,51 @@
+get:
+  operationId: getCheerlistByTypeAndId
+  summary: 拍手数の取得。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/getCheerlistByTypeAndId.md
+  parameters:
+    - in: path
+      name: type
+      required: true
+      description: 拍手対象の種別。
+      schema:
+        $ref: ../components/schemas/EnumCheerType.yaml
+    - in: path
+      name: id
+      required: true
+      description: |-
+        拍手対象の ID。`type=rec` の場合は記録の ID、`type=rec_photo` の場合は写真の ID。
+      schema:
+        type: string
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponseGetCheerlist.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseGetCheerlist.yaml
+            failed:
+              value:
+                $ref: ../examples/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            authError:
+              value:
+                $ref: ../examples/ResponseError.yaml

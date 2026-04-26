@@ -1,0 +1,8 @@
+type: object
+description: 装備アイテム。
+required:
+  - name
+properties:
+  name:
+    type: string
+    description: 装備名。

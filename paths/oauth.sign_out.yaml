@@ -1,0 +1,33 @@
+get:
+  operationId: getOauthSignOut
+  summary: OAuth サインアウト。
+  tags:
+    - oauth
+  description:
+    $ref: ./descriptions/getOauthSignOut.md
+  security: []
+  parameters:
+    - in: query
+      name: redirect_uri
+      required: false
+      description: 省略可能。省略時はログアウト完了メッセージページが表示される。
+      schema:
+        type: string
+        format: uri
+  responses:
+    "302":
+      description: |-
+        サインアウト処理完了後、`redirect_uri` 指定時は当該 URL へリダイレクトされる。
+      headers:
+        Location:
+          description: リダイレクト先 URL。
+          schema:
+            type: string
+            format: uri
+    "200":
+      description: |-
+        `redirect_uri` 省略時はログアウト完了メッセージページが表示される。
+      content:
+        text/html:
+          schema:
+            type: string

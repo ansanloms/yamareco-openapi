@@ -1,0 +1,37 @@
+post:
+  operationId: postOauthAccessToken
+  summary: OAuth アクセストークンの取得。
+  tags:
+    - oauth
+  description:
+    $ref: ./descriptions/postOauthAccessToken.md
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: ../components/schemas/RequestPostOauthAccessToken.yaml
+        examples:
+          normal:
+            value:
+              $ref: ../examples/RequestPostOauthAccessToken.yaml
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `error` フィールドにより成否を判定する。
+        - `error: 0`: 処理成功 (`ResponsePostOauthAccessToken`、`access_token` に値)
+        - `error: 1`: 処理失敗 (`ResponseOAuthError`、`error_message` に要因)。
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponsePostOauthAccessToken.yaml
+              - $ref: ../components/schemas/ResponseOAuthError.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponsePostOauthAccessToken.yaml
+            failed:
+              value:
+                $ref: ../examples/ResponseOAuthError.yaml

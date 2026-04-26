@@ -1,0 +1,61 @@
+type: object
+description: ユーザのプロフィール情報。
+required:
+  - uid
+  - uname
+properties:
+  uid:
+    type: integer
+    description: ユーザ ID。
+  uname:
+    type: string
+    description: ユーザ名。
+  avatar:
+    type: string
+    description: プロフィール画像の URL (未設定の場合は空欄)。
+  premium:
+    type: boolean
+    description: プレミアムプランに加入しているか。
+  frilends:
+    type: array
+    description: 友達リスト (ユーザ ID の配列)。
+    items:
+      type: integer
+  url:
+    type: string
+    description: URL (未設定の場合は空欄)。
+  profile:
+    type: string
+    description: プロフィール (自己紹介文)。未設定の場合は空欄。
+  age:
+    type: integer
+    description: |-
+      年齢。`-1`: 非公開、`0` 以上: 年齢。
+  pref:
+    type: string
+    description: 現住所 (都道府県)。未設定の場合は空欄。
+  address:
+    type: string
+    description: 現住所 (市区町村)。未設定の場合は空欄。
+  blood:
+    type: string
+    description: 血液型 (未設定の場合は空欄)。
+  hobby:
+    type: string
+    description: 山以外の趣味 (未設定の場合は空欄)。
+  work:
+    type: string
+    description: 職業 (未設定の場合は空欄)。
+  ht_pref:
+    type: string
+    description: 出身地 (都道府県)。未設定の場合は空欄。
+  ht_address:
+    type: string
+    description: 出身地 (市区町村)。未設定の場合は空欄。
+  sex:
+    type: string
+    description: 性別 (`女性`／`男性`)。未設定の場合は空欄。
+  page_url:
+    type: string
+    format: uri
+    description: 当該ユーザーのプロフィールページ URL。

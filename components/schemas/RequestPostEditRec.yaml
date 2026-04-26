@@ -1,0 +1,11 @@
+allOf:
+  - type: object
+    required:
+      - rec_id
+    properties:
+      rec_id:
+        type: integer
+        description: 記録の ID。
+  - $ref: ./RequestPostCreateRec.yaml
+description: |-
+  山行記録の編集リクエスト。`rec_id` 以外のフィールドは `RequestPostCreateRec` と同じ。

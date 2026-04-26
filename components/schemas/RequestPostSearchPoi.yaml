@@ -1,0 +1,26 @@
+type: object
+required:
+  - page
+  - type_id
+properties:
+  page:
+    type: integer
+    minimum: 1
+    description: 一覧のページ番号。1 ページあたり 20 件。
+  name:
+    type: string
+    description: |-
+      検索したい地名の名称。空: 検索条件に入れない、2 文字以上: 部分一致で文字列検索。
+  type_id:
+    type: integer
+    description: |-
+      検索したい地名のデータ種別。`0`: 検索条件に入れない、`1` 以上: 該当するデータ種別。
+  area_id:
+    type: integer
+    description: |-
+      検索したい地名のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。
+      エリア ID が 100 の倍数 (関東などの大枠のエリア) の場合は、その配下の全エリアが検索対象になる。
+  ptid:
+    type: integer
+    description: |-
+      表示したい地名の ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名。

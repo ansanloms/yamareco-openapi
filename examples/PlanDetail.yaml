@@ -1,0 +1,40 @@
+plan_id: 9000001
+uid: 1
+place: 富士山
+start: "2026-05-01"
+end: "2026-05-02"
+days: 2
+add_date: 1
+area_id: 700
+area: 富士・御坂
+genre_id: 1
+genre: ハイキング
+group_id: 0
+other_members: 0
+time: "5:00 出発 / 18:00 下山予定"
+aim: 山頂アタック
+meeting: 河口湖駅 4:30
+food: 各自準備
+submit_to: 山岳救助隊宛
+escape: 雷時は速やかに 5 合目へ
+caution: 高山病
+other_info: ヘッドランプ持参
+equip:
+  share:
+    - name: ロープ
+    - name: 救急箱
+  personal:
+    - name: ヘッドランプ
+    - name: 雨具
+eqnote: 各自軽量化推奨
+is_track: 1
+private: 0
+cheer: 0
+comment: 0
+members:
+  - uname: yamareco_user
+    uid: 1
+    avatar: "https://www.yamareco.com/modules/yamareco/avatar/1.jpg"
+    role_id: 1
+    role: リーダー
+gpx: "https://www.yamareco.com/modules/yamareco/track/plan-9000001.gpx"

@@ -1,0 +1,44 @@
+get:
+  operationId: getPlanlistByUser
+  summary: 山行計画一覧の取得 (ユーザ別)
+  tags:
+    - plan
+  description:
+    $ref: ./descriptions/getPlanlistByUser.md
+  security: []
+  parameters:
+    - in: path
+      name: userID
+      required: true
+      description: |-
+        ユーザ ID。`0`: 問い合わせを行ったユーザの計画、`1` 以上: 指定したユーザの計画。
+      schema:
+        type: integer
+        minimum: 0
+    - in: path
+      name: page
+      required: true
+      description: 一覧のページ番号 (1 ページあたり 20 件)。
+      schema:
+        type: integer
+        minimum: 1
+    - in: query
+      name: is_track
+      required: false
+      description: |-
+        `1`: ルート登録済みの計画のみ取得、それ以外: 全計画。
+      schema:
+        type: integer
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponseGetPlanlist.yaml
+              - $ref: ../components/schemas/ResponseError.yaml

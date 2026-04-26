@@ -1,0 +1,8 @@
+allOf:
+  - $ref: ./ResponseBase.yaml
+  - type: object
+    required:
+      - plan
+    properties:
+      plan:
+        $ref: ./PlanDetail.yaml

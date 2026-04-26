@@ -1,0 +1,36 @@
+type: object
+description: 山行記録／計画のアクセス権限設定。
+required:
+  - guest
+  - user
+  - friend
+  - following
+properties:
+  guest:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      ログインしていないユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+  user:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      ログイン済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+  friend:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      友達リストに追加済みユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。
+  following:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      現在フォローしているユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。

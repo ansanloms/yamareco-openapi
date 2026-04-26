@@ -1,0 +1,29 @@
+type: object
+description: 山行記録／計画に登録されたコメント。
+required:
+  - com_id
+  - uid
+  - text
+properties:
+  com_id:
+    type: integer
+    description: コメント ID。
+  uid:
+    type: integer
+    description: コメントしたユーザのユーザ ID。
+  title:
+    type: string
+    description: コメントのタイトル。
+  text:
+    type: string
+    description: コメント本文。
+  created:
+    type: integer
+    format: int64
+    description: コメントの作成日時 (Unix time、1970-01-01 00:00:00 UTC からの経過秒)。
+  uname:
+    type: string
+    description: コメントしたユーザのユーザ名。
+  avatar:
+    type: string
+    description: プロフィール画像の URL。

@@ -1,0 +1,21 @@
+type: object
+description: 山行記録／計画の参加メンバー (役割情報を含む)。
+required:
+  - uname
+  - uid
+properties:
+  uname:
+    type: string
+    description: ユーザ名。
+  uid:
+    type: integer
+    description: ユーザ ID。
+  avatar:
+    type: string
+    description: プロフィール画像の URL。
+  role_id:
+    type: integer
+    description: 役割の ID。
+  role:
+    type: string
+    description: 役割名。

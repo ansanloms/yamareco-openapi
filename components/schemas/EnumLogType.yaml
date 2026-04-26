@@ -1,0 +1,8 @@
+type: string
+description: GPS ログのファイル形式種別。
+enum:
+  - "gpx"
+  - "kml"
+  - "nmea"
+  - "gdb"
+  - "gtrnctr"

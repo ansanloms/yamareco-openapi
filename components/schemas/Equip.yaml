@@ -1,0 +1,13 @@
+type: object
+description: 山行計画の装備一覧 (共同装備／個人装備)。
+properties:
+  share:
+    type: array
+    description: 共同装備の一覧。
+    items:
+      $ref: ./EquipItem.yaml
+  personal:
+    type: array
+    description: 個人装備の一覧。
+    items:
+      $ref: ./EquipItem.yaml

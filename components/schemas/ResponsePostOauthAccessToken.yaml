@@ -1,0 +1,22 @@
+type: object
+description: |-
+  OAuth アクセストークン取得の成功時レスポンス。
+
+  HTTP ステータスコードは処理の成否によらず `200` が返り、`error` フィールドで成否を判定する。
+  処理失敗時は本スキーマではなく `ResponseOAuthError` (`error: 1`) が返る。
+required:
+  - access_token
+  - error
+  - error_message
+properties:
+  access_token:
+    type: string
+    description: 成功時のアクセストークン値。
+  error:
+    type: integer
+    enum:
+      - 0
+    description: エラーの有無。処理成功時は常に `0`。
+  error_message:
+    type: string
+    description: エラー時のメッセージ (成功時は空文字)。

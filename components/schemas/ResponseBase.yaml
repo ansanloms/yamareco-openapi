@@ -1,0 +1,14 @@
+type: object
+description: |-
+  ヤマレコ API の処理成功時レスポンス共通基底。
+
+  HTTP ステータスコードは処理の成否によらず `200` が返り、`err` フィールドで成否を判定する。
+  処理失敗時は本スキーマではなく `ResponseError` (`err: 1`) が返る。
+required:
+  - err
+properties:
+  err:
+    type: integer
+    enum:
+      - 0
+    description: エラーの有無。処理成功時は常に `0`。

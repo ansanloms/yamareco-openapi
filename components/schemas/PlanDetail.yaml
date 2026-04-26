@@ -1,0 +1,124 @@
+type: object
+description: 山行計画の詳細情報。
+required:
+  - plan_id
+  - uid
+  - place
+  - start
+  - end
+  - days
+  - area_id
+  - area
+  - genre_id
+  - genre
+  - group_id
+  - other_members
+properties:
+  plan_id:
+    type: integer
+    description: 計画の ID。
+  uid:
+    type: integer
+    description: 計画所有者のユーザ ID。
+  place:
+    type: string
+    description: 場所の名前。
+  start:
+    type: string
+    format: date
+    description: 入山日 (YYYY-MM-DD)。
+  end:
+    type: string
+    format: date
+    description: 下山日 (YYYY-MM-DD)。
+  days:
+    type: integer
+    description: 日数。
+  add_date:
+    type: integer
+    description: 予備日。予備として確保している日数で、`days` には含まれない。
+  area_id:
+    type: integer
+    description: エリア ID。
+  area:
+    type: string
+    description: エリア名。
+  genre_id:
+    type: integer
+    description: ジャンル ID。
+  genre:
+    type: string
+    description: ジャンル名。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 個人の計画、`1` 以上: 当該グループの計画。
+  other_members:
+    type: integer
+    description: その他のメンバー人数。
+  other_member_names:
+    type: string
+    description: その他メンバーの名前 (計画の参加メンバーがリクエストを送ったときのみ応答がある)。
+  time:
+    type: string
+    description: コースタイム。
+  aim:
+    type: string
+    description: 山行目的。
+  meeting:
+    type: string
+    description: 集合場所・時間。
+  food:
+    type: string
+    description: 食事。
+  submit_to:
+    type: string
+    description: 計画書の提出先／場所。
+  escape:
+    type: string
+    description: 緊急時の対応・ルート。
+  caution:
+    type: string
+    description: 注意箇所・注意点。
+  other_info:
+    type: string
+    description: その他情報。
+  equip:
+    $ref: ./Equip.yaml
+  eqnote:
+    type: string
+    description: 装備の備考。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      GPS ログの有無。`0`: なし、`1`: あり。
+  private:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      公開設定。`0`: 公開状態、`1`: 非公開状態。
+  cheer:
+    type: integer
+    description: 拍手数。
+  comment:
+    type: integer
+    description: コメント数。
+  members:
+    type: array
+    description: 参加メンバーの一覧。
+    items:
+      $ref: ./MemberDetail.yaml
+  photodata:
+    type: array
+    description: 写真一覧 (写真があるときのみ応答がある)。
+    items:
+      $ref: ./Photo.yaml
+  gpx:
+    type: string
+    format: uri
+    description: GPS ログの URL (GPX フォーマット)。`is_track=1` のときのみ応答がある。

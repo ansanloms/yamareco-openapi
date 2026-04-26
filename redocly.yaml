@@ -2,7 +2,7 @@ extends:
   - recommended-strict
 
 apis:
-  example:
+  yamareco:
     root: ./api.yaml
 plugins:
   - "./redocly/plugins/index.js"

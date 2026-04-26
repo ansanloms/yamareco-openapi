@@ -1,0 +1,15 @@
+type: object
+required:
+  - rec_id
+  - title
+  - text
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  title:
+    type: string
+    description: コメントのタイトル。
+  text:
+    type: string
+    description: コメントの文字列。

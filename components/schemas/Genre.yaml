@@ -1,0 +1,12 @@
+type: object
+description: ヤマレコで定義されている山行ジャンル区分。
+required:
+  - genre_id
+  - genre
+properties:
+  genre_id:
+    type: integer
+    description: ジャンル ID。
+  genre:
+    type: string
+    description: ジャンル名。

@@ -1,0 +1,10 @@
+allOf:
+  - $ref: ./ResponseBase.yaml
+  - type: object
+    required:
+      - rec_id
+    properties:
+      rec_id:
+        type: integer
+        description: |-
+          記録の ID。全く同じ内容のデータを登録しようとした場合は、データを作成せず、見つかった山行記録の ID を応答する。

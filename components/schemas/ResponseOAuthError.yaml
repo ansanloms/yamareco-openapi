@@ -1,0 +1,22 @@
+type: object
+description: |-
+  OAuth エンドポイント失敗時レスポンス。
+
+  HTTP ステータスは `200` で返り、`error` フィールド (`1`) で失敗を示す。
+  通常 API のエラー形式 (`ResponseError`、`err` / `errcode`) とはフィールド名が異なる点に注意。
+required:
+  - access_token
+  - error
+  - error_message
+properties:
+  access_token:
+    type: string
+    description: 失敗時は空文字。
+  error:
+    type: integer
+    enum:
+      - 1
+    description: エラーの有無 (常に `1`)。
+  error_message:
+    type: string
+    description: エラー要因の説明メッセージ。

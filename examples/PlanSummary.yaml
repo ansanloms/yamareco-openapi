@@ -1,0 +1,22 @@
+plan_id: 9000001
+uid: 1
+place: 富士山
+nodate: 0
+start: "2026-05-01"
+end: "2026-05-02"
+days: 2
+add_date: 1
+area_id: 700
+area: 富士・御坂
+genre_id: 1
+genre: ハイキング
+group_id: 0
+other_members: 0
+is_track: 1
+private: 0
+cheer: 0
+comment: 0
+members:
+  - $ref: ./Member.yaml
+page_url: "https://www.yamareco.com/modules/yamareco/plan-9000001.html"
+updated: 1777132271

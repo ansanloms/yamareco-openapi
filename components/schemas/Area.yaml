@@ -1,0 +1,12 @@
+type: object
+description: ヤマレコで定義されているエリア (山域) 区分。
+required:
+  - area_id
+  - area
+properties:
+  area_id:
+    type: integer
+    description: エリア ID。
+  area:
+    type: string
+    description: エリア名。

@@ -1,0 +1,11 @@
+type: object
+required:
+  - rec_id
+  - pid
+properties:
+  rec_id:
+    type: integer
+    description: 記録の ID。
+  pid:
+    type: string
+    description: 写真の ID。

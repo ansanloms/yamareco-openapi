@@ -1,0 +1,36 @@
+get:
+  operationId: getPlanlistByPage
+  summary: 山行計画一覧の取得 (全体)
+  tags:
+    - plan
+  description:
+    $ref: ./descriptions/getPlanlistByPage.md
+  security: []
+  parameters:
+    - in: path
+      name: page
+      required: true
+      description: 一覧のページ番号 (1 ページあたり 20 件)。
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponseGetPlanlist.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponseGetPlanlist.yaml
+            failed:
+              value:
+                $ref: ../examples/ResponseError.yaml

@@ -1,0 +1,13 @@
+type: object
+required:
+  - type
+  - id
+properties:
+  type:
+    $ref: ./EnumCheerType.yaml
+    description: |-
+      拍手対象。`rec`: 記録、`rec_photo`: 記録の写真。
+  id:
+    type: string
+    description: |-
+      拍手対象の ID。`type=rec` の場合は記録の ID、`type=rec_photo` の場合は写真の ID。

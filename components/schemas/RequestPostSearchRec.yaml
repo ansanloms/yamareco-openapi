@@ -1,0 +1,74 @@
+type: object
+required:
+  - page
+  - place
+  - area_id
+  - genre_id
+  - is_photo
+  - is_track
+  - ptid
+properties:
+  page:
+    type: integer
+    minimum: 1
+    description: 一覧のページ番号。1 ページあたり 20 件。
+  place:
+    type: string
+    description: 検索したい記録の名称 (部分一致)。検索対象にしたくない場合は空欄。
+  area_id:
+    type: integer
+    description: |-
+      検索したい記録のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。
+  genre_id:
+    type: integer
+    description: |-
+      検索したい記録のジャンル ID。`0`: 検索条件に入れない、`1` 以上: 該当ジャンル。
+  is_photo:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      写真の有無。`0`: 検索条件に入れない、`1`: 写真がある記録。
+  is_track:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      ルートの有無。`0`: 検索条件に入れない、`1`: ルートがある記録。
+  with_child:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      子連れ登山。`0`: 検索条件に入れない、`1`: 子連れの記録。省略時は `0`。
+  guestok:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      ゲスト閲覧可の記録。`0`: 検索条件に入れない、`1`: ゲスト閲覧可の記録のみ。
+      `0` の場合は「ヤマレコ内部のみに公開」の記録も取得対象になり、`1` の場合は除外される。省略時は `0`。
+  min_days:
+    type: integer
+    description: |-
+      最小日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以上の記録。省略時は `0`。
+  max_days:
+    type: integer
+    description: |-
+      最大日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以下の記録。省略時は `0`。
+  ptid:
+    type: integer
+    description: |-
+      地名 ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名の場所を通る記録。
+  group_id:
+    type: integer
+    description: |-
+      グループ ID。`0`: 検索条件に入れない、`1` 以上: 該当グループに所属する山行記録。省略時は `0`。
+  rec_id:
+    type: integer
+    description: |-
+      記録の ID。`0`: 検索条件に入れない、`1` 以上: 該当 ID の山行記録。省略時は `0`。

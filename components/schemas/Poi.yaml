@@ -1,0 +1,68 @@
+type: object
+description: 地名 (POI) データ。
+required:
+  - ptid
+  - name
+properties:
+  ptid:
+    type: integer
+    description: 地名データの ID。
+  name:
+    type: string
+    description: 地名。
+  other_names:
+    type: string
+    description: 別名。
+  name_en:
+    type: string
+    description: 英語名。
+  yomi:
+    type: string
+    description: 地名の読みがな。
+  elevation:
+    type: number
+    format: float
+    description: 標高 (m)。
+  lat:
+    type: number
+    format: float
+    description: |-
+      緯度。北緯: 正、南緯: 負。
+  lon:
+    type: number
+    format: float
+    description: |-
+      経度。東経: 正、西経: 負。
+  detail:
+    type: string
+    description: 詳細説明。
+  area:
+    type: integer
+    description: エリア ID。
+  types:
+    type: array
+    description: |-
+      データ種別の一覧。`types` のデータがない地名データもある。
+    items:
+      type: object
+      required:
+        - type_id
+        - name
+      properties:
+        type_id:
+          type: integer
+          description: データ種別の ID。
+        name:
+          type: string
+          description: データ種別の名称 (全地名データで共通)。
+        detail:
+          type: string
+          description: データ種別の詳細説明 (地名データごとに異なる)。
+  page_url:
+    type: string
+    format: uri
+    description: 地名の Web ページ URL。
+  photo_url:
+    type: string
+    format: uri
+    description: 写真画像の URL。

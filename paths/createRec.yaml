@@ -1,0 +1,47 @@
+post:
+  operationId: postCreateRec
+  summary: 山行記録の新規登録。
+  tags:
+    - rec
+  description:
+    $ref: ./descriptions/postCreateRec.md
+  requestBody:
+    required: true
+    content:
+      application/x-www-form-urlencoded:
+        schema:
+          $ref: ../components/schemas/RequestPostCreateRec.yaml
+        examples:
+          normal:
+            value:
+              $ref: ../examples/RequestPostCreateRec.yaml
+  responses:
+    "200":
+      description: |-
+        処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+        - `err: 0`: 処理成功 (Success スキーマ)
+        - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: ../components/schemas/ResponsePostCreateRec.yaml
+              - $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            succeeded:
+              value:
+                $ref: ../examples/ResponsePostCreateRec.yaml
+            failed:
+              value:
+                $ref: ../examples/ResponseError.yaml
+    "403":
+      description: OAuth 認証エラー。
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ResponseError.yaml
+          examples:
+            authError:
+              value:
+                $ref: ../examples/ResponseError.yaml

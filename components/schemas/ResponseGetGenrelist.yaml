@@ -1,0 +1,11 @@
+allOf:
+  - $ref: ./ResponseBase.yaml
+  - type: object
+    required:
+      - genrelist
+    properties:
+      genrelist:
+        type: array
+        description: ジャンルの定義一覧。
+        items:
+          $ref: ./Genre.yaml

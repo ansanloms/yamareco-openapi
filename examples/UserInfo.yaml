@@ -1,0 +1,19 @@
+uid: 1
+uname: yamareco_user
+avatar: "https://www.yamareco.com/modules/yamareco/avatar/1.jpg"
+premium: true
+frilends:
+  - 2
+  - 3
+url: "https://example.org"
+profile: 山が好き
+age: 30
+pref: 東京都
+address: 新宿区
+blood: A
+hobby: 写真
+work: エンジニア
+ht_pref: 北海道
+ht_address: 札幌市
+sex: 男性
+page_url: "https://www.yamareco.com/modules/yamareco/user-1.html"

@@ -1,0 +1,25 @@
+type: object
+description: 地名データの種別定義。
+required:
+  - type_id
+  - name
+properties:
+  type_id:
+    type: integer
+    description: データ種別の ID。
+  name:
+    type: string
+    description: データ種別の名称。
+  comment:
+    type: string
+    description: データ種別の詳細欄向け説明。
+  hasdetail:
+    type: integer
+    enum:
+      - 0
+      - 1
+    description: |-
+      データ種別の詳細欄の定義有無。
+
+      `0`: 詳細欄の定義あり、`1`: 詳細欄の定義なし。
+      (公式ドキュメントの記載通り。直感的な対応関係に見えないが原文に従う)。
