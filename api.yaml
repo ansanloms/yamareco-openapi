@@ -5,7 +5,7 @@ info:
   description:
     $ref: ./README.md
 servers:
-  - url: "https://api.yamareco.com/api/v1"
+  - url: https://api.yamareco.com/api/v1
     description: 本番サーバ。
 tags:
   - name: oauth
@@ -23,10 +23,10 @@ paths:
     $ref: ./paths/addComment.yaml
   /addNote:
     $ref: ./paths/addNote.yaml
-  "/addPhoto/{rec_id}/{type}/{maxsize}/{rotate}":
-    $ref: "./paths/addPhoto.{rec_id}.{type}.{maxsize}.{rotate}.yaml"
-  "/addTrack/{rec_id}/{logtype}/{thinout}/{sensor}/{merge}":
-    $ref: "./paths/addTrack.{rec_id}.{logtype}.{thinout}.{sensor}.{merge}.yaml"
+  /addPhoto/{rec_id}/{type}/{maxsize}/{rotate}:
+    $ref: ./paths/addPhoto.{rec_id}.{type}.{maxsize}.{rotate}.yaml
+  /addTrack/{rec_id}/{logtype}/{thinout}/{sensor}/{merge}:
+    $ref: ./paths/addTrack.{rec_id}.{logtype}.{thinout}.{sensor}.{merge}.yaml
   /createRec:
     $ref: ./paths/createRec.yaml
   /deleteCheer:
@@ -49,32 +49,32 @@ paths:
     $ref: ./paths/editRec.yaml
   /getArealist:
     $ref: ./paths/getArealist.yaml
-  "/getCheerlist/{type}/{id}":
-    $ref: "./paths/getCheerlist.{type}.{id}.yaml"
-  "/getCommentlist/{rec_id}":
-    $ref: "./paths/getCommentlist.{rec_id}.yaml"
+  /getCheerlist/{type}/{id}:
+    $ref: ./paths/getCheerlist.{type}.{id}.yaml
+  /getCommentlist/{rec_id}:
+    $ref: ./paths/getCommentlist.{rec_id}.yaml
   /getGenrelist:
     $ref: ./paths/getGenrelist.yaml
-  "/getPlan/{plan_id}":
-    $ref: "./paths/getPlan.{plan_id}.yaml"
-  "/getPlanCommentlist/{plan_id}":
-    $ref: "./paths/getPlanCommentlist.{plan_id}.yaml"
-  "/getPlanlist/user/{userID}/{page}":
-    $ref: "./paths/getPlanlist.user.{userID}.{page}.yaml"
-  "/getPlanlist/{page}":
-    $ref: "./paths/getPlanlist.{page}.yaml"
-  "/getRec/{rec_id}":
-    $ref: "./paths/getRec.{rec_id}.yaml"
-  "/getReclist/group/{groupID}/{page}":
-    $ref: "./paths/getReclist.group.{groupID}.{page}.yaml"
-  "/getReclist/user/{userID}/{page}":
-    $ref: "./paths/getReclist.user.{userID}.{page}.yaml"
-  "/getReclist/{page}":
-    $ref: "./paths/getReclist.{page}.yaml"
+  /getPlan/{plan_id}:
+    $ref: ./paths/getPlan.{plan_id}.yaml
+  /getPlanCommentlist/{plan_id}:
+    $ref: ./paths/getPlanCommentlist.{plan_id}.yaml
+  /getPlanlist/user/{userID}/{page}:
+    $ref: ./paths/getPlanlist.user.{userID}.{page}.yaml
+  /getPlanlist/{page}:
+    $ref: ./paths/getPlanlist.{page}.yaml
+  /getRec/{rec_id}:
+    $ref: ./paths/getRec.{rec_id}.yaml
+  /getReclist/group/{groupID}/{page}:
+    $ref: ./paths/getReclist.group.{groupID}.{page}.yaml
+  /getReclist/user/{userID}/{page}:
+    $ref: ./paths/getReclist.user.{userID}.{page}.yaml
+  /getReclist/{page}:
+    $ref: ./paths/getReclist.{page}.yaml
   /getTypelist:
     $ref: ./paths/getTypelist.yaml
-  "/getUserInfo/{uid}":
-    $ref: "./paths/getUserInfo.{uid}.yaml"
+  /getUserInfo/{uid}:
+    $ref: ./paths/getUserInfo.{uid}.yaml
   /nearbyPoi:
     $ref: ./paths/nearbyPoi.yaml
   /oauth:
