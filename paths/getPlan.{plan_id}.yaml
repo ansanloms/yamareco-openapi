@@ -1,6 +1,6 @@
 get:
   operationId: getPlanById
-  summary: 山行計画の取得。
+  summary: 山行計画の取得
   tags:
     - plan
   description:

@@ -1,6 +1,6 @@
 post:
   operationId: postDeleteNote
-  summary: 感想の削除。
+  summary: 感想の削除
   tags:
     - rec
   description:

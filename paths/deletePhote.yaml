@@ -1,6 +1,6 @@
 post:
   operationId: postDeletePhote
-  summary: 写真の削除。
+  summary: 写真の削除
   tags:
     - rec
   description:

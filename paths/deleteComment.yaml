@@ -1,6 +1,6 @@
 post:
   operationId: postDeleteComment
-  summary: コメントの削除。
+  summary: コメントの削除
   tags:
     - rec
   description:

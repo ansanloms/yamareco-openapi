@@ -1,6 +1,6 @@
 post:
   operationId: postOauthAccessToken
-  summary: OAuth アクセストークンの取得。
+  summary: OAuth アクセストークンの取得
   tags:
     - oauth
   description:

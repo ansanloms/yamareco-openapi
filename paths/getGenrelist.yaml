@@ -1,6 +1,6 @@
 get:
   operationId: getGenrelist
-  summary: ジャンル定義一覧の取得。
+  summary: ジャンル定義一覧の取得
   tags:
     - other
   description:

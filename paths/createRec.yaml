@@ -1,6 +1,6 @@
 post:
   operationId: postCreateRec
-  summary: 山行記録の新規登録。
+  summary: 山行記録の新規登録
   tags:
     - rec
   description:

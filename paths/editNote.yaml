@@ -1,6 +1,6 @@
 post:
   operationId: postEditNote
-  summary: 感想の編集。
+  summary: 感想の編集
   tags:
     - rec
   description:

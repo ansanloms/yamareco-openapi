@@ -1,6 +1,6 @@
 post:
   operationId: postDeleteTrack
-  summary: GPS ログの削除。
+  summary: GPS ログの削除
   tags:
     - rec
   description:

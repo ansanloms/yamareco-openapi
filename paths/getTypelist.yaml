@@ -1,6 +1,6 @@
 get:
   operationId: getTypelist
-  summary: 地名データ種別定義一覧の取得。
+  summary: 地名データ種別定義一覧の取得
   tags:
     - other
   description:

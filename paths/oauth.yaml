@@ -1,6 +1,6 @@
 get:
   operationId: getOauth
-  summary: OAuth 認可コードの取得。
+  summary: OAuth 認可コードの取得
   tags:
     - oauth
   description:

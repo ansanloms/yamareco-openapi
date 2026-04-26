@@ -1,6 +1,6 @@
 post:
   operationId: postAddNote
-  summary: 感想の登録。
+  summary: 感想の登録
   tags:
     - rec
   description:

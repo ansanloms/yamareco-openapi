@@ -1,6 +1,6 @@
 get:
   operationId: getCommentlistById
-  summary: コメントリストの取得。
+  summary: コメントリストの取得
   tags:
     - rec
   description:

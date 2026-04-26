@@ -1,6 +1,6 @@
 post:
   operationId: postRelatePlanAndRec
-  summary: 山行記録と山行計画の関連付け。
+  summary: 山行記録と山行計画の関連付け
   tags:
     - rec
   description:
