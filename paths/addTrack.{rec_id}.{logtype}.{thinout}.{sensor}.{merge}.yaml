@@ -1,6 +1,6 @@
 post:
   operationId: postAddTrack
-  summary: GPS ログの登録
+  summary: GPS ログの登録。
   tags:
     - rec
   description:

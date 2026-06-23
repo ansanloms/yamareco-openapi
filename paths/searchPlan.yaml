@@ -1,6 +1,6 @@
 post:
   operationId: postSearchPlan
-  summary: 山行計画の検索
+  summary: 山行計画の検索。
   tags:
     - plan
   description:

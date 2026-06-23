@@ -1,6 +1,6 @@
 post:
   operationId: postEditPhote
-  summary: 写真の編集
+  summary: 写真の編集。
   tags:
     - rec
   description:

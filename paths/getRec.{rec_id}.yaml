@@ -1,6 +1,6 @@
 get:
   operationId: getRecById
-  summary: 山行記録の取得
+  summary: 山行記録の取得。
   tags:
     - rec
   description:

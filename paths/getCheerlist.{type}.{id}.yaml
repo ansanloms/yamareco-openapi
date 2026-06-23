@@ -1,6 +1,6 @@
 get:
   operationId: getCheerlistByTypeAndId
-  summary: 拍手数の取得
+  summary: 拍手数の取得。
   tags:
     - rec
   description:

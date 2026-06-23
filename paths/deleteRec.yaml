@@ -1,6 +1,6 @@
 post:
   operationId: postDeleteRec
-  summary: 山行記録の削除
+  summary: 山行記録の削除。
   tags:
     - rec
   description:

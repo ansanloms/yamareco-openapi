@@ -1,6 +1,6 @@
 post:
   operationId: postEditRec
-  summary: 山行記録の編集
+  summary: 山行記録の編集。
   tags:
     - rec
   description:

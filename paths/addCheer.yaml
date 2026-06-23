@@ -1,6 +1,6 @@
 post:
   operationId: postAddCheer
-  summary: 拍手の登録
+  summary: 拍手の登録。
   tags:
     - rec
   description:

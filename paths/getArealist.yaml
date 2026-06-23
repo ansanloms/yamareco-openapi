@@ -1,6 +1,6 @@
 get:
   operationId: getArealist
-  summary: エリア定義一覧の取得
+  summary: エリア定義一覧の取得。
   tags:
     - other
   description:

@@ -1,6 +1,6 @@
 get:
   operationId: getUserInfoById
-  summary: ユーザプロフィール情報の取得
+  summary: ユーザプロフィール情報の取得。
   tags:
     - other
   description:
