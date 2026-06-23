@@ -1,6 +1,6 @@
 get:
   operationId: getOauthSignOut
-  summary: OAuth サインアウト
+  summary: OAuth サインアウト。
   tags:
     - oauth
   description:

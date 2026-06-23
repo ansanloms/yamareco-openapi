@@ -1,6 +1,6 @@
 post:
   operationId: postAddComment
-  summary: コメントの登録
+  summary: コメントの登録。
   tags:
     - rec
   description:

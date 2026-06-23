@@ -1,20 +1,23 @@
 const path = require("node:path");
 
-// ローカルの textlint plugin (./textlint/plugins/yaml-keys) を絶対パスで参照する。
+// textlint plugin yaml-keys のローカルラッパー (textlint/plugins/yaml-keys.ts) を
+// 絶対パスで参照する。ラッパーは別 repo ansanloms/textlint-plugin-yaml-keys の
+// ソースを import map (deno.json) 経由で jsDelivr から読み込む薄い再 export。
 // pluginId が npm package 名でないため "textlint-plugin-<id>" の解決には失敗するが、
 // その後段で textlint module-resolver が require.resolve(<id>) を試すため、
 // 絶対パスを渡せばローカル plugin として読み込まれる。
 const yamlKeysPlugin = path.join(
   __dirname,
-  "textlint/plugins/yaml-keys/index.js",
+  "textlint/plugins/yaml-keys.ts",
 );
 
 module.exports = {
   plugins: {
     [yamlKeysPlugin]: {
-      // 抽出対象とする yaml キー。`*` / `[]` / 階層パス対応。詳細は textlint/plugins/yaml-keys を参照。
+      // 抽出対象とする yaml キー。`*` / `[]` / 階層パス対応。詳細は ansanloms/textlint-plugin-yaml-keys を参照。
       keys: [
         "description",
+        "summary",
       ],
     },
   },
@@ -46,6 +49,11 @@ module.exports = {
         strict: true,
       },
 
+      // 感嘆符と疑問符の設定。
+      "no-exclamation-question-mark": {
+        allow: [],
+      },
+
       // 弱い表現を許可するかどうか。
       "ja-no-weak-phrase": false,
 
@@ -61,9 +69,21 @@ module.exports = {
 
     // https://github.com/textlint-ja/textlint-rule-preset-ja-spacing
     "preset-ja-spacing": {
-      // 全角半角間にスペースを空ける。
+      // 全角半角間にスペースを設ける。
       "ja-space-between-half-and-full-width": {
         space: "always",
+      },
+
+      // インラインコードの前後にスペースを設ける。
+      "ja-space-around-code": {
+        "before": true,
+        "after": true,
+      },
+
+      // リンクの前後にスペースを設ける。
+      "ja-space-around-link": {
+        "before": true,
+        "after": true,
       },
     },
 

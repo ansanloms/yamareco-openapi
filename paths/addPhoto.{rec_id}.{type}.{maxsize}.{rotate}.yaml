@@ -1,6 +1,6 @@
 post:
   operationId: postAddPhoto
-  summary: 写真の追加登録
+  summary: 写真の追加登録。
   tags:
     - rec
   description:

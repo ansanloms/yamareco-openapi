@@ -1,6 +1,6 @@
 post:
   operationId: postSearchRec
-  summary: 山行記録の検索
+  summary: 山行記録の検索。
   tags:
     - rec
   description:

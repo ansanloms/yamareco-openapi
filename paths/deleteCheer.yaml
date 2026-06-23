@@ -1,6 +1,6 @@
 post:
   operationId: postDeleteCheer
-  summary: 拍手の削除
+  summary: 拍手の削除。
   tags:
     - rec
   description:
