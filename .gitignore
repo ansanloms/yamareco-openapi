@@ -1,8 +1,3 @@
 dist/**
-
-# Deno (created when nodeModulesDir is enabled)
 node_modules/
-
-# Caches
 .cache/
-bin/.cache/

@@ -1,10 +1,10 @@
 get:
-  operationId: getUserInfoById
+  operationId: getGetUserInfoUid
   summary: ユーザプロフィール情報の取得。
   tags:
     - other
   description:
-    $ref: ./descriptions/getUserInfoById.md
+    $ref: ./descriptions/getGetUserInfoUid.md
   security: []
   parameters:
     - in: path
@@ -29,7 +29,7 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetUserInfo.yaml
+                $ref: ../examples/ResponseGetUserInfo/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

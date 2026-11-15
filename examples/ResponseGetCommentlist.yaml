@@ -1,4 +1,0 @@
-err: 0
-total: 1
-comment:
-  - $ref: ./Comment.yaml

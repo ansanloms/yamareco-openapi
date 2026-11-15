@@ -1,0 +1,5 @@
+err: 0
+total: 12
+userinfo:
+  - $ref: ../CheerUser/default.yaml
+  - $ref: ../CheerUser/default.yaml

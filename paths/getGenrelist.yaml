@@ -1,10 +1,10 @@
 get:
-  operationId: getGenrelist
+  operationId: getGetGenrelist
   summary: ジャンル定義一覧の取得。
   tags:
     - other
   description:
-    $ref: ./descriptions/getGenrelist.md
+    $ref: ./descriptions/getGetGenrelist.md
   security: []
   responses:
     "200":
@@ -22,7 +22,7 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetGenrelist.yaml
+                $ref: ../examples/ResponseGetGenrelist/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

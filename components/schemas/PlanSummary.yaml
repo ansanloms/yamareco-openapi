@@ -29,7 +29,7 @@ properties:
       - 0
       - 1
     description: |-
-      日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。`1` の場合は `start` / `end` / `days` / `add_date` の値は意味を持たない。
+      日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。`1` の場合は `start`/`end`/`days`/`add_date` の値は意味を持たない。
   start:
     type: string
     format: date

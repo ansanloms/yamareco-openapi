@@ -1,10 +1,10 @@
 get:
-  operationId: getReclistByPage
+  operationId: getGetReclistPage
   summary: 山行記録一覧の取得 (全体)
   tags:
     - rec
   description:
-    $ref: ./descriptions/getReclistByPage.md
+    $ref: ./descriptions/getGetReclistPage.md
   security: []
   parameters:
     - in: path
@@ -38,7 +38,7 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetReclist.yaml
+                $ref: ../examples/ResponseGetReclist/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

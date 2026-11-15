@@ -15,7 +15,7 @@ post:
         examples:
           normal:
             value:
-              $ref: ../examples/RequestPostSearchPoi.yaml
+              $ref: ../examples/RequestPostSearchPoi/default.yaml
   responses:
     "200":
       description: |-
@@ -32,7 +32,7 @@ post:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponsePostSearchPoi.yaml
+                $ref: ../examples/ResponsePostSearchPoi/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

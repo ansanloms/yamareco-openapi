@@ -14,7 +14,7 @@ post:
         examples:
           normal:
             value:
-              $ref: ../examples/RequestPostCreateRec.yaml
+              $ref: ../examples/RequestPostCreateRec/default.yaml
   responses:
     "200":
       description: |-
@@ -31,10 +31,10 @@ post:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponsePostCreateRec.yaml
+                $ref: ../examples/ResponsePostCreateRec/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml
     "403":
       description: OAuth 認証エラー。
       content:
@@ -44,4 +44,4 @@ post:
           examples:
             authError:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

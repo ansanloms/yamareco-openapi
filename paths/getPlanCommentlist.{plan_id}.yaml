@@ -1,10 +1,10 @@
 get:
-  operationId: getPlanCommentlistById
+  operationId: getGetPlanCommentlistPlanId
   summary: 山行計画コメントリストの取得。
   tags:
     - plan
   description:
-    $ref: ./descriptions/getPlanCommentlistById.md
+    $ref: ./descriptions/getGetPlanCommentlistPlanId.md
   parameters:
     - in: path
       name: plan_id
