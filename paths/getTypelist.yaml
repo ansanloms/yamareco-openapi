@@ -1,10 +1,10 @@
 get:
-  operationId: getTypelist
+  operationId: getGetTypelist
   summary: 地名データ種別定義一覧の取得。
   tags:
     - other
   description:
-    $ref: ./descriptions/getTypelist.md
+    $ref: ./descriptions/getGetTypelist.md
   security: []
   responses:
     "200":
@@ -22,7 +22,7 @@ get:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponseGetTypelist.yaml
+                $ref: ../examples/ResponseGetTypelist/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseError.yaml
+                $ref: ../examples/ResponseError/default.yaml

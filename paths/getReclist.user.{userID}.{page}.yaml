@@ -1,10 +1,10 @@
 get:
-  operationId: getReclistByUser
+  operationId: getGetReclistUserUserIDPage
   summary: 山行記録一覧の取得 (ユーザ別)
   tags:
     - rec
   description:
-    $ref: ./descriptions/getReclistByUser.md
+    $ref: ./descriptions/getGetReclistUserUserIDPage.md
   security: []
   parameters:
     - in: path

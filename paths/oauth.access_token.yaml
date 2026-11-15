@@ -15,7 +15,7 @@ post:
         examples:
           normal:
             value:
-              $ref: ../examples/RequestPostOauthAccessToken.yaml
+              $ref: ../examples/RequestPostOauthAccessToken/default.yaml
   responses:
     "200":
       description: |-
@@ -31,7 +31,7 @@ post:
           examples:
             succeeded:
               value:
-                $ref: ../examples/ResponsePostOauthAccessToken.yaml
+                $ref: ../examples/ResponsePostOauthAccessToken/default.yaml
             failed:
               value:
-                $ref: ../examples/ResponseOAuthError.yaml
+                $ref: ../examples/ResponseOAuthError/default.yaml

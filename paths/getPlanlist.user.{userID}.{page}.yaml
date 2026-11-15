@@ -1,10 +1,10 @@
 get:
-  operationId: getPlanlistByUser
+  operationId: getGetPlanlistUserUserIDPage
   summary: 山行計画一覧の取得 (ユーザ別)
   tags:
     - plan
   description:
-    $ref: ./descriptions/getPlanlistByUser.md
+    $ref: ./descriptions/getGetPlanlistUserUserIDPage.md
   security: []
   parameters:
     - in: path

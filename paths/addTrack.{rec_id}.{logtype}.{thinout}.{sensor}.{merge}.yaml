@@ -1,10 +1,10 @@
 post:
-  operationId: postAddTrack
+  operationId: postAddTrackRecIdLogtypeThinoutSensorMerge
   summary: GPS ログの登録。
   tags:
     - rec
   description:
-    $ref: ./descriptions/postAddTrack.md
+    $ref: ./descriptions/postAddTrackRecIdLogtypeThinoutSensorMerge.md
   parameters:
     - in: path
       name: rec_id
@@ -25,7 +25,7 @@ post:
       description: |-
         ルートの間引き量。`0`: 間引きなし、`1` 以上: 指定した数に間引き。
 
-        ヤマレコ Web では選択肢は間引きなし / `500` / `1000` / `3000` だが、本 API では任意の数字を入力できる。
+        ヤマレコ Web では選択肢は間引きなし/`500`/`1000`/`3000` だが、本 API では任意の数字を入力できる。
       schema:
         type: integer
         minimum: 0

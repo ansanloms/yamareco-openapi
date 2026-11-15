@@ -1,10 +1,10 @@
 get:
-  operationId: getReclistByGroup
+  operationId: getGetReclistGroupGroupIDPage
   summary: 山行記録一覧の取得 (グループ別)
   tags:
     - rec
   description:
-    $ref: ./descriptions/getReclistByGroup.md
+    $ref: ./descriptions/getGetReclistGroupGroupIDPage.md
   security: []
   parameters:
     - in: path
