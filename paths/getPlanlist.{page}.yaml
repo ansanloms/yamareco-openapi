@@ -24,9 +24,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponseGetPlanlist.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponseGetPlanlistOrError.yaml
           examples:
             succeeded:
               value:

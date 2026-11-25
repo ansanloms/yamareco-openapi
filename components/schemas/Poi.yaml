@@ -1,5 +1,6 @@
 type: object
-description: 地名 (POI) データ。
+description:
+  $ref: "./descriptions/Poi.md"
 required:
   - ptid
   - name

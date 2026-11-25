@@ -25,17 +25,13 @@ get:
       required: true
       description: 固定値 `code`。
       schema:
-        type: string
-        enum:
-          - "code"
+        $ref: ../components/schemas/EnumResponseType.yaml
     - in: query
       name: scope
       required: true
       description: 固定値 `all`。
       schema:
-        type: string
-        enum:
-          - "all"
+        $ref: ../components/schemas/EnumScope.yaml
   responses:
     "302":
       description: |-

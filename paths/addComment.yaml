@@ -21,9 +21,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponsePostAddComment.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponsePostAddCommentOrError.yaml
     "403":
       description: OAuth 認証エラー。
       content:

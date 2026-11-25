@@ -1,5 +1,6 @@
 type: object
-description: 山行記録／計画の参加メンバー (役割情報を含む)。
+description:
+  $ref: "./descriptions/MemberDetail.md"
 required:
   - uname
   - uid

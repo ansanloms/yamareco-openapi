@@ -1,0 +1,6 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumAccessTrain.md"
+enum:
+  - 0
+  - 1

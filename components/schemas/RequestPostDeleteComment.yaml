@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostDeleteComment.md"
 required:
   - com_id
 properties:

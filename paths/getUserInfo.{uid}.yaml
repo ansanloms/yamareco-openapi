@@ -23,9 +23,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponseGetUserInfo.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponseGetUserInfoOrError.yaml
           examples:
             succeeded:
               value:

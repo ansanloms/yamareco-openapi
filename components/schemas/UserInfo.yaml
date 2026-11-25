@@ -1,5 +1,6 @@
 type: object
-description: ユーザのプロフィール情報。
+description:
+  $ref: "./descriptions/UserInfo.md"
 required:
   - uid
   - uname

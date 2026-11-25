@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostNearbyPoi.md"
 required:
   - page
   - range

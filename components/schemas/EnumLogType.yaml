@@ -1,5 +1,6 @@
 type: string
-description: GPS ログのファイル形式種別。
+description:
+  $ref: "./descriptions/EnumLogType.md"
 enum:
   - "gpx"
   - "kml"

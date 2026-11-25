@@ -1,5 +1,6 @@
 type: object
-description: 地名データの種別定義。
+description:
+  $ref: "./descriptions/PoiType.md"
 required:
   - type_id
   - name
@@ -14,10 +15,7 @@ properties:
     type: string
     description: データ種別の詳細欄向け説明。
   hasdetail:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumHasdetail.yaml
     description: |-
       データ種別の詳細欄の定義有無。
 

@@ -1,0 +1,5 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumResponsePostOauthAccessTokenError.md"
+enum:
+  - 0

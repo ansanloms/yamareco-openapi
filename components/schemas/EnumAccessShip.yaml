@@ -1,0 +1,6 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumAccessShip.md"
+enum:
+  - 0
+  - 1

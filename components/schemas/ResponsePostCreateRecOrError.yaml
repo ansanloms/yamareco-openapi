@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponsePostCreateRecOrError.md"
+oneOf:
+  - $ref: ./ResponsePostCreateRec.yaml
+  - $ref: ./ResponseError.yaml

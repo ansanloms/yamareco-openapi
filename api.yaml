@@ -129,22 +129,90 @@ components:
       $ref: ./components/schemas/RecSummary.yaml
     UserInfo:
       $ref: ./components/schemas/UserInfo.yaml
+    EnumAccessAir:
+      $ref: ./components/schemas/EnumAccessAir.yaml
+    EnumAccessBus:
+      $ref: ./components/schemas/EnumAccessBus.yaml
+    EnumAccessCable:
+      $ref: ./components/schemas/EnumAccessCable.yaml
+    EnumAccessCar:
+      $ref: ./components/schemas/EnumAccessCar.yaml
+    EnumAccessCycle:
+      $ref: ./components/schemas/EnumAccessCycle.yaml
+    EnumAccessShip:
+      $ref: ./components/schemas/EnumAccessShip.yaml
+    EnumAccessTaxi:
+      $ref: ./components/schemas/EnumAccessTaxi.yaml
+    EnumAccessTrain:
+      $ref: ./components/schemas/EnumAccessTrain.yaml
     EnumCheerType:
       $ref: ./components/schemas/EnumCheerType.yaml
+    EnumCommentopen:
+      $ref: ./components/schemas/EnumCommentopen.yaml
+    EnumDraft:
+      $ref: ./components/schemas/EnumDraft.yaml
+    EnumFollowing:
+      $ref: ./components/schemas/EnumFollowing.yaml
+    EnumFriend:
+      $ref: ./components/schemas/EnumFriend.yaml
+    EnumGrantType:
+      $ref: ./components/schemas/EnumGrantType.yaml
+    EnumGroupId:
+      $ref: ./components/schemas/EnumGroupId.yaml
+    EnumGuest:
+      $ref: ./components/schemas/EnumGuest.yaml
+    EnumGuestok:
+      $ref: ./components/schemas/EnumGuestok.yaml
+    EnumHasdetail:
+      $ref: ./components/schemas/EnumHasdetail.yaml
+    EnumIsPhoto:
+      $ref: ./components/schemas/EnumIsPhoto.yaml
+    EnumIsTrack:
+      $ref: ./components/schemas/EnumIsTrack.yaml
     EnumLogType:
       $ref: ./components/schemas/EnumLogType.yaml
+    EnumMerge:
+      $ref: ./components/schemas/EnumMerge.yaml
+    EnumNodate:
+      $ref: ./components/schemas/EnumNodate.yaml
     EnumPhotoType:
       $ref: ./components/schemas/EnumPhotoType.yaml
+    EnumPicked:
+      $ref: ./components/schemas/EnumPicked.yaml
+    EnumPrivate:
+      $ref: ./components/schemas/EnumPrivate.yaml
     EnumRank:
       $ref: ./components/schemas/EnumRank.yaml
+    EnumResponseBaseErr:
+      $ref: ./components/schemas/EnumResponseBaseErr.yaml
+    EnumResponseErrorErr:
+      $ref: ./components/schemas/EnumResponseErrorErr.yaml
+    EnumResponseOAuthErrorError:
+      $ref: ./components/schemas/EnumResponseOAuthErrorError.yaml
+    EnumResponsePostOauthAccessTokenError:
+      $ref: ./components/schemas/EnumResponsePostOauthAccessTokenError.yaml
+    EnumResponseType:
+      $ref: ./components/schemas/EnumResponseType.yaml
     EnumRotate:
       $ref: ./components/schemas/EnumRotate.yaml
+    EnumScope:
+      $ref: ./components/schemas/EnumScope.yaml
+    EnumSensor:
+      $ref: ./components/schemas/EnumSensor.yaml
+    EnumUser:
+      $ref: ./components/schemas/EnumUser.yaml
+    EnumWithChild:
+      $ref: ./components/schemas/EnumWithChild.yaml
     RequestPostAddCheer:
       $ref: ./components/schemas/RequestPostAddCheer.yaml
     RequestPostAddComment:
       $ref: ./components/schemas/RequestPostAddComment.yaml
     RequestPostAddNote:
       $ref: ./components/schemas/RequestPostAddNote.yaml
+    RequestPostAddPhotoRecIdTypeMaxsizeRotate:
+      $ref: ./components/schemas/RequestPostAddPhotoRecIdTypeMaxsizeRotate.yaml
+    RequestPostAddTrackRecIdLogtypeThinoutSensorMerge:
+      $ref: ./components/schemas/RequestPostAddTrackRecIdLogtypeThinoutSensorMerge.yaml
     RequestPostCreateRec:
       $ref: ./components/schemas/RequestPostCreateRec.yaml
     RequestPostDeleteCheer:
@@ -183,70 +251,136 @@ components:
       $ref: ./components/schemas/ResponseError.yaml
     ResponseGetArealist:
       $ref: ./components/schemas/ResponseGetArealist.yaml
+    ResponseGetArealistOrError:
+      $ref: ./components/schemas/ResponseGetArealistOrError.yaml
     ResponseGetCheerlist:
       $ref: ./components/schemas/ResponseGetCheerlist.yaml
+    ResponseGetCheerlistOrError:
+      $ref: ./components/schemas/ResponseGetCheerlistOrError.yaml
     ResponseGetCommentlist:
       $ref: ./components/schemas/ResponseGetCommentlist.yaml
+    ResponseGetCommentlistOrError:
+      $ref: ./components/schemas/ResponseGetCommentlistOrError.yaml
     ResponseGetGenrelist:
       $ref: ./components/schemas/ResponseGetGenrelist.yaml
+    ResponseGetGenrelistOrError:
+      $ref: ./components/schemas/ResponseGetGenrelistOrError.yaml
+    ResponseGetOauthSignOut:
+      $ref: ./components/schemas/ResponseGetOauthSignOut.yaml
     ResponseGetPlan:
       $ref: ./components/schemas/ResponseGetPlan.yaml
     ResponseGetPlanCommentlist:
       $ref: ./components/schemas/ResponseGetPlanCommentlist.yaml
+    ResponseGetPlanCommentlistOrError:
+      $ref: ./components/schemas/ResponseGetPlanCommentlistOrError.yaml
+    ResponseGetPlanOrError:
+      $ref: ./components/schemas/ResponseGetPlanOrError.yaml
     ResponseGetPlanlist:
       $ref: ./components/schemas/ResponseGetPlanlist.yaml
+    ResponseGetPlanlistOrError:
+      $ref: ./components/schemas/ResponseGetPlanlistOrError.yaml
     ResponseGetRec:
       $ref: ./components/schemas/ResponseGetRec.yaml
+    ResponseGetRecOrError:
+      $ref: ./components/schemas/ResponseGetRecOrError.yaml
     ResponseGetReclist:
       $ref: ./components/schemas/ResponseGetReclist.yaml
+    ResponseGetReclistOrError:
+      $ref: ./components/schemas/ResponseGetReclistOrError.yaml
     ResponseGetTypelist:
       $ref: ./components/schemas/ResponseGetTypelist.yaml
+    ResponseGetTypelistOrError:
+      $ref: ./components/schemas/ResponseGetTypelistOrError.yaml
     ResponseGetUserInfo:
       $ref: ./components/schemas/ResponseGetUserInfo.yaml
+    ResponseGetUserInfoOrError:
+      $ref: ./components/schemas/ResponseGetUserInfoOrError.yaml
     ResponseOAuthError:
       $ref: ./components/schemas/ResponseOAuthError.yaml
     ResponsePostAddCheer:
       $ref: ./components/schemas/ResponsePostAddCheer.yaml
+    ResponsePostAddCheerOrError:
+      $ref: ./components/schemas/ResponsePostAddCheerOrError.yaml
     ResponsePostAddComment:
       $ref: ./components/schemas/ResponsePostAddComment.yaml
+    ResponsePostAddCommentOrError:
+      $ref: ./components/schemas/ResponsePostAddCommentOrError.yaml
     ResponsePostAddNote:
       $ref: ./components/schemas/ResponsePostAddNote.yaml
+    ResponsePostAddNoteOrError:
+      $ref: ./components/schemas/ResponsePostAddNoteOrError.yaml
     ResponsePostAddPhoto:
       $ref: ./components/schemas/ResponsePostAddPhoto.yaml
+    ResponsePostAddPhotoOrError:
+      $ref: ./components/schemas/ResponsePostAddPhotoOrError.yaml
     ResponsePostAddTrack:
       $ref: ./components/schemas/ResponsePostAddTrack.yaml
+    ResponsePostAddTrackOrError:
+      $ref: ./components/schemas/ResponsePostAddTrackOrError.yaml
     ResponsePostCreateRec:
       $ref: ./components/schemas/ResponsePostCreateRec.yaml
+    ResponsePostCreateRecOrError:
+      $ref: ./components/schemas/ResponsePostCreateRecOrError.yaml
     ResponsePostDeleteCheer:
       $ref: ./components/schemas/ResponsePostDeleteCheer.yaml
+    ResponsePostDeleteCheerOrError:
+      $ref: ./components/schemas/ResponsePostDeleteCheerOrError.yaml
     ResponsePostDeleteComment:
       $ref: ./components/schemas/ResponsePostDeleteComment.yaml
+    ResponsePostDeleteCommentOrError:
+      $ref: ./components/schemas/ResponsePostDeleteCommentOrError.yaml
     ResponsePostDeleteNote:
       $ref: ./components/schemas/ResponsePostDeleteNote.yaml
+    ResponsePostDeleteNoteOrError:
+      $ref: ./components/schemas/ResponsePostDeleteNoteOrError.yaml
     ResponsePostDeletePhote:
       $ref: ./components/schemas/ResponsePostDeletePhote.yaml
+    ResponsePostDeletePhoteOrError:
+      $ref: ./components/schemas/ResponsePostDeletePhoteOrError.yaml
     ResponsePostDeleteRec:
       $ref: ./components/schemas/ResponsePostDeleteRec.yaml
+    ResponsePostDeleteRecOrError:
+      $ref: ./components/schemas/ResponsePostDeleteRecOrError.yaml
     ResponsePostDeleteTrack:
       $ref: ./components/schemas/ResponsePostDeleteTrack.yaml
+    ResponsePostDeleteTrackOrError:
+      $ref: ./components/schemas/ResponsePostDeleteTrackOrError.yaml
     ResponsePostEditNote:
       $ref: ./components/schemas/ResponsePostEditNote.yaml
+    ResponsePostEditNoteOrError:
+      $ref: ./components/schemas/ResponsePostEditNoteOrError.yaml
     ResponsePostEditPhote:
       $ref: ./components/schemas/ResponsePostEditPhote.yaml
+    ResponsePostEditPhoteOrError:
+      $ref: ./components/schemas/ResponsePostEditPhoteOrError.yaml
     ResponsePostEditRec:
       $ref: ./components/schemas/ResponsePostEditRec.yaml
+    ResponsePostEditRecOrError:
+      $ref: ./components/schemas/ResponsePostEditRecOrError.yaml
     ResponsePostNearbyPoi:
       $ref: ./components/schemas/ResponsePostNearbyPoi.yaml
+    ResponsePostNearbyPoiOrError:
+      $ref: ./components/schemas/ResponsePostNearbyPoiOrError.yaml
     ResponsePostOauthAccessToken:
       $ref: ./components/schemas/ResponsePostOauthAccessToken.yaml
+    ResponsePostOauthAccessTokenOrError:
+      $ref: ./components/schemas/ResponsePostOauthAccessTokenOrError.yaml
     ResponsePostRelatePlanAndRec:
       $ref: ./components/schemas/ResponsePostRelatePlanAndRec.yaml
+    ResponsePostRelatePlanAndRecOrError:
+      $ref: ./components/schemas/ResponsePostRelatePlanAndRecOrError.yaml
     ResponsePostSearchPlan:
       $ref: ./components/schemas/ResponsePostSearchPlan.yaml
+    ResponsePostSearchPlanOrError:
+      $ref: ./components/schemas/ResponsePostSearchPlanOrError.yaml
     ResponsePostSearchPoi:
       $ref: ./components/schemas/ResponsePostSearchPoi.yaml
+    ResponsePostSearchPoiOrError:
+      $ref: ./components/schemas/ResponsePostSearchPoiOrError.yaml
     ResponsePostSearchRec:
       $ref: ./components/schemas/ResponsePostSearchRec.yaml
+    ResponsePostSearchRecOrError:
+      $ref: ./components/schemas/ResponsePostSearchRecOrError.yaml
   securitySchemes:
     oauthToken:
       type: apiKey

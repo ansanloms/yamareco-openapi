@@ -36,28 +36,21 @@ post:
         GPS で採取したログかどうか。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
         手入力などで作成したログの場合は `0` 推奨。`1` を指定した場合はコースタイムが自動計算される (上書き)。
       schema:
-        type: integer
-        enum:
-          - 0
-          - 1
+        $ref: ../components/schemas/EnumSensor.yaml
     - in: path
       name: merge
       required: true
       description: |-
         GPS ログの追記モード。`0`: 既存ルートがある場合は上書き保存、`1`: 既存ルートがある場合は追記。
       schema:
-        type: integer
-        enum:
-          - 0
-          - 1
+        $ref: ../components/schemas/EnumMerge.yaml
   requestBody:
     required: true
     description: GPS ログデータ (バイナリ)。
     content:
       application/octet-stream:
         schema:
-          type: string
-          format: binary
+          $ref: ../components/schemas/RequestPostAddTrackRecIdLogtypeThinoutSensorMerge.yaml
   responses:
     "200":
       description: |-
@@ -68,9 +61,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponsePostAddTrack.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponsePostAddTrackOrError.yaml
     "403":
       description: OAuth 認証エラー。
       content:

@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponseGetTypelistOrError.md"
+oneOf:
+  - $ref: ./ResponseGetTypelist.yaml
+  - $ref: ./ResponseError.yaml

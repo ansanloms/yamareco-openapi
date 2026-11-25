@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostRelatePlanAndRec.md"
 required:
   - rec_id
   - plan_id

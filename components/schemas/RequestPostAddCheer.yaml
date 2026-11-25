@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostAddCheer.md"
 required:
   - type
   - id

@@ -1,0 +1,6 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumIsTrack.md"
+enum:
+  - 0
+  - 1

@@ -1,5 +1,6 @@
 type: string
-description: 写真のファイル形式種別。
+description:
+  $ref: "./descriptions/EnumPhotoType.md"
 enum:
   - "jpg"
   - "png"

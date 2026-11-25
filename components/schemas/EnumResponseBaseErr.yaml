@@ -1,0 +1,5 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumResponseBaseErr.md"
+enum:
+  - 0

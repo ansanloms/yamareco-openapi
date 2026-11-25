@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponseGetReclistOrError.md"
+oneOf:
+  - $ref: ./ResponseGetReclist.yaml
+  - $ref: ./ResponseError.yaml

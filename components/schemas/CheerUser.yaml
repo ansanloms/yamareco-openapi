@@ -1,5 +1,6 @@
 type: object
-description: 拍手をしたユーザの情報。
+description:
+  $ref: "./descriptions/CheerUser.md"
 required:
   - uid
   - uname

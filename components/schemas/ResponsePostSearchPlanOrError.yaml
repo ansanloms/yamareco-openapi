@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponsePostSearchPlanOrError.md"
+oneOf:
+  - $ref: ./ResponsePostSearchPlan.yaml
+  - $ref: ./ResponseError.yaml

@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponseGetArealistOrError.md"
+oneOf:
+  - $ref: ./ResponseGetArealist.yaml
+  - $ref: ./ResponseError.yaml

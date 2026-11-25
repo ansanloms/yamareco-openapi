@@ -1,5 +1,6 @@
 type: string
-description: 山行記録の情報量の目安。
+description:
+  $ref: "./descriptions/EnumRank.md"
 enum:
   - "S"
   - "A"

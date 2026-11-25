@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponsePostNearbyPoiOrError.md"
+oneOf:
+  - $ref: ./ResponsePostNearbyPoi.yaml
+  - $ref: ./ResponseError.yaml

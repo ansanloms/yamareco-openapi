@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostEditPhote.md"
 required:
   - rec_id
   - pid
@@ -18,16 +20,10 @@ properties:
     type: string
     description: 写真のコメント。
   private:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumPrivate.yaml
     description: |-
       写真の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。
   picked:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumPicked.yaml
     description: |-
       代表写真。`0`: 代表写真ではない、`1`: 代表写真。

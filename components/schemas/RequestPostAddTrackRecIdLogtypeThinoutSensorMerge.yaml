@@ -1,0 +1,4 @@
+type: string
+description:
+  $ref: "./descriptions/RequestPostAddTrackRecIdLogtypeThinoutSensorMerge.md"
+format: binary

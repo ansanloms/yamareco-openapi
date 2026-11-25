@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostDeletePhote.md"
 required:
   - rec_id
   - pid

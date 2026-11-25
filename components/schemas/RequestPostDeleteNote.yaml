@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostDeleteNote.md"
 required:
   - rec_id
 properties:

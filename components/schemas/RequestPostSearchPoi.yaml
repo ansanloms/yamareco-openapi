@@ -1,4 +1,6 @@
 type: object
+description:
+  $ref: "./descriptions/RequestPostSearchPoi.md"
 required:
   - page
   - type_id

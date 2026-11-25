@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponseGetUserInfoOrError.md"
+oneOf:
+  - $ref: ./ResponseGetUserInfo.yaml
+  - $ref: ./ResponseError.yaml

@@ -1,0 +1,6 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumDraft.md"
+enum:
+  - 0
+  - 1

@@ -1,5 +1,6 @@
 type: string
-description: 拍手の対象種別。
+description:
+  $ref: "./descriptions/EnumCheerType.md"
 enum:
   - "rec"
   - "rec_photo"

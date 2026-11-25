@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponsePostAddCheerOrError.md"
+oneOf:
+  - $ref: ./ResponsePostAddCheer.yaml
+  - $ref: ./ResponseError.yaml

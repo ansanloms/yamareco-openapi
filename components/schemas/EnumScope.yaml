@@ -1,0 +1,5 @@
+type: string
+description:
+  $ref: "./descriptions/EnumScope.md"
+enum:
+  - "all"

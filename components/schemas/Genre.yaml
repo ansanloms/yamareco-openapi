@@ -1,5 +1,6 @@
 type: object
-description: ヤマレコで定義されている山行ジャンル区分。
+description:
+  $ref: "./descriptions/Genre.md"
 required:
   - genre_id
   - genre

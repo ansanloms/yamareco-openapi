@@ -1,0 +1,5 @@
+description:
+  $ref: "./descriptions/ResponsePostAddPhotoOrError.md"
+oneOf:
+  - $ref: ./ResponsePostAddPhoto.yaml
+  - $ref: ./ResponseError.yaml

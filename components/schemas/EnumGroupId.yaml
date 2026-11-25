@@ -1,0 +1,5 @@
+type: integer
+description:
+  $ref: "./descriptions/EnumGroupId.md"
+enum:
+  - 0
