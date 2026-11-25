@@ -1,5 +1,6 @@
 type: object
-description: OAuth アクセストークンの取得のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostOauthAccessToken.md"
 required:
   - client_id
   - client_secret

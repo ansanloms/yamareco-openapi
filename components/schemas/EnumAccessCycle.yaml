@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  アクセスに自転車を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+description:
+  $ref: "./descriptions/EnumAccessCycle.md"
 enum:
   - 0
   - 1

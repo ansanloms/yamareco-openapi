@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  アクセスにケーブルカー／ロープウェイ／リフトを利用したかどうか。`0`: 利用していない、`1`: 利用した。
+description:
+  $ref: "./descriptions/EnumAccessCable.md"
 enum:
   - 0
   - 1

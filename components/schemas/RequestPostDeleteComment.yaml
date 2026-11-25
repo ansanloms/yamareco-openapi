@@ -1,5 +1,6 @@
 type: object
-description: コメントの削除のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostDeleteComment.md"
 required:
   - com_id
 properties:

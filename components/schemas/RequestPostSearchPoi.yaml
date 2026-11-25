@@ -1,5 +1,6 @@
 type: object
-description: 地名 (POI) データの検索のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostSearchPoi.md"
 required:
   - page
   - type_id

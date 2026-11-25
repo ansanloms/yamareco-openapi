@@ -1,5 +1,6 @@
 type: object
-description: 山行記録の概要情報 (一覧取得用)。
+description:
+  $ref: "./descriptions/RecSummary.md"
 required:
   - rec_id
   - uid

@@ -1,5 +1,6 @@
 type: object
-description: 地名データの種別定義。
+description:
+  $ref: "./descriptions/PoiType.md"
 required:
   - type_id
   - name

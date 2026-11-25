@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  コメントを受け付けるかどうかを表すフラグ。`0`: 受け付けない、`1`: 受け付ける。
+description:
+  $ref: "./descriptions/EnumCommentopen.md"
 enum:
   - 0
   - 1

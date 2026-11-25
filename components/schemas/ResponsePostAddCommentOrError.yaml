@@ -1,4 +1,5 @@
-description: コメントの登録のレスポンス。
+description:
+  $ref: "./descriptions/ResponsePostAddCommentOrError.md"
 oneOf:
   - $ref: ./ResponsePostAddComment.yaml
   - $ref: ./ResponseError.yaml

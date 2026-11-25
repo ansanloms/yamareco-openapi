@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  公開範囲を表すフラグ。`0`: 公開、`1`: 非公開 (参加メンバーのみに公開)。
+description:
+  $ref: "./descriptions/EnumPrivate.md"
 enum:
   - 0
   - 1

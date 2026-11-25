@@ -1,4 +1,5 @@
-description: 山行計画一覧 (全体・ユーザ別) の取得のレスポンス。
+description:
+  $ref: "./descriptions/ResponseGetPlanlistOrError.md"
 oneOf:
   - $ref: ./ResponseGetPlanlist.yaml
   - $ref: ./ResponseError.yaml

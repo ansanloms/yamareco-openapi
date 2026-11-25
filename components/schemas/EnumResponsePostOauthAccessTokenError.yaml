@@ -1,5 +1,5 @@
 type: integer
-description: |-
-  OAuth エンドポイント成功時のエラーの有無。常に `0`。
+description:
+  $ref: "./descriptions/EnumResponsePostOauthAccessTokenError.md"
 enum:
   - 0

@@ -1,5 +1,6 @@
 type: object
-description: 感想の削除のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostDeleteNote.md"
 required:
   - rec_id
 properties:

@@ -1,5 +1,6 @@
 type: object
-description: 感想の登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostAddNote.md"
 required:
   - rec_id
   - text

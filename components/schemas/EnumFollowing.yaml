@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  現在フォローしているユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+description:
+  $ref: "./descriptions/EnumFollowing.md"
 enum:
   - 0
   - 1

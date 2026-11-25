@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  アクセスに船を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+description:
+  $ref: "./descriptions/EnumAccessShip.md"
 enum:
   - 0
   - 1

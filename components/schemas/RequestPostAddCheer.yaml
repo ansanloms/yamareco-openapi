@@ -1,5 +1,6 @@
 type: object
-description: 拍手の登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostAddCheer.md"
 required:
   - type
   - id

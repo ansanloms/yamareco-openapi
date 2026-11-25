@@ -1,5 +1,6 @@
 type: object
-description: 感想の編集のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostEditNote.md"
 required:
   - rec_id
   - text

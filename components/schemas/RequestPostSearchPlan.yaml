@@ -1,5 +1,6 @@
 type: object
-description: 山行計画の検索のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostSearchPlan.md"
 required:
   - page
   - place

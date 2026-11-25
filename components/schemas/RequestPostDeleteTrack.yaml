@@ -1,5 +1,6 @@
 type: object
-description: GPS ログの削除のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostDeleteTrack.md"
 required:
   - rec_id
 properties:

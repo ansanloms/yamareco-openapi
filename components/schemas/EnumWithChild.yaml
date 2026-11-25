@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  子供連れの登山かどうかを表すフラグ。`0`: 子供連れではない、`1`: 子供連れ。
+description:
+  $ref: "./descriptions/EnumWithChild.md"
 enum:
   - 0
   - 1

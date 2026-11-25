@@ -1,5 +1,6 @@
 type: object
-description: 近傍の地名 (POI) データ検索のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostNearbyPoi.md"
 required:
   - page
   - range

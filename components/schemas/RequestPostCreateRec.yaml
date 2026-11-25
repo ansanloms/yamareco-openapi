@@ -1,5 +1,6 @@
 type: object
-description: 山行記録の新規登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostCreateRec.md"
 required:
   - place
   - start

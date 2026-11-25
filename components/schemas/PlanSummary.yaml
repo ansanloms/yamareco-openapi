@@ -1,5 +1,6 @@
 type: object
-description: 山行計画の概要情報 (一覧取得用)。
+description:
+  $ref: "./descriptions/PlanSummary.md"
 required:
   - plan_id
   - uid

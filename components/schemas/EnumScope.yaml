@@ -1,5 +1,5 @@
 type: string
-description: |-
-  OAuth の認可スコープ。固定値 `all`。
+description:
+  $ref: "./descriptions/EnumScope.md"
 enum:
   - "all"

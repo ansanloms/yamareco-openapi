@@ -1,5 +1,6 @@
 type: object
-description: 写真の編集のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostEditPhote.md"
 required:
   - rec_id
   - pid

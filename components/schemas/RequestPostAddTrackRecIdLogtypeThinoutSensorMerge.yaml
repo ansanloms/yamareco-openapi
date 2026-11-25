@@ -1,3 +1,4 @@
 type: string
-description: GPS ログの登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostAddTrackRecIdLogtypeThinoutSensorMerge.md"
 format: binary

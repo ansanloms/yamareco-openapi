@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  GPS ログ (ルート) の有無を表すフラグ。`0`: なし、`1`: あり。
+description:
+  $ref: "./descriptions/EnumIsTrack.md"
 enum:
   - 0
   - 1

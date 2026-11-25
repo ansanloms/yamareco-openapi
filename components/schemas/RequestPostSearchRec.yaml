@@ -1,5 +1,6 @@
 type: object
-description: 山行記録の検索のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostSearchRec.md"
 required:
   - page
   - place

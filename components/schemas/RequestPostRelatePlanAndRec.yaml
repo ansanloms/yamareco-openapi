@@ -1,5 +1,6 @@
 type: object
-description: 山行記録と山行計画の関連付けのリクエスト。
+description:
+  $ref: "./descriptions/RequestPostRelatePlanAndRec.md"
 required:
   - rec_id
   - plan_id

@@ -1,5 +1,6 @@
 type: object
-description: コメントの登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostAddComment.md"
 required:
   - rec_id
   - title

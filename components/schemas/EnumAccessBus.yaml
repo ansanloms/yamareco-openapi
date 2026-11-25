@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  アクセスにバスを利用したかどうか。`0`: 利用していない、`1`: 利用した。
+description:
+  $ref: "./descriptions/EnumAccessBus.md"
 enum:
   - 0
   - 1

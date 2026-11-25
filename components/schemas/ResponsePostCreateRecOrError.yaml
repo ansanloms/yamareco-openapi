@@ -1,4 +1,5 @@
-description: 山行記録の新規登録のレスポンス。
+description:
+  $ref: "./descriptions/ResponsePostCreateRecOrError.md"
 oneOf:
   - $ref: ./ResponsePostCreateRec.yaml
   - $ref: ./ResponseError.yaml

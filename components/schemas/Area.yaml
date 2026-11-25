@@ -1,5 +1,6 @@
 type: object
-description: ヤマレコで定義されているエリア (山域) 区分。
+description:
+  $ref: "./descriptions/Area.md"
 required:
   - area_id
   - area

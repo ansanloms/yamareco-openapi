@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  GPS ログの追記モード。`0`: 上書き保存、`1`: 追記。
+description:
+  $ref: "./descriptions/EnumMerge.md"
 enum:
   - 0
   - 1

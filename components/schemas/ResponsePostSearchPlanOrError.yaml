@@ -1,4 +1,5 @@
-description: 山行計画の検索のレスポンス。
+description:
+  $ref: "./descriptions/ResponsePostSearchPlanOrError.md"
 oneOf:
   - $ref: ./ResponsePostSearchPlan.yaml
   - $ref: ./ResponseError.yaml

@@ -1,5 +1,6 @@
 type: object
-description: 山行記録／計画に登録された写真。
+description:
+  $ref: "./descriptions/Photo.md"
 required:
   - pid
   - order

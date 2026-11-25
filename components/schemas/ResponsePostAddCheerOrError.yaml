@@ -1,4 +1,5 @@
-description: 拍手の登録のレスポンス。
+description:
+  $ref: "./descriptions/ResponsePostAddCheerOrError.md"
 oneOf:
   - $ref: ./ResponsePostAddCheer.yaml
   - $ref: ./ResponseError.yaml

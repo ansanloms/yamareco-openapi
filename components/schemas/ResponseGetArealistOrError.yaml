@@ -1,4 +1,5 @@
-description: エリア定義一覧の取得のレスポンス。
+description:
+  $ref: "./descriptions/ResponseGetArealistOrError.md"
 oneOf:
   - $ref: ./ResponseGetArealist.yaml
   - $ref: ./ResponseError.yaml

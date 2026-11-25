@@ -1,5 +1,6 @@
 type: object
-description: 山行記録／計画のアクセス権限設定。
+description:
+  $ref: "./descriptions/Permission.md"
 required:
   - guest
   - user

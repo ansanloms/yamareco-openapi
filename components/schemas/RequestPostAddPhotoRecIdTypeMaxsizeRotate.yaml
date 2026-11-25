@@ -1,3 +1,4 @@
 type: string
-description: 写真の追加登録のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostAddPhotoRecIdTypeMaxsizeRotate.md"
 format: binary

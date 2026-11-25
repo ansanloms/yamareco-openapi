@@ -1,5 +1,6 @@
 type: object
-description: 山行記録に登録された感想。
+description:
+  $ref: "./descriptions/Note.md"
 required:
   - uid
   - uname

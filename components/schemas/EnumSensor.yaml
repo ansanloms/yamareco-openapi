@@ -1,6 +1,6 @@
 type: integer
-description: |-
-  GPS で採取したログかどうかを表すフラグ。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
+description:
+  $ref: "./descriptions/EnumSensor.md"
 enum:
   - 0
   - 1

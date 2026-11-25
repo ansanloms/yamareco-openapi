@@ -1,5 +1,6 @@
 type: object
-description: 拍手の削除のリクエスト。
+description:
+  $ref: "./descriptions/RequestPostDeleteCheer.md"
 required:
   - type
   - id
