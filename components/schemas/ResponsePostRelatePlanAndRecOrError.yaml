@@ -1,0 +1,4 @@
+description: 山行記録と山行計画の関連付けのレスポンス。
+oneOf:
+  - $ref: ./ResponsePostRelatePlanAndRec.yaml
+  - $ref: ./ResponseError.yaml

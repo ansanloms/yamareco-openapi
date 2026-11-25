@@ -1,0 +1,4 @@
+description: 地名 (POI) データの検索のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostSearchPoi.yaml
+  - $ref: ./ResponseError.yaml

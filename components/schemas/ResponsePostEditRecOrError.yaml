@@ -1,0 +1,4 @@
+description: 山行記録の編集のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostEditRec.yaml
+  - $ref: ./ResponseError.yaml

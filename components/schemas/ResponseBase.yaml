@@ -8,7 +8,5 @@ required:
   - err
 properties:
   err:
-    type: integer
-    enum:
-      - 0
+    $ref: ./EnumResponseBaseErr.yaml
     description: エラーの有無。処理成功時は常に `0`。

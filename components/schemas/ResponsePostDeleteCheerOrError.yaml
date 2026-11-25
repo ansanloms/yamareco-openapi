@@ -1,0 +1,4 @@
+description: 拍手の削除のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostDeleteCheer.yaml
+  - $ref: ./ResponseError.yaml

@@ -24,10 +24,7 @@ properties:
     type: string
     description: 場所の名前。
   nodate:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumNodate.yaml
     description: |-
       日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。`1` の場合は `start`/`end`/`days`/`add_date` の値は意味を持たない。
   start:
@@ -64,17 +61,11 @@ properties:
     type: integer
     description: その他のメンバー人数。
   is_track:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumIsTrack.yaml
     description: |-
       GPS ログの有無。`0`: なし、`1`: あり。
   private:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumPrivate.yaml
     description: |-
       公開設定。`0`: 公開状態、`1`: 非公開状態。
   cheer:

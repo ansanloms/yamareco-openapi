@@ -13,9 +13,7 @@ properties:
     type: string
     description: 失敗時は空文字。
   error:
-    type: integer
-    enum:
-      - 1
+    $ref: ./EnumResponseOAuthErrorError.yaml
     description: エラーの有無 (常に `1`)。
   error_message:
     type: string

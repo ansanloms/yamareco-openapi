@@ -1,0 +1,4 @@
+description: 感想の削除のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostDeleteNote.yaml
+  - $ref: ./ResponseError.yaml

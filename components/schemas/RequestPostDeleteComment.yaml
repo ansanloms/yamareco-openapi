@@ -1,4 +1,5 @@
 type: object
+description: コメントの削除のリクエスト。
 required:
   - com_id
 properties:

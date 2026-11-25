@@ -1,0 +1,4 @@
+description: コメントリストの取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetCommentlist.yaml
+  - $ref: ./ResponseError.yaml

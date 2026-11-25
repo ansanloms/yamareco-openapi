@@ -1,0 +1,6 @@
+type: integer
+description: |-
+  日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。
+enum:
+  - 0
+  - 1

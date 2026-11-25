@@ -1,0 +1,4 @@
+description: 写真の編集のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostEditPhote.yaml
+  - $ref: ./ResponseError.yaml

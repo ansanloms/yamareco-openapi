@@ -1,0 +1,4 @@
+description: 拍手数の取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetCheerlist.yaml
+  - $ref: ./ResponseError.yaml

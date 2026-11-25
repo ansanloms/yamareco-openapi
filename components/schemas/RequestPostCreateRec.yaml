@@ -1,4 +1,5 @@
 type: object
+description: 山行記録の新規登録のリクエスト。
 required:
   - place
   - start
@@ -29,9 +30,7 @@ properties:
     description: |-
       ジャンル ID。`0`: 未選択 (記録一覧の掲載対象外)、その他は `getGenrelist` の値。
   group_id:
-    type: integer
-    enum:
-      - 0
+    $ref: ./EnumGroupId.yaml
     description: |-
       グループ ID。現在は取得する API が無いため `0` 固定。
   time:
@@ -51,74 +50,41 @@ properties:
     minimum: 0
     description: その他のメンバー人数。
   commentopen:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumCommentopen.yaml
     description: |-
       コメントを受け付ける。`0`: 受け付けない、`1`: 受け付ける。デフォルト `1` を推奨。
   access_train:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessTrain.yaml
     description: アクセスに電車を利用 (未記入時は `0`)。
   access_bus:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessBus.yaml
     description: アクセスにバスを利用 (未記入時は `0`)。
   access_taxi:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessTaxi.yaml
     description: アクセスにタクシーを利用 (未記入時は `0`)。
   access_car:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCar.yaml
     description: アクセスに車を利用 (未記入時は `0`)。
   access_cable:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCable.yaml
     description: アクセスにケーブルカー／リフトを利用 (未記入時は `0`)。
   access_ship:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessShip.yaml
     description: アクセスに船を利用 (未記入時は `0`)。
   access_air:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessAir.yaml
     description: アクセスに飛行機を利用 (未記入時は `0`)。
   access_cycle:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCycle.yaml
     description: アクセスに自転車を利用 (未記入時は `0`)。
   access_detail:
     type: string
     description: アクセスの詳細 (駐車場の情報など)。
   with_child:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumWithChild.yaml
     description: |-
       (小学校くらいまでの) 子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。未記入時は `0`。
   draft:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumDraft.yaml
     description: |-
       下書き。`0`: 公開状態、`1`: 下書き状態。下書きの場合、参加メンバーのみ閲覧可能。

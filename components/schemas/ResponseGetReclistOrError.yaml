@@ -1,0 +1,4 @@
+description: 山行記録一覧 (全体・ユーザ別・グループ別) の取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetReclist.yaml
+  - $ref: ./ResponseError.yaml

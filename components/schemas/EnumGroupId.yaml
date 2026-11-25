@@ -1,0 +1,5 @@
+type: integer
+description: |-
+  グループ ID。現在は `0` 固定。
+enum:
+  - 0

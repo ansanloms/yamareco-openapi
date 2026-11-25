@@ -1,4 +1,5 @@
 type: object
+description: 写真の削除のリクエスト。
 required:
   - rec_id
   - pid

@@ -1,4 +1,5 @@
 type: object
+description: OAuth アクセストークンの取得のリクエスト。
 required:
   - client_id
   - client_secret
@@ -20,7 +21,5 @@ properties:
     type: string
     description: 認可コード取得ステップで受け取った値。
   grant_type:
-    type: string
-    enum:
-      - "authorization_code"
+    $ref: ./EnumGrantType.yaml
     description: 固定文字列 `authorization_code`。

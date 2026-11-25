@@ -1,0 +1,4 @@
+description: 写真の追加登録のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostAddPhoto.yaml
+  - $ref: ./ResponseError.yaml

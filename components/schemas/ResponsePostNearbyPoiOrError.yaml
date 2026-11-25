@@ -1,0 +1,4 @@
+description: 近傍の地名 (POI) データ検索のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostNearbyPoi.yaml
+  - $ref: ./ResponseError.yaml

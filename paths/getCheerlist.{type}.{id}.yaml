@@ -29,9 +29,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponseGetCheerlist.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponseGetCheerlistOrError.yaml
           examples:
             succeeded:
               value:

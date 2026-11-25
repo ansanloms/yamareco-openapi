@@ -9,9 +9,7 @@ required:
   - errcode
 properties:
   err:
-    type: integer
-    enum:
-      - 1
+    $ref: ./EnumResponseErrorErr.yaml
     description: エラーの有無 (常に `1`)。
   errcode:
     type: string

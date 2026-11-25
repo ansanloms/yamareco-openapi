@@ -1,0 +1,4 @@
+description: 山行記録の検索のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostSearchRec.yaml
+  - $ref: ./ResponseError.yaml

@@ -1,0 +1,4 @@
+description: OAuth アクセストークンの取得のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostOauthAccessToken.yaml
+  - $ref: ./ResponseOAuthError.yaml

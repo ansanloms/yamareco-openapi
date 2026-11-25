@@ -1,0 +1,4 @@
+description: 地名データ種別定義一覧の取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetTypelist.yaml
+  - $ref: ./ResponseError.yaml

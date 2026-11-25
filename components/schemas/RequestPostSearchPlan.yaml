@@ -1,4 +1,5 @@
 type: object
+description: 山行計画の検索のリクエスト。
 required:
   - page
   - place
@@ -23,10 +24,7 @@ properties:
     description: |-
       検索したい計画のジャンル ID。`0`: 検索条件に入れない、`1` 以上: 該当ジャンル。
   is_track:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumIsTrack.yaml
     description: |-
       ルートの有無。`0`: 検索条件に入れない、`1`: ルートがある計画。
   ptid:

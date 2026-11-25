@@ -1,0 +1,6 @@
+type: integer
+description: |-
+  写真の有無を表すフラグ。`0`: なし、`1`: あり。
+enum:
+  - 0
+  - 1

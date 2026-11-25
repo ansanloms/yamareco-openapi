@@ -26,9 +26,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponsePostSearchPoi.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponsePostSearchPoiOrError.yaml
           examples:
             succeeded:
               value:

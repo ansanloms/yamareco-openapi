@@ -1,4 +1,5 @@
 type: object
+description: コメントの登録のリクエスト。
 required:
   - rec_id
   - title

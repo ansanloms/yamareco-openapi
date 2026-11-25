@@ -21,9 +21,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponsePostAddCheer.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponsePostAddCheerOrError.yaml
           examples:
             succeeded:
               value:

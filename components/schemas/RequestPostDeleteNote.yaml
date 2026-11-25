@@ -1,4 +1,5 @@
 type: object
+description: 感想の削除のリクエスト。
 required:
   - rec_id
 properties:

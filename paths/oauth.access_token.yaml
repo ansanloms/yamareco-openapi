@@ -25,9 +25,7 @@ post:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponsePostOauthAccessToken.yaml
-              - $ref: ../components/schemas/ResponseOAuthError.yaml
+            $ref: ../components/schemas/ResponsePostOauthAccessTokenOrError.yaml
           examples:
             succeeded:
               value:

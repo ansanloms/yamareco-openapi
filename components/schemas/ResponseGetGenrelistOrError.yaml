@@ -1,0 +1,4 @@
+description: ジャンル定義一覧の取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetGenrelist.yaml
+  - $ref: ./ResponseError.yaml

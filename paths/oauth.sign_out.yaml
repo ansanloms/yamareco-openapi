@@ -30,4 +30,4 @@ get:
       content:
         text/html:
           schema:
-            type: string
+            $ref: ../components/schemas/ResponseGetOauthSignOut.yaml

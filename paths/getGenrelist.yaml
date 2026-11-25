@@ -16,9 +16,7 @@ get:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: ../components/schemas/ResponseGetGenrelist.yaml
-              - $ref: ../components/schemas/ResponseError.yaml
+            $ref: ../components/schemas/ResponseGetGenrelistOrError.yaml
           examples:
             succeeded:
               value:

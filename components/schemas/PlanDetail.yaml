@@ -89,17 +89,11 @@ properties:
     type: string
     description: 装備の備考。
   is_track:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumIsTrack.yaml
     description: |-
       GPS ログの有無。`0`: なし、`1`: あり。
   private:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumPrivate.yaml
     description: |-
       公開設定。`0`: 公開状態、`1`: 非公開状態。
   cheer:

@@ -1,4 +1,5 @@
 type: object
+description: GPS ログの削除のリクエスト。
 required:
   - rec_id
 properties:

@@ -1,0 +1,4 @@
+description: 山行計画コメントリストの取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetPlanCommentlist.yaml
+  - $ref: ./ResponseError.yaml

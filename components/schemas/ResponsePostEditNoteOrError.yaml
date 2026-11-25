@@ -1,0 +1,4 @@
+description: 感想の編集のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostEditNote.yaml
+  - $ref: ./ResponseError.yaml

@@ -13,9 +13,7 @@ properties:
     type: string
     description: 成功時のアクセストークン値。
   error:
-    type: integer
-    enum:
-      - 0
+    $ref: ./EnumResponsePostOauthAccessTokenError.yaml
     description: エラーの有無。処理成功時は常に `0`。
   error_message:
     type: string

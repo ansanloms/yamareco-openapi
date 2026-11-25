@@ -7,30 +7,18 @@ required:
   - following
 properties:
   guest:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumGuest.yaml
     description: |-
       ログインしていないユーザーへのアクセス権限。`0`: 不可、`1`: 可。
   user:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumUser.yaml
     description: |-
       ログイン済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。
   friend:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumFriend.yaml
     description: |-
       友達リストに追加済みユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。
   following:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumFollowing.yaml
     description: |-
       現在フォローしているユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。

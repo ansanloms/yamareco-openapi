@@ -1,0 +1,4 @@
+description: ユーザプロフィール情報の取得のレスポンス。
+oneOf:
+  - $ref: ./ResponseGetUserInfo.yaml
+  - $ref: ./ResponseError.yaml

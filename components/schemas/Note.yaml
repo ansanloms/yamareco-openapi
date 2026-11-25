@@ -15,9 +15,6 @@ properties:
     type: string
     description: 感想本文。
   private:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumPrivate.yaml
     description: |-
       感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。

@@ -1,0 +1,6 @@
+type: integer
+description: |-
+  GPS で採取したログかどうかを表すフラグ。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
+enum:
+  - 0
+  - 1

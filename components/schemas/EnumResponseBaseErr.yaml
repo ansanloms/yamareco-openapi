@@ -1,0 +1,5 @@
+type: integer
+description: |-
+  処理成功時のエラーの有無。常に `0`。
+enum:
+  - 0

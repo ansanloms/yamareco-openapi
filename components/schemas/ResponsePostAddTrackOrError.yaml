@@ -1,0 +1,4 @@
+description: GPS ログの登録のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostAddTrack.yaml
+  - $ref: ./ResponseError.yaml

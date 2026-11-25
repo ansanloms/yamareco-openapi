@@ -1,4 +1,5 @@
 type: object
+description: 拍手の登録のリクエスト。
 required:
   - type
   - id

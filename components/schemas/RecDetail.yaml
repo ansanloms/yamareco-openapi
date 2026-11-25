@@ -73,83 +73,50 @@ properties:
     description: |-
       コメント受付状態。`0`: コメント禁止、`1`: コメント受付中。
   access_train:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessTrain.yaml
     description: |-
       アクセスに電車を利用したか。`0`: 利用していない、`1`: 利用した。
   access_bus:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessBus.yaml
     description: |-
       アクセスにバスを利用したか。`0`: 利用していない、`1`: 利用した。
   access_car:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCar.yaml
     description: |-
       アクセスに車を利用したか。`0`: 利用していない、`1`: 利用した。
   access_taxi:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessTaxi.yaml
     description: |-
       アクセスにタクシーを利用したか。`0`: 利用していない、`1`: 利用した。
   access_cable:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCable.yaml
     description: |-
       アクセスにケーブルカー／ロープウェイを利用したか。`0`: 利用していない、`1`: 利用した。
   access_ship:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessShip.yaml
     description: |-
       アクセスに船を利用したか。`0`: 利用していない、`1`: 利用した。
   access_air:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessAir.yaml
     description: |-
       アクセスに飛行機を利用したか。`0`: 利用していない、`1`: 利用した。
   access_cycle:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumAccessCycle.yaml
     description: |-
       アクセスに自転車を利用したか。`0`: 利用していない、`1`: 利用した。
   access_detail:
     type: string
     description: アクセスの詳細 (駐車場の情報など)。
   is_track:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumIsTrack.yaml
     description: |-
       GPS ログの有無。`0`: なし、`1`: あり。
   with_child:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumWithChild.yaml
     description: |-
       子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。
   draft:
-    type: integer
-    enum:
-      - 0
-      - 1
+    $ref: ./EnumDraft.yaml
     description: |-
       下書き状態。`0`: 公開状態、`1`: 下書き状態。
   permission:

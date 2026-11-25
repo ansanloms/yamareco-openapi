@@ -1,0 +1,6 @@
+type: integer
+description: |-
+  ログイン済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+enum:
+  - 0
+  - 1

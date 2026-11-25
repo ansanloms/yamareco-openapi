@@ -1,0 +1,4 @@
+description: GPS ログの削除のレスポンス。
+oneOf:
+  - $ref: ./ResponsePostDeleteTrack.yaml
+  - $ref: ./ResponseError.yaml
