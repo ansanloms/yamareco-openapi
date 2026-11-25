@@ -1,0 +1,3902 @@
+openapi: 3.2.1
+info:
+  version: 0.0.1
+  title: ヤマレコ Web API
+  description: |
+    # yamareco-openapi
+
+    ヤマレコ Web API ([https://sites.google.com/site/apiforyamareco/home](https://sites.google.com/site/apiforyamareco/home)) の非公式 OpenAPI 仕様。
+servers:
+  - url: https://api.yamareco.com/api/v1
+    description: 本番サーバ。
+security:
+  - oauthToken: []
+tags:
+  - name: oauth
+    description: OAuth 認証関連。
+  - name: rec
+    description: 山行記録。
+  - name: plan
+    description: 山行計画。
+  - name: other
+    description: 共通／その他。
+paths:
+  /addCheer:
+    post:
+      operationId: postAddCheer
+      summary: 拍手の登録。
+      tags:
+        - rec
+      description: |
+        登録済みの記録または写真に拍手をする。1 人につき 1 回のみ拍手が登録でき、すでに拍手済みの場合はエラーが返される。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddCheer'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostAddCheerOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /addComment:
+    post:
+      operationId: postAddComment
+      summary: コメントの登録。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録にコメントを残す。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddComment'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostAddCommentOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /addNote:
+    post:
+      operationId: postAddNote
+      summary: 感想の登録。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録に感想を登録する。1 人につき 1 つのみ感想が登録できる。すでに登録済みの場合はエラーが返される。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddNote'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostAddNoteOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /addPhoto/{rec_id}/{type}/{maxsize}/{rotate}:
+    post:
+      operationId: postAddPhotoRecIdTypeMaxsizeRotate
+      summary: 写真の追加登録。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録に写真を追加登録する。
+
+        メッセージボディには写真データ (バイナリ) を格納し、パラメータは URL に含めて送信する。
+      parameters:
+        - in: path
+          name: rec_id
+          required: true
+          description: 記録の ID。
+          schema:
+            type: integer
+        - in: path
+          name: type
+          required: true
+          description: 写真のファイルタイプ。
+          schema:
+            $ref: '#/components/schemas/EnumPhotoType'
+        - in: path
+          name: maxsize
+          required: true
+          description: |-
+            写真の長辺の長さ (px)。縦もしくは横のうち長い辺のサイズが指定したピクセル数で縮小される。
+            `0` 入力時はオリジナルの写真を維持する。
+
+            ヤマレコ Web では選択肢は `1600`/`1280`/`1024`/`640`/オリジナルだが、本 API では任意の数字を入力できる。
+          schema:
+            type: integer
+            minimum: 0
+        - in: path
+          name: rotate
+          required: true
+          description: 写真の回転指定。自動判別は JPEG の Exif データを利用する。
+          schema:
+            $ref: '#/components/schemas/EnumRotate'
+      requestBody:
+        required: true
+        description: 写真データ (バイナリ)。
+        content:
+          image/jpeg:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddPhotoRecIdTypeMaxsizeRotate'
+          image/png:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddPhotoRecIdTypeMaxsizeRotate'
+          image/gif:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddPhotoRecIdTypeMaxsizeRotate'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostAddPhotoOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /addTrack/{rec_id}/{logtype}/{thinout}/{sensor}/{merge}:
+    post:
+      operationId: postAddTrackRecIdLogtypeThinoutSensorMerge
+      summary: GPS ログの登録。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録に GPS ログを登録する。
+
+        メッセージボディには GPS ログデータ (バイナリ) を格納し、パラメータは URL に含めて送信する。
+
+        GPS ログファイルの上限は 5 MB 程度 (5,000,000 byte)。それ以上のサイズはエラーとなる。応答までの時間も長くなるため、ファイルサイズが大きくなる場合は間引きなどをしてから登録することが推奨される。
+      parameters:
+        - in: path
+          name: rec_id
+          required: true
+          description: 記録の ID。
+          schema:
+            type: integer
+        - in: path
+          name: logtype
+          required: true
+          description: 'GPS ログの種別。`gpx`: GPX、`kml`: KML、`nmea`: NMEA、`gdb`: Garmin Mapsource (.gdb)、`gtrnctr`: Garmin Training Center (.tcx)。'
+          schema:
+            $ref: '#/components/schemas/EnumLogType'
+        - in: path
+          name: thinout
+          required: true
+          description: |-
+            ルートの間引き量。`0`: 間引きなし、`1` 以上: 指定した数に間引き。
+
+            ヤマレコ Web では選択肢は間引きなし/`500`/`1000`/`3000` だが、本 API では任意の数字を入力できる。
+          schema:
+            type: integer
+            minimum: 0
+        - in: path
+          name: sensor
+          required: true
+          description: |-
+            GPS で採取したログかどうか。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
+            手入力などで作成したログの場合は `0` 推奨。`1` を指定した場合はコースタイムが自動計算される (上書き)。
+          schema:
+            $ref: '#/components/schemas/EnumSensor'
+        - in: path
+          name: merge
+          required: true
+          description: 'GPS ログの追記モード。`0`: 既存ルートがある場合は上書き保存、`1`: 既存ルートがある場合は追記。'
+          schema:
+            $ref: '#/components/schemas/EnumMerge'
+      requestBody:
+        required: true
+        description: GPS ログデータ (バイナリ)。
+        content:
+          application/octet-stream:
+            schema:
+              $ref: '#/components/schemas/RequestPostAddTrackRecIdLogtypeThinoutSensorMerge'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostAddTrackOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /createRec:
+    post:
+      operationId: postCreateRec
+      summary: 山行記録の新規登録。
+      tags:
+        - rec
+      description: |
+        新しく山行記録を登録する。メンバーには自動的に登録者が追加され、個人の記録として登録される。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostCreateRec'
+            examples:
+              normal:
+                value:
+                  place: 富士山
+                  start: '2026-04-01'
+                  end: '2026-04-02'
+                  area_id: 700
+                  genre_id: 1
+                  group_id: 0
+                  time: 8:00 出発 / 16:00 下山
+                  weather: 晴れ
+                  other_info: コース整備良好
+                  other_info2: 売店営業中
+                  other_members: 0
+                  commentopen: 1
+                  access_train: 1
+                  access_bus: 1
+                  access_taxi: 0
+                  access_car: 0
+                  access_cable: 0
+                  access_ship: 0
+                  access_air: 0
+                  access_cycle: 0
+                  access_detail: 富士急行線で河口湖駅まで。
+                  with_child: 0
+                  draft: 0
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostCreateRecOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    rec_id: 8000001
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /deleteCheer:
+    post:
+      operationId: postDeleteCheer
+      summary: 拍手の削除。
+      tags:
+        - rec
+      description: |
+        登録済みの拍手を削除する。該当する拍手が存在しない場合でもエラーは発生しない。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeleteCheer'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeleteCheerOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /deleteComment:
+    post:
+      operationId: postDeleteComment
+      summary: コメントの削除。
+      tags:
+        - rec
+      description: |
+        登録済みのコメントを削除する。該当するコメントが存在しない場合でもエラーは発生しない。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeleteComment'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeleteCommentOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /deleteNote:
+    post:
+      operationId: postDeleteNote
+      summary: 感想の削除。
+      tags:
+        - rec
+      description: |
+        登録済みの感想を削除する。該当する感想が存在しない場合でもエラーは発生しない。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeleteNote'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeleteNoteOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /deletePhote:
+    post:
+      operationId: postDeletePhote
+      summary: 写真の削除。
+      tags:
+        - rec
+      description: |
+        登録済みの写真を削除する。該当する写真が存在しない場合でもエラーは発生しない。
+
+        エンドポイント名のスペル `deletePhote` は公式仕様の表記をそのまま採用している (`deletePhoto` ではない)。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeletePhote'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeletePhoteOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /deleteRec:
+    post:
+      operationId: postDeleteRec
+      summary: 山行記録の削除。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録を削除する。関連する写真および GPS ログなどの情報も含めて全ての情報が削除される。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeleteRec'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeleteRecOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /deleteTrack:
+    post:
+      operationId: postDeleteTrack
+      summary: GPS ログの削除。
+      tags:
+        - rec
+      description: |
+        登録済みの GPS ログを削除する。該当する GPS ログが存在しない場合でもエラーは発生しない。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostDeleteTrack'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostDeleteTrackOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /editNote:
+    post:
+      operationId: postEditNote
+      summary: 感想の編集。
+      tags:
+        - rec
+      description: |
+        登録済みの感想を変更する。未登録の場合はエラーが返される。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostEditNote'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostEditNoteOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /editPhote:
+    post:
+      operationId: postEditPhote
+      summary: 写真の編集。
+      tags:
+        - rec
+      description: |
+        登録済みの写真の情報を編集する。
+
+        エンドポイント名のスペル `editPhote` は公式仕様の表記をそのまま採用している (`editPhoto` ではない)。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostEditPhote'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostEditPhoteOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /editRec:
+    post:
+      operationId: postEditRec
+      summary: 山行記録の編集。
+      tags:
+        - rec
+      description: |
+        登録済みの山行記録を編集する。`rec_id` 以外のフィールドは新規登録時と同様。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostEditRec'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostEditRecOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /getArealist:
+    get:
+      operationId: getGetArealist
+      summary: エリア定義一覧の取得。
+      tags:
+        - other
+      description: |
+        ヤマレコで定義されているエリア (山域) の定義一覧を取得する。
+      security: []
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetArealistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    arealist:
+                      - area_id: 100
+                        area: 北海道
+                      - area_id: 200
+                        area: 東北
+                      - area_id: 700
+                        area: 富士・御坂
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getCheerlist/{type}/{id}:
+    get:
+      operationId: getGetCheerlistTypeId
+      summary: 拍手数の取得。
+      tags:
+        - rec
+      description: |
+        該当する対象 (記録または写真) についた拍手の一覧を取得する。
+      parameters:
+        - in: path
+          name: type
+          required: true
+          description: 拍手対象の種別。
+          schema:
+            $ref: '#/components/schemas/EnumCheerType'
+        - in: path
+          name: id
+          required: true
+          description: 拍手対象の ID。`type=rec` の場合は記録の ID、`type=rec_photo` の場合は写真の ID。
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetCheerlistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    total: 12
+                    userinfo:
+                      - uid: 2
+                        uname: another_user
+                        avatar: https://www.yamareco.com/modules/yamareco/avatar/2.jpg
+                      - uid: 2
+                        uname: another_user
+                        avatar: https://www.yamareco.com/modules/yamareco/avatar/2.jpg
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getCommentlist/{rec_id}:
+    get:
+      operationId: getGetCommentlistRecId
+      summary: コメントリストの取得。
+      tags:
+        - rec
+      description: |
+        該当する山行記録についたコメントの一覧を取得する。
+      parameters:
+        - in: path
+          name: rec_id
+          required: true
+          description: 記録の ID。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetCommentlistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    total: 1
+                    comment:
+                      - com_id: 1001
+                        uid: 2
+                        title: お疲れ様でした
+                        text: 写真きれいですね。
+                        created: 1777132271
+                        uname: another_user
+                        avatar: https://www.yamareco.com/modules/yamareco/avatar/2.jpg
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getGenrelist:
+    get:
+      operationId: getGetGenrelist
+      summary: ジャンル定義一覧の取得。
+      tags:
+        - other
+      description: |
+        ヤマレコで定義されているジャンルの定義一覧を取得する。
+      security: []
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetGenrelistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    genrelist:
+                      - genre_id: 1
+                        genre: ハイキング
+                      - genre_id: 2
+                        genre: 無雪期ピークハント／縦走
+                      - genre_id: 3
+                        genre: 雪山ハイキング
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getPlan/{plan_id}:
+    get:
+      operationId: getGetPlanPlanId
+      summary: 山行計画の取得。
+      tags:
+        - plan
+      description: |
+        該当する山行計画の詳細情報を取得する。
+      parameters:
+        - in: path
+          name: plan_id
+          required: true
+          description: 計画の ID。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetPlanOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    plan:
+                      plan_id: 9000001
+                      uid: 1
+                      place: 富士山
+                      start: '2026-05-01'
+                      end: '2026-05-02'
+                      days: 2
+                      add_date: 1
+                      area_id: 700
+                      area: 富士・御坂
+                      genre_id: 1
+                      genre: ハイキング
+                      group_id: 0
+                      other_members: 0
+                      time: 5:00 出発 / 18:00 下山予定
+                      aim: 山頂アタック
+                      meeting: 河口湖駅 4:30
+                      food: 各自準備
+                      submit_to: 山岳救助隊宛
+                      escape: 雷時は速やかに 5 合目へ
+                      caution: 高山病
+                      other_info: ヘッドランプ持参
+                      equip:
+                        share:
+                          - name: ロープ
+                          - name: 救急箱
+                        personal:
+                          - name: ヘッドランプ
+                          - name: 雨具
+                      eqnote: 各自軽量化推奨
+                      is_track: 1
+                      private: 0
+                      cheer: 0
+                      comment: 0
+                      members:
+                        - uname: yamareco_user
+                          uid: 1
+                          avatar: https://www.yamareco.com/modules/yamareco/avatar/1.jpg
+                          role_id: 1
+                          role: リーダー
+                      gpx: https://www.yamareco.com/modules/yamareco/track/plan-9000001.gpx
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getPlanCommentlist/{plan_id}:
+    get:
+      operationId: getGetPlanCommentlistPlanId
+      summary: 山行計画コメントリストの取得。
+      tags:
+        - plan
+      description: |
+        該当する山行計画についたコメントの一覧を取得する。
+      parameters:
+        - in: path
+          name: plan_id
+          required: true
+          description: 計画の ID。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetPlanCommentlistOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /getPlanlist/user/{userID}/{page}:
+    get:
+      operationId: getGetPlanlistUserUserIDPage
+      summary: 山行計画一覧の取得 (ユーザ別)
+      tags:
+        - plan
+      description: |
+        指定したユーザの山行計画一覧を取得する。
+      security: []
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          description: 'ユーザ ID。`0`: リクエスト元のユーザの計画、`1` 以上: 指定したユーザの計画。'
+          schema:
+            type: integer
+            minimum: 0
+        - in: path
+          name: page
+          required: true
+          description: 一覧のページ番号 (1 ページあたり 20 件)。
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: is_track
+          required: false
+          description: '`1`: ルート登録済みの計画のみ取得、それ以外: 全計画。'
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetPlanlistOrError'
+  /getPlanlist/{page}:
+    get:
+      operationId: getGetPlanlistPage
+      summary: 山行計画一覧の取得 (全体)
+      tags:
+        - plan
+      description: |
+        ヤマレコに登録されている全体の山行計画一覧を取得する。
+      security: []
+      parameters:
+        - in: path
+          name: page
+          required: true
+          description: 一覧のページ番号 (1 ページあたり 20 件)。
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetPlanlistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    total: 100
+                    planlist:
+                      - plan_id: 9000001
+                        uid: 1
+                        place: 富士山
+                        nodate: 0
+                        start: '2026-05-01'
+                        end: '2026-05-02'
+                        days: 2
+                        add_date: 1
+                        area_id: 700
+                        area: 富士・御坂
+                        genre_id: 1
+                        genre: ハイキング
+                        group_id: 0
+                        other_members: 0
+                        is_track: 1
+                        private: 0
+                        cheer: 0
+                        comment: 0
+                        members:
+                          - uname: yamareco_user
+                            uid: 1
+                        page_url: https://www.yamareco.com/modules/yamareco/plan-9000001.html
+                        updated: 1777132271
+                      - plan_id: 9000001
+                        uid: 1
+                        place: 富士山
+                        nodate: 0
+                        start: '2026-05-01'
+                        end: '2026-05-02'
+                        days: 2
+                        add_date: 1
+                        area_id: 700
+                        area: 富士・御坂
+                        genre_id: 1
+                        genre: ハイキング
+                        group_id: 0
+                        other_members: 0
+                        is_track: 1
+                        private: 0
+                        cheer: 0
+                        comment: 0
+                        members:
+                          - uname: yamareco_user
+                            uid: 1
+                        page_url: https://www.yamareco.com/modules/yamareco/plan-9000001.html
+                        updated: 1777132271
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getRec/{rec_id}:
+    get:
+      operationId: getGetRecRecId
+      summary: 山行記録の取得。
+      tags:
+        - rec
+      description: |
+        該当する山行記録の詳細情報を取得する。
+      parameters:
+        - in: path
+          name: rec_id
+          required: true
+          description: 記録の ID。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetRecOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    rec:
+                      rec_id: 8000001
+                      uid: 1
+                      place: 富士山
+                      start: '2026-04-01'
+                      end: '2026-04-02'
+                      days: 2
+                      area_id: 700
+                      area: 富士・御坂
+                      genre_id: 1
+                      genre: ハイキング
+                      group_id: 0
+                      time: 8:00 出発 / 16:00 下山
+                      weather: 晴れ
+                      other_info: コース整備良好
+                      other_info2: 売店営業中
+                      other_members: 0
+                      commentopen: '1'
+                      access_train: 1
+                      access_bus: 1
+                      access_car: 0
+                      access_taxi: 0
+                      access_cable: 0
+                      access_ship: 0
+                      access_air: 0
+                      access_cycle: 0
+                      access_detail: 富士急行線で河口湖駅まで。
+                      is_track: 1
+                      with_child: 0
+                      draft: 0
+                      permission:
+                        guest: 1
+                        user: 1
+                        friend: 0
+                        following: 0
+                      cheer: 12
+                      comment: 3
+                      rank: A
+                      members:
+                        - uname: yamareco_user
+                          uid: 1
+                          role_id: 1
+                          role: リーダー
+                      photodata:
+                        - pid: p_001
+                          comment: 山頂より
+                          private: 0
+                          picked: 1
+                          order: 1
+                          photo_url: https://www.yamareco.com/modules/yamareco/img/8000001/p_001.jpg
+                          thumb_url: https://www.yamareco.com/modules/yamareco/img/8000001/p_001_t.jpg
+                          thumb80_url: https://www.yamareco.com/modules/yamareco/img/8000001/p_001_t80.jpg
+                          thumb450_url: https://www.yamareco.com/modules/yamareco/img/8000001/p_001_t450.jpg
+                          thumb800_url: https://www.yamareco.com/modules/yamareco/img/8000001/p_001_t800.jpg
+                      notedata:
+                        - uid: 1
+                          uname: yamareco_user
+                          text: 天候に恵まれた登山だった。
+                          private: 0
+                      gpx: https://www.yamareco.com/modules/yamareco/track/8000001.gpx
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+              examples:
+                authError:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getReclist/group/{groupID}/{page}:
+    get:
+      operationId: getGetReclistGroupGroupIDPage
+      summary: 山行記録一覧の取得 (グループ別)
+      tags:
+        - rec
+      description: |
+        指定したグループの山行記録一覧を取得する。並び順は入山日 (`start`) の降順。
+      security: []
+      parameters:
+        - in: path
+          name: groupID
+          required: true
+          description: グループ ID。
+          schema:
+            type: integer
+            minimum: 1
+        - in: path
+          name: page
+          required: true
+          description: 一覧のページ番号 (1 ページあたり 20 件)。
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetReclistOrError'
+  /getReclist/user/{userID}/{page}:
+    get:
+      operationId: getGetReclistUserUserIDPage
+      summary: 山行記録一覧の取得 (ユーザ別)
+      tags:
+        - rec
+      description: |
+        指定したユーザの山行記録一覧を取得する。並び順は入山日 (`start`) の降順。
+      security: []
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          description: 'ユーザ ID。`0`: リクエスト元のユーザの記録、`1` 以上: 指定したユーザの記録。'
+          schema:
+            type: integer
+            minimum: 0
+        - in: path
+          name: page
+          required: true
+          description: 一覧のページ番号 (1 ページあたり 20 件)。
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetReclistOrError'
+  /getReclist/{page}:
+    get:
+      operationId: getGetReclistPage
+      summary: 山行記録一覧の取得 (全体)
+      tags:
+        - rec
+      description: |
+        ヤマレコに登録されている全体の山行記録一覧を取得する。並び順は記録の作成日の降順。
+
+        `max_id` を指定すると、その記録より前に登録された記録一覧が取得できる。
+      security: []
+      parameters:
+        - in: path
+          name: page
+          required: true
+          description: 一覧のページ番号 (1 ページあたり 20 件)。
+          schema:
+            type: integer
+            minimum: 1
+            example: 1
+        - in: query
+          name: max_id
+          required: false
+          description: 表示する最も最近の記録の ID。指定した記録を含み、それより古い記録一覧が返される。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetReclistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    reclist:
+                      - rec_id: 8000001
+                        uid: 1
+                        place: 富士山
+                        start: '2026-04-01'
+                        end: '2026-04-02'
+                        days: 2
+                        area_id: 700
+                        area: 富士・御坂
+                        genre_id: 1
+                        genre: ハイキング
+                        group_id: 0
+                        other_members: 0
+                        is_track: 1
+                        with_child: 0
+                        draft: 0
+                        permission:
+                          guest: 1
+                          user: 1
+                          friend: 0
+                          following: 0
+                        cheer: 12
+                        comment: 3
+                        rank: A
+                        members:
+                          - uname: yamareco_user
+                            uid: 1
+                        thumb_url: https://www.yamareco.com/modules/yamareco/img/8000001/thumb.jpg
+                        notes: 1
+                        photos: 18
+                        page_url: https://www.yamareco.com/modules/yamareco/detail-8000001.html
+                      - rec_id: 8000001
+                        uid: 1
+                        place: 富士山
+                        start: '2026-04-01'
+                        end: '2026-04-02'
+                        days: 2
+                        area_id: 700
+                        area: 富士・御坂
+                        genre_id: 1
+                        genre: ハイキング
+                        group_id: 0
+                        other_members: 0
+                        is_track: 1
+                        with_child: 0
+                        draft: 0
+                        permission:
+                          guest: 1
+                          user: 1
+                          friend: 0
+                          following: 0
+                        cheer: 12
+                        comment: 3
+                        rank: A
+                        members:
+                          - uname: yamareco_user
+                            uid: 1
+                        thumb_url: https://www.yamareco.com/modules/yamareco/img/8000001/thumb.jpg
+                        notes: 1
+                        photos: 18
+                        page_url: https://www.yamareco.com/modules/yamareco/detail-8000001.html
+                      - rec_id: 8000001
+                        uid: 1
+                        place: 富士山
+                        start: '2026-04-01'
+                        end: '2026-04-02'
+                        days: 2
+                        area_id: 700
+                        area: 富士・御坂
+                        genre_id: 1
+                        genre: ハイキング
+                        group_id: 0
+                        other_members: 0
+                        is_track: 1
+                        with_child: 0
+                        draft: 0
+                        permission:
+                          guest: 1
+                          user: 1
+                          friend: 0
+                          following: 0
+                        cheer: 12
+                        comment: 3
+                        rank: A
+                        members:
+                          - uname: yamareco_user
+                            uid: 1
+                        thumb_url: https://www.yamareco.com/modules/yamareco/img/8000001/thumb.jpg
+                        notes: 1
+                        photos: 18
+                        page_url: https://www.yamareco.com/modules/yamareco/detail-8000001.html
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getTypelist:
+    get:
+      operationId: getGetTypelist
+      summary: 地名データ種別定義一覧の取得。
+      tags:
+        - other
+      description: |
+        地名 (POI) データのデータ種別の定義一覧を取得する。
+      security: []
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetTypelistOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    typelist:
+                      - type_id: 1
+                        name: 山頂
+                        comment: 山頂の標高、所在地など
+                        hasdetail: 0
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /getUserInfo/{uid}:
+    get:
+      operationId: getGetUserInfoUid
+      summary: ユーザプロフィール情報の取得。
+      tags:
+        - other
+      description: |
+        指定したユーザのプロフィール情報を取得する。`uid` を省略した場合は、アクセスした本人のユーザ ID として動作する。
+      security: []
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          description: ユーザ ID。
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseGetUserInfoOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    userinfo:
+                      uid: 1
+                      uname: yamareco_user
+                      avatar: https://www.yamareco.com/modules/yamareco/avatar/1.jpg
+                      premium: true
+                      frilends:
+                        - 2
+                        - 3
+                      url: https://example.org
+                      profile: 山が好き
+                      age: 30
+                      pref: 東京都
+                      address: 新宿区
+                      blood: A
+                      hobby: 写真
+                      work: エンジニア
+                      ht_pref: 北海道
+                      ht_address: 札幌市
+                      sex: 男性
+                      page_url: https://www.yamareco.com/modules/yamareco/user-1.html
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /nearbyPoi:
+    post:
+      operationId: postNearbyPoi
+      summary: 近傍の地名 (POI) データ検索。
+      tags:
+        - other
+      description: |
+        指定された地点に近い地名 (POI) データを検索する。
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostNearbyPoi'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostNearbyPoiOrError'
+  /oauth:
+    get:
+      operationId: getOauth
+      summary: OAuth 認可コードの取得。
+      tags:
+        - oauth
+      description: |
+        OAuth 認証フローの最初のステップ。ブラウザでユーザがログインし許可した場合、リダイレクト先 URL に認可コードが `?code=<CODE>` の形式で通知される。
+
+        キャッシュ防止のためタイムスタンプパラメータの付与を推奨。
+      security: []
+      parameters:
+        - in: query
+          name: client_id
+          required: true
+          description: アプリケーション登録時に取得したクライアント ID。
+          schema:
+            type: string
+        - in: query
+          name: redirect_uri
+          required: true
+          description: 登録済みのリダイレクト先 URL。
+          schema:
+            type: string
+            format: uri
+        - in: query
+          name: response_type
+          required: true
+          description: 固定値 `code`。
+          schema:
+            $ref: '#/components/schemas/EnumResponseType'
+        - in: query
+          name: scope
+          required: true
+          description: 固定値 `all`。
+          schema:
+            $ref: '#/components/schemas/EnumScope'
+      responses:
+        '302':
+          description: ユーザがログイン・許可した場合、`redirect_uri` のクエリパラメータ `code` に認可コードを付与してリダイレクトされる。
+          headers:
+            Location:
+              description: 認可コード付きのリダイレクト先 URL。
+              schema:
+                type: string
+                format: uri
+  /oauth/access_token:
+    post:
+      operationId: postOauthAccessToken
+      summary: OAuth アクセストークンの取得。
+      tags:
+        - oauth
+      description: |
+        OAuth 認証フローで取得した認可コードを利用してアクセストークンを取得する。
+
+        取得したアクセストークンは `Authorization: OAuth <access_token>` の形式で各 API へのリクエストヘッダに付与する。
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostOauthAccessToken'
+            examples:
+              normal:
+                value:
+                  client_id: my_client_id
+                  client_secret: my_client_secret
+                  redirect_uri: https://example.org/callback
+                  code: AUTHORIZATION_CODE_HERE
+                  grant_type: authorization_code
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `error` フィールドにより成否を判定する。
+            - `error: 0`: 処理成功 (`ResponsePostOauthAccessToken`、`access_token` に値)
+            - `error: 1`: 処理失敗 (`ResponseOAuthError`、`error_message` に要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostOauthAccessTokenOrError'
+              examples:
+                succeeded:
+                  value:
+                    access_token: 5d393ec8c36122523baf7a966c21a647faeba8aa
+                    error: 0
+                    error_message: ''
+                failed:
+                  value:
+                    access_token: ''
+                    error: 1
+                    error_message: Invalid authorization code
+  /oauth/sign_out:
+    get:
+      operationId: getOauthSignOut
+      summary: OAuth サインアウト。
+      tags:
+        - oauth
+      description: |
+        サインアウト処理を行う。`redirect_uri` は省略可能で、省略時はログアウト完了メッセージページが表示される。
+      security: []
+      parameters:
+        - in: query
+          name: redirect_uri
+          required: false
+          description: 省略可能。省略時はログアウト完了メッセージページが表示される。
+          schema:
+            type: string
+            format: uri
+      responses:
+        '200':
+          description: '`redirect_uri` 省略時はログアウト完了メッセージページが表示される。'
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ResponseGetOauthSignOut'
+        '302':
+          description: サインアウト処理完了後、`redirect_uri` 指定時は当該 URL へリダイレクトされる。
+          headers:
+            Location:
+              description: リダイレクト先 URL。
+              schema:
+                type: string
+                format: uri
+  /relatePlanAndRec:
+    post:
+      operationId: postRelatePlanAndRec
+      summary: 山行記録と山行計画の関連付け。
+      tags:
+        - rec
+      description: |
+        山行記録と山行計画の関連付けを行う。
+
+        計画および記録の両方の編集権限がない場合はエラーになる。計画または記録とすでに関連付けがある場合は関連付けが上書きされる。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostRelatePlanAndRec'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostRelatePlanAndRecOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+  /searchPlan:
+    post:
+      operationId: postSearchPlan
+      summary: 山行計画の検索。
+      tags:
+        - plan
+      description: |
+        登録済みの山行計画を検索する。
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostSearchPlan'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostSearchPlanOrError'
+  /searchPoi:
+    post:
+      operationId: postSearchPoi
+      summary: 地名 (POI) データの検索。
+      tags:
+        - other
+      description: |
+        ヤマレコに登録されている地名 (POI) データを検索する。
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostSearchPoi'
+            examples:
+              normal:
+                value:
+                  page: 1
+                  name: 富士
+                  type_id: 1
+                  area_id: 700
+                  ptid: 0
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostSearchPoiOrError'
+              examples:
+                succeeded:
+                  value:
+                    err: 0
+                    poilist:
+                      - ptid: 4001
+                        name: 富士山
+                        other_names: 富士・芙蓉峰
+                        name_en: Mt. Fuji
+                        yomi: ふじさん
+                        elevation: 3776.12
+                        lat: 35.360635
+                        lon: 138.727362
+                        detail: 日本の最高峰
+                        area: 700
+                        types:
+                          - type_id: 1
+                            name: 山頂
+                            detail: 標高 3776m の活火山
+                        page_url: https://www.yamareco.com/modules/poi/4001.html
+                        photo_url: https://www.yamareco.com/modules/poi/4001.jpg
+                failed:
+                  value:
+                    err: 1
+                    errcode: NOT_FOUND
+  /searchRec:
+    post:
+      operationId: postSearchRec
+      summary: 山行記録の検索。
+      tags:
+        - rec
+      description: |
+        ヤマレコに登録されている記録を検索する。見つからない場合はエラーが返される。
+
+        モバイルデバイス専用の制限あり (山行記録を過去 1 年以内に公開していない場合かつスタンダードプランのユーザは利用できない)。Web サイトでの利用など制限解除を希望する場合は本番サイト公開時にヤマレコ運営に連絡が必要。
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RequestPostSearchRec'
+      responses:
+        '200':
+          description: |-
+            処理結果。HTTP 200 でレスポンスボディの `err` フィールドにより成否を判定する。
+            - `err: 0`: 処理成功 (Success スキーマ)
+            - `err: 1`: サーバ処理エラー (`ResponseError` スキーマ、`errcode` でエラー要因)。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostSearchRecOrError'
+        '403':
+          description: OAuth 認証エラー。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+components:
+  schemas:
+    Area:
+      type: object
+      description: |
+        ヤマレコで定義されているエリア (山域) 区分。
+      required:
+        - area_id
+        - area
+      properties:
+        area_id:
+          type: integer
+          description: エリア ID。
+        area:
+          type: string
+          description: エリア名。
+    CheerUser:
+      type: object
+      description: |
+        拍手をしたユーザの情報。
+      required:
+        - uid
+        - uname
+      properties:
+        uid:
+          type: integer
+          description: ユーザ ID。
+        uname:
+          type: string
+          description: ユーザ名。
+        avatar:
+          type: string
+          description: プロフィール画像の URL (未設定の場合は空欄)。
+    Comment:
+      type: object
+      description: |
+        山行記録／計画に登録されたコメント。
+      required:
+        - com_id
+        - uid
+        - text
+      properties:
+        com_id:
+          type: integer
+          description: コメント ID。
+        uid:
+          type: integer
+          description: コメントしたユーザのユーザ ID。
+        title:
+          type: string
+          description: コメントのタイトル。
+        text:
+          type: string
+          description: コメント本文。
+        created:
+          type: integer
+          format: int64
+          description: コメントの作成日時 (Unix time、1970-01-01 00:00:00 UTC からの経過秒)。
+        uname:
+          type: string
+          description: コメントしたユーザのユーザ名。
+        avatar:
+          type: string
+          description: プロフィール画像の URL。
+    Equip:
+      type: object
+      description: |
+        山行計画の装備一覧 (共同装備／個人装備)。
+      properties:
+        share:
+          type: array
+          description: 共同装備の一覧。
+          items:
+            $ref: '#/components/schemas/EquipItem'
+        personal:
+          type: array
+          description: 個人装備の一覧。
+          items:
+            $ref: '#/components/schemas/EquipItem'
+    EquipItem:
+      type: object
+      description: |
+        装備アイテム。
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: 装備名。
+    Genre:
+      type: object
+      description: |
+        ヤマレコで定義されている山行ジャンル区分。
+      required:
+        - genre_id
+        - genre
+      properties:
+        genre_id:
+          type: integer
+          description: ジャンル ID。
+        genre:
+          type: string
+          description: ジャンル名。
+    Member:
+      type: object
+      description: |
+        山行記録／計画の参加メンバー (簡易情報)。
+      required:
+        - uname
+        - uid
+      properties:
+        uname:
+          type: string
+          description: ユーザ名。
+        uid:
+          type: integer
+          description: ユーザ ID。
+    MemberDetail:
+      type: object
+      description: |
+        山行記録／計画の参加メンバー (役割情報を含む)。
+      required:
+        - uname
+        - uid
+      properties:
+        uname:
+          type: string
+          description: ユーザ名。
+        uid:
+          type: integer
+          description: ユーザ ID。
+        avatar:
+          type: string
+          description: プロフィール画像の URL。
+        role_id:
+          type: integer
+          description: 役割の ID。
+        role:
+          type: string
+          description: 役割名。
+    Note:
+      type: object
+      description: |
+        山行記録に登録された感想。
+      required:
+        - uid
+        - uname
+        - text
+      properties:
+        uid:
+          type: integer
+          description: ユーザ ID。
+        uname:
+          type: string
+          description: ユーザ名。
+        text:
+          type: string
+          description: 感想本文。
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。'
+    Permission:
+      type: object
+      description: |
+        山行記録／計画のアクセス権限設定。
+      required:
+        - guest
+        - user
+        - friend
+        - following
+      properties:
+        guest:
+          $ref: '#/components/schemas/EnumGuest'
+          description: 'ログインしていないユーザーへのアクセス権限。`0`: 不可、`1`: 可。'
+        user:
+          $ref: '#/components/schemas/EnumUser'
+          description: 'ログイン済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。'
+        friend:
+          $ref: '#/components/schemas/EnumFriend'
+          description: '友達リストに追加済みユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。'
+        following:
+          $ref: '#/components/schemas/EnumFollowing'
+          description: '現在フォローしているユーザーへのアクセス権限。`user=0` のときのみ有効。`0`: 不可、`1`: 可。'
+    Photo:
+      type: object
+      description: |
+        山行記録／計画に登録された写真。
+      required:
+        - pid
+        - order
+        - photo_url
+        - thumb_url
+      properties:
+        pid:
+          type: string
+          description: 写真 ID。
+        comment:
+          type: string
+          description: 写真のコメント。
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '写真の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。'
+        picked:
+          $ref: '#/components/schemas/EnumPicked'
+          description: '代表写真。`0`: 代表写真ではない、`1`: 代表写真。'
+        order:
+          type: integer
+          description: 写真の並び順 (小さいものから順に並ぶ)。
+        photo_url:
+          type: string
+          format: uri
+          description: 写真のアドレス (オリジナルサイズ)。
+        thumb_url:
+          type: string
+          format: uri
+          description: 写真のアドレス (小サイズ、最大辺の長さ 160px)。
+        thumb80_url:
+          type: string
+          format: uri
+          description: 写真のアドレス (最大辺の長さ 80px)。
+        thumb450_url:
+          type: string
+          format: uri
+          description: 写真のアドレス (最大辺の長さ 450px)。
+        thumb800_url:
+          type: string
+          format: uri
+          description: 写真のアドレス (最大辺の長さ 800px)。
+    PlanDetail:
+      type: object
+      description: |
+        山行計画の詳細情報。
+      required:
+        - plan_id
+        - uid
+        - place
+        - start
+        - end
+        - days
+        - area_id
+        - area
+        - genre_id
+        - genre
+        - group_id
+        - other_members
+      properties:
+        plan_id:
+          type: integer
+          description: 計画の ID。
+        uid:
+          type: integer
+          description: 計画所有者のユーザ ID。
+        place:
+          type: string
+          description: 場所の名前。
+        start:
+          type: string
+          format: date
+          description: 入山日 (YYYY-MM-DD)。
+        end:
+          type: string
+          format: date
+          description: 下山日 (YYYY-MM-DD)。
+        days:
+          type: integer
+          description: 日数。
+        add_date:
+          type: integer
+          description: 予備日。予備として確保している日数で、`days` には含まれない。
+        area_id:
+          type: integer
+          description: エリア ID。
+        area:
+          type: string
+          description: エリア名。
+        genre_id:
+          type: integer
+          description: ジャンル ID。
+        genre:
+          type: string
+          description: ジャンル名。
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 個人の計画、`1` 以上: 当該グループの計画。'
+        other_members:
+          type: integer
+          description: その他のメンバー人数。
+        other_member_names:
+          type: string
+          description: その他メンバーの名前 (計画の参加メンバーがリクエストを送ったときのみ応答がある)。
+        time:
+          type: string
+          description: コースタイム。
+        aim:
+          type: string
+          description: 山行目的。
+        meeting:
+          type: string
+          description: 集合場所・時間。
+        food:
+          type: string
+          description: 食事。
+        submit_to:
+          type: string
+          description: 計画書の提出先／場所。
+        escape:
+          type: string
+          description: 緊急時の対応・ルート。
+        caution:
+          type: string
+          description: 注意箇所・注意点。
+        other_info:
+          type: string
+          description: その他情報。
+        equip:
+          $ref: '#/components/schemas/Equip'
+        eqnote:
+          type: string
+          description: 装備の備考。
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'GPS ログの有無。`0`: なし、`1`: あり。'
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '公開設定。`0`: 公開状態、`1`: 非公開状態。'
+        cheer:
+          type: integer
+          description: 拍手数。
+        comment:
+          type: integer
+          description: コメント数。
+        members:
+          type: array
+          description: 参加メンバーの一覧。
+          items:
+            $ref: '#/components/schemas/MemberDetail'
+        photodata:
+          type: array
+          description: 写真一覧 (写真があるときのみ応答がある)。
+          items:
+            $ref: '#/components/schemas/Photo'
+        gpx:
+          type: string
+          format: uri
+          description: GPS ログの URL (GPX フォーマット)。`is_track=1` のときのみ応答がある。
+    PlanSummary:
+      type: object
+      description: |
+        山行計画の概要情報 (一覧取得用)。
+      required:
+        - plan_id
+        - uid
+        - place
+        - nodate
+        - area_id
+        - area
+        - genre_id
+        - genre
+        - group_id
+        - other_members
+        - is_track
+        - private
+      properties:
+        plan_id:
+          type: integer
+          description: 計画の ID。
+        uid:
+          type: integer
+          description: 計画所有者のユーザ ID。
+        place:
+          type: string
+          description: 場所の名前。
+        nodate:
+          $ref: '#/components/schemas/EnumNodate'
+          description: '日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。`1` の場合は `start`/`end`/`days`/`add_date` の値は意味を持たない。'
+        start:
+          type: string
+          format: date
+          description: 入山日 (YYYY-MM-DD)。
+        end:
+          type: string
+          format: date
+          description: 下山日 (YYYY-MM-DD)。
+        days:
+          type: integer
+          description: 日数。
+        add_date:
+          type: integer
+          description: 予備日。予備として確保している日数で、`days` には含まれない。
+        area_id:
+          type: integer
+          description: エリア ID。
+        area:
+          type: string
+          description: エリア名。
+        genre_id:
+          type: integer
+          description: ジャンル ID。
+        genre:
+          type: string
+          description: ジャンル名。
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 個人の計画、`1` 以上: 当該グループの計画。'
+        other_members:
+          type: integer
+          description: その他のメンバー人数。
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'GPS ログの有無。`0`: なし、`1`: あり。'
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '公開設定。`0`: 公開状態、`1`: 非公開状態。'
+        cheer:
+          type: integer
+          description: 拍手数。
+        comment:
+          type: integer
+          description: コメント数。
+        members:
+          type: array
+          description: 参加メンバーの一覧。
+          items:
+            $ref: '#/components/schemas/Member'
+        page_url:
+          type: string
+          format: uri
+          description: 山行計画の Web ページ URL。
+        updated:
+          type: integer
+          format: int64
+          description: 計画の更新日時 (Unix time)。情報更新の内容によっては更新されない可能性あり。
+    Poi:
+      type: object
+      description: |
+        地名 (POI) データ。
+      required:
+        - ptid
+        - name
+      properties:
+        ptid:
+          type: integer
+          description: 地名データの ID。
+        name:
+          type: string
+          description: 地名。
+        other_names:
+          type: string
+          description: 別名。
+        name_en:
+          type: string
+          description: 英語名。
+        yomi:
+          type: string
+          description: 地名の読みがな。
+        elevation:
+          type: number
+          format: float
+          description: 標高 (m)。
+        lat:
+          type: number
+          format: float
+          description: '緯度。北緯: 正、南緯: 負。'
+        lon:
+          type: number
+          format: float
+          description: '経度。東経: 正、西経: 負。'
+        detail:
+          type: string
+          description: 詳細説明。
+        area:
+          type: integer
+          description: エリア ID。
+        types:
+          type: array
+          description: データ種別の一覧。`types` のデータがない地名データもある。
+          items:
+            type: object
+            required:
+              - type_id
+              - name
+            properties:
+              type_id:
+                type: integer
+                description: データ種別の ID。
+              name:
+                type: string
+                description: データ種別の名称 (全地名データで共通)。
+              detail:
+                type: string
+                description: データ種別の詳細説明 (地名データごとに異なる)。
+        page_url:
+          type: string
+          format: uri
+          description: 地名の Web ページ URL。
+        photo_url:
+          type: string
+          format: uri
+          description: 写真画像の URL。
+    PoiType:
+      type: object
+      description: |
+        地名データの種別定義。
+      required:
+        - type_id
+        - name
+      properties:
+        type_id:
+          type: integer
+          description: データ種別の ID。
+        name:
+          type: string
+          description: データ種別の名称。
+        comment:
+          type: string
+          description: データ種別の詳細欄向け説明。
+        hasdetail:
+          $ref: '#/components/schemas/EnumHasdetail'
+          description: |-
+            データ種別の詳細欄の定義有無。
+
+            `0`: 詳細欄の定義あり、`1`: 詳細欄の定義なし。
+            (公式ドキュメントの記載通り。直感的な対応関係に見えないが原文に従う)。
+    RecDetail:
+      type: object
+      description: |
+        山行記録の詳細情報。
+      required:
+        - rec_id
+        - uid
+        - place
+        - start
+        - end
+        - days
+        - area_id
+        - area
+        - genre_id
+        - genre
+        - group_id
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        uid:
+          type: integer
+          description: '記録所有者のユーザ ID。`0`: グループの記録、`1` 以上: 該当ユーザの記録。'
+        place:
+          type: string
+          description: 場所の名前。
+        start:
+          type: string
+          format: date
+          description: 入山日 (YYYY-MM-DD)。
+        end:
+          type: string
+          format: date
+          description: 下山日 (YYYY-MM-DD)。
+        days:
+          type: integer
+          description: 日数。
+        area_id:
+          type: integer
+          description: エリア ID。
+        area:
+          type: string
+          description: エリア名。
+        genre_id:
+          type: integer
+          description: ジャンル ID。
+        genre:
+          type: string
+          description: ジャンル名。
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 個人の記録、`1` 以上: 当該グループの記録。'
+        time:
+          type: string
+          description: コースタイム。
+        weather:
+          type: string
+          description: 天気。
+        other_info:
+          type: string
+          description: コース状況。
+        other_info2:
+          type: string
+          description: その他情報。
+        other_members:
+          type: integer
+          description: その他のメンバー人数。
+        other_member_names:
+          type: string
+          description: その他メンバーの名前 (記録の参加メンバーのみ応答がある)。
+        commentopen:
+          type: string
+          description: 'コメント受付状態。`0`: コメント禁止、`1`: コメント受付中。'
+        access_train:
+          $ref: '#/components/schemas/EnumAccessTrain'
+          description: 'アクセスに電車を利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_bus:
+          $ref: '#/components/schemas/EnumAccessBus'
+          description: 'アクセスにバスを利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_car:
+          $ref: '#/components/schemas/EnumAccessCar'
+          description: 'アクセスに車を利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_taxi:
+          $ref: '#/components/schemas/EnumAccessTaxi'
+          description: 'アクセスにタクシーを利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_cable:
+          $ref: '#/components/schemas/EnumAccessCable'
+          description: 'アクセスにケーブルカー／ロープウェイを利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_ship:
+          $ref: '#/components/schemas/EnumAccessShip'
+          description: 'アクセスに船を利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_air:
+          $ref: '#/components/schemas/EnumAccessAir'
+          description: 'アクセスに飛行機を利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_cycle:
+          $ref: '#/components/schemas/EnumAccessCycle'
+          description: 'アクセスに自転車を利用したか。`0`: 利用していない、`1`: 利用した。'
+        access_detail:
+          type: string
+          description: アクセスの詳細 (駐車場の情報など)。
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'GPS ログの有無。`0`: なし、`1`: あり。'
+        with_child:
+          $ref: '#/components/schemas/EnumWithChild'
+          description: '子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。'
+        draft:
+          $ref: '#/components/schemas/EnumDraft'
+          description: '下書き状態。`0`: 公開状態、`1`: 下書き状態。'
+        permission:
+          $ref: '#/components/schemas/Permission'
+        cheer:
+          type: integer
+          description: 拍手数。
+        comment:
+          type: integer
+          description: コメント数。
+        rank:
+          $ref: '#/components/schemas/EnumRank'
+        members:
+          type: array
+          description: 参加メンバーの一覧。
+          items:
+            $ref: '#/components/schemas/MemberDetail'
+        photodata:
+          type: array
+          description: 写真一覧。
+          items:
+            $ref: '#/components/schemas/Photo'
+        notedata:
+          type: array
+          description: 感想一覧。
+          items:
+            $ref: '#/components/schemas/Note'
+        gpx:
+          type: string
+          format: uri
+          description: GPS ログの URL (GPX フォーマット)。`is_track=1` のときのみ応答がある。
+    RecSummary:
+      type: object
+      description: |
+        山行記録の概要情報 (一覧取得用)。
+      required:
+        - rec_id
+        - uid
+        - place
+        - start
+        - end
+        - days
+        - area_id
+        - area
+        - genre_id
+        - genre
+        - group_id
+        - other_members
+        - is_track
+        - with_child
+        - draft
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        uid:
+          type: integer
+          description: '記録所有者のユーザ ID。`0`: グループの記録、`1` 以上: 該当ユーザの記録。'
+        place:
+          type: string
+          description: 場所の名前。
+        start:
+          type: string
+          format: date
+          description: 入山日 (YYYY-MM-DD)。
+        end:
+          type: string
+          format: date
+          description: 下山日 (YYYY-MM-DD)。
+        days:
+          type: integer
+          description: 日数。
+        area_id:
+          type: integer
+          description: エリア ID。
+        area:
+          type: string
+          description: エリア名。
+        genre_id:
+          type: integer
+          description: ジャンル ID。
+        genre:
+          type: string
+          description: ジャンル名。
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 個人の記録、`1` 以上: 当該グループの記録。'
+        other_members:
+          type: integer
+          description: その他のメンバー人数。
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'GPS ログの有無。`0`: なし、`1`: あり。'
+        with_child:
+          $ref: '#/components/schemas/EnumWithChild'
+          description: '子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。'
+        draft:
+          $ref: '#/components/schemas/EnumDraft'
+          description: '下書き状態。`0`: 公開状態、`1`: 下書き状態。'
+        permission:
+          $ref: '#/components/schemas/Permission'
+        cheer:
+          type: integer
+          description: 拍手数。
+        comment:
+          type: integer
+          description: コメント数。
+        rank:
+          $ref: '#/components/schemas/EnumRank'
+        members:
+          type: array
+          description: 参加メンバーの一覧。
+          items:
+            $ref: '#/components/schemas/Member'
+        thumb_url:
+          type: string
+          description: サムネイル画像の URL (画像がない場合は空欄)。
+        notes:
+          type: integer
+          minimum: 0
+          description: 登録されている感想の数。
+        photos:
+          type: integer
+          minimum: 0
+          description: 登録されている写真の数。
+        page_url:
+          type: string
+          format: uri
+          description: 山行記録の Web ページ URL。
+    UserInfo:
+      type: object
+      description: |
+        ユーザのプロフィール情報。
+      required:
+        - uid
+        - uname
+      properties:
+        uid:
+          type: integer
+          description: ユーザ ID。
+        uname:
+          type: string
+          description: ユーザ名。
+        avatar:
+          type: string
+          description: プロフィール画像の URL (未設定の場合は空欄)。
+        premium:
+          type: boolean
+          description: プレミアムプランに加入しているか。
+        frilends:
+          type: array
+          description: 友達リスト (ユーザ ID の配列)。
+          items:
+            type: integer
+        url:
+          type: string
+          description: URL (未設定の場合は空欄)。
+        profile:
+          type: string
+          description: プロフィール (自己紹介文)。未設定の場合は空欄。
+        age:
+          type: integer
+          description: '年齢。`-1`: 非公開、`0` 以上: 年齢。'
+        pref:
+          type: string
+          description: 現住所 (都道府県)。未設定の場合は空欄。
+        address:
+          type: string
+          description: 現住所 (市区町村)。未設定の場合は空欄。
+        blood:
+          type: string
+          description: 血液型 (未設定の場合は空欄)。
+        hobby:
+          type: string
+          description: 山以外の趣味 (未設定の場合は空欄)。
+        work:
+          type: string
+          description: 職業 (未設定の場合は空欄)。
+        ht_pref:
+          type: string
+          description: 出身地 (都道府県)。未設定の場合は空欄。
+        ht_address:
+          type: string
+          description: 出身地 (市区町村)。未設定の場合は空欄。
+        sex:
+          type: string
+          description: 性別 (`女性`／`男性`)。未設定の場合は空欄。
+        page_url:
+          type: string
+          format: uri
+          description: 当該ユーザーのプロフィールページ URL。
+    EnumAccessAir:
+      type: integer
+      description: |
+        アクセスに飛行機を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessBus:
+      type: integer
+      description: |
+        アクセスにバスを利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessCable:
+      type: integer
+      description: |
+        アクセスにケーブルカー／ロープウェイ／リフトを利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessCar:
+      type: integer
+      description: |
+        アクセスに車を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessCycle:
+      type: integer
+      description: |
+        アクセスに自転車を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessShip:
+      type: integer
+      description: |
+        アクセスに船を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessTaxi:
+      type: integer
+      description: |
+        アクセスにタクシーを利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumAccessTrain:
+      type: integer
+      description: |
+        アクセスに電車を利用したかどうか。`0`: 利用していない、`1`: 利用した。
+      enum:
+        - 0
+        - 1
+    EnumCheerType:
+      type: string
+      description: |
+        拍手の対象種別。
+      enum:
+        - rec
+        - rec_photo
+    EnumCommentopen:
+      type: integer
+      description: |
+        コメントを受け付けるかどうかを表すフラグ。`0`: 受け付けない、`1`: 受け付ける。
+      enum:
+        - 0
+        - 1
+    EnumDraft:
+      type: integer
+      description: |
+        下書き状態かどうかを表すフラグ。`0`: 公開状態、`1`: 下書き状態。
+      enum:
+        - 0
+        - 1
+    EnumFollowing:
+      type: integer
+      description: |
+        現在フォローしているユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+      enum:
+        - 0
+        - 1
+    EnumFriend:
+      type: integer
+      description: |
+        友達リストに追加済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+      enum:
+        - 0
+        - 1
+    EnumGrantType:
+      type: string
+      description: |
+        OAuth の認可方式。固定文字列 `authorization_code`。
+      enum:
+        - authorization_code
+    EnumGroupId:
+      type: integer
+      description: |
+        グループ ID。現在は `0` 固定。
+      enum:
+        - 0
+    EnumGuest:
+      type: integer
+      description: |
+        ログインしていないユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+      enum:
+        - 0
+        - 1
+    EnumGuestok:
+      type: integer
+      description: |
+        ゲスト閲覧可の記録かどうかを表すフラグ。`0`: 検索条件に入れない、`1`: ゲスト閲覧可の記録のみ。
+      enum:
+        - 0
+        - 1
+    EnumHasdetail:
+      type: integer
+      description: |
+        データ種別の詳細欄の定義有無。`0`: 詳細欄の定義あり、`1`: 詳細欄の定義なし (公式ドキュメントの記載通り)。
+      enum:
+        - 0
+        - 1
+    EnumIsPhoto:
+      type: integer
+      description: |
+        写真の有無を表すフラグ。`0`: なし、`1`: あり。
+      enum:
+        - 0
+        - 1
+    EnumIsTrack:
+      type: integer
+      description: |
+        GPS ログ (ルート) の有無を表すフラグ。`0`: なし、`1`: あり。
+      enum:
+        - 0
+        - 1
+    EnumLogType:
+      type: string
+      description: |
+        GPS ログのファイル形式種別。
+      enum:
+        - gpx
+        - kml
+        - nmea
+        - gdb
+        - gtrnctr
+    EnumMerge:
+      type: integer
+      description: |
+        GPS ログの追記モード。`0`: 上書き保存、`1`: 追記。
+      enum:
+        - 0
+        - 1
+    EnumNodate:
+      type: integer
+      description: |
+        日程未定フラグ。`0`: 日程設定済、`1`: 日程未定。
+      enum:
+        - 0
+        - 1
+    EnumPhotoType:
+      type: string
+      description: |
+        写真のファイル形式種別。
+      enum:
+        - jpg
+        - png
+        - gif
+    EnumPicked:
+      type: integer
+      description: |
+        代表写真かどうかを表すフラグ。`0`: 代表写真ではない、`1`: 代表写真。
+      enum:
+        - 0
+        - 1
+    EnumPrivate:
+      type: integer
+      description: |
+        公開範囲を表すフラグ。`0`: 公開、`1`: 非公開 (参加メンバーのみに公開)。
+      enum:
+        - 0
+        - 1
+    EnumRank:
+      type: string
+      description: |
+        山行記録の情報量の目安。
+      enum:
+        - S
+        - A
+        - B
+        - C
+        - D
+    EnumResponseBaseErr:
+      type: integer
+      description: |
+        処理成功時のエラーの有無。常に `0`。
+      enum:
+        - 0
+    EnumResponseErrorErr:
+      type: integer
+      description: |
+        処理失敗時のエラーの有無。常に `1`。
+      enum:
+        - 1
+    EnumResponseOAuthErrorError:
+      type: integer
+      description: |
+        OAuth エンドポイント失敗時のエラーの有無。常に `1`。
+      enum:
+        - 1
+    EnumResponsePostOauthAccessTokenError:
+      type: integer
+      description: |
+        OAuth エンドポイント成功時のエラーの有無。常に `0`。
+      enum:
+        - 0
+    EnumResponseType:
+      type: string
+      description: |
+        OAuth の認可レスポンス種別。固定値 `code`。
+      enum:
+        - code
+    EnumRotate:
+      type: integer
+      description: |
+        写真の回転指定。
+
+        - `0`: 自動判別 (JPEG の Exif データを利用)
+        - `1`: 回転なし
+        - `2`: 左 90 度回転
+        - `3`: 180 度回転
+        - `4`: 右 90 度回転。
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+    EnumScope:
+      type: string
+      description: |
+        OAuth の認可スコープ。固定値 `all`。
+      enum:
+        - all
+    EnumSensor:
+      type: integer
+      description: |
+        GPS で採取したログかどうかを表すフラグ。`0`: GPS 採取ログではない、`1`: GPS 採取ログ。
+      enum:
+        - 0
+        - 1
+    EnumUser:
+      type: integer
+      description: |
+        ログイン済みユーザーへのアクセス権限。`0`: 不可、`1`: 可。
+      enum:
+        - 0
+        - 1
+    EnumWithChild:
+      type: integer
+      description: |
+        子供連れの登山かどうかを表すフラグ。`0`: 子供連れではない、`1`: 子供連れ。
+      enum:
+        - 0
+        - 1
+    RequestPostAddCheer:
+      type: object
+      description: |
+        拍手の登録のリクエスト。
+      required:
+        - type
+        - id
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumCheerType'
+          description: '拍手対象。`rec`: 記録、`rec_photo`: 記録の写真。'
+        id:
+          type: string
+          description: 拍手対象の ID。`type=rec` の場合は記録の ID、`type=rec_photo` の場合は写真の ID。
+        anonymous:
+          type: integer
+          description: 'こっそり拍手。`1`: こっそり拍手 (匿名 `uid=0` で登録、キャンセル不可)、それ以外: ユーザ ID 指定で拍手。'
+    RequestPostAddComment:
+      type: object
+      description: |
+        コメントの登録のリクエスト。
+      required:
+        - rec_id
+        - title
+        - text
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        title:
+          type: string
+          description: コメントのタイトル。
+        text:
+          type: string
+          description: コメントの文字列。
+    RequestPostAddNote:
+      type: object
+      description: |
+        感想の登録のリクエスト。
+      required:
+        - rec_id
+        - text
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        text:
+          type: string
+          description: 感想本文。
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。省略時は `0`。'
+    RequestPostAddPhotoRecIdTypeMaxsizeRotate:
+      type: string
+      description: |
+        写真の追加登録のリクエスト。
+      format: binary
+    RequestPostAddTrackRecIdLogtypeThinoutSensorMerge:
+      type: string
+      description: |
+        GPS ログの登録のリクエスト。
+      format: binary
+    RequestPostCreateRec:
+      type: object
+      description: |
+        山行記録の新規登録のリクエスト。
+      required:
+        - place
+        - start
+        - end
+        - area_id
+        - genre_id
+        - group_id
+        - other_members
+        - commentopen
+      properties:
+        place:
+          type: string
+          description: 場所の名前。
+        start:
+          type: string
+          format: date
+          description: 入山日 (YYYY-MM-DD、1950-01-01 以降)。
+        end:
+          type: string
+          format: date
+          description: 下山日 (YYYY-MM-DD、1950-01-01 以降)。
+        area_id:
+          type: integer
+          description: 'エリア ID。`0`: 未選択 (記録一覧の掲載対象外)、その他は `getArealist` の値。'
+        genre_id:
+          type: integer
+          description: 'ジャンル ID。`0`: 未選択 (記録一覧の掲載対象外)、その他は `getGenrelist` の値。'
+        group_id:
+          $ref: '#/components/schemas/EnumGroupId'
+          description: グループ ID。現在は取得する API が無いため `0` 固定。
+        time:
+          type: string
+          description: コースタイム。
+        weather:
+          type: string
+          description: 天気。
+        other_info:
+          type: string
+          description: コース状況。
+        other_info2:
+          type: string
+          description: その他情報。
+        other_members:
+          type: integer
+          minimum: 0
+          description: その他のメンバー人数。
+        commentopen:
+          $ref: '#/components/schemas/EnumCommentopen'
+          description: 'コメントを受け付ける。`0`: 受け付けない、`1`: 受け付ける。デフォルト `1` を推奨。'
+        access_train:
+          $ref: '#/components/schemas/EnumAccessTrain'
+          description: アクセスに電車を利用 (未記入時は `0`)。
+        access_bus:
+          $ref: '#/components/schemas/EnumAccessBus'
+          description: アクセスにバスを利用 (未記入時は `0`)。
+        access_taxi:
+          $ref: '#/components/schemas/EnumAccessTaxi'
+          description: アクセスにタクシーを利用 (未記入時は `0`)。
+        access_car:
+          $ref: '#/components/schemas/EnumAccessCar'
+          description: アクセスに車を利用 (未記入時は `0`)。
+        access_cable:
+          $ref: '#/components/schemas/EnumAccessCable'
+          description: アクセスにケーブルカー／リフトを利用 (未記入時は `0`)。
+        access_ship:
+          $ref: '#/components/schemas/EnumAccessShip'
+          description: アクセスに船を利用 (未記入時は `0`)。
+        access_air:
+          $ref: '#/components/schemas/EnumAccessAir'
+          description: アクセスに飛行機を利用 (未記入時は `0`)。
+        access_cycle:
+          $ref: '#/components/schemas/EnumAccessCycle'
+          description: アクセスに自転車を利用 (未記入時は `0`)。
+        access_detail:
+          type: string
+          description: アクセスの詳細 (駐車場の情報など)。
+        with_child:
+          $ref: '#/components/schemas/EnumWithChild'
+          description: '(小学校くらいまでの) 子供連れの登山。`0`: 子供連れではない、`1`: 子供連れ。未記入時は `0`。'
+        draft:
+          $ref: '#/components/schemas/EnumDraft'
+          description: '下書き。`0`: 公開状態、`1`: 下書き状態。下書きの場合、参加メンバーのみ閲覧可能。'
+    RequestPostDeleteCheer:
+      type: object
+      description: |
+        拍手の削除のリクエスト。
+      required:
+        - type
+        - id
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumCheerType'
+          description: '拍手対象。`rec`: 記録、`rec_photo`: 記録の写真。'
+        id:
+          type: string
+          description: 拍手対象の ID。`type=rec` の場合は記録の ID、`type=rec_photo` の場合は写真の ID。
+    RequestPostDeleteComment:
+      type: object
+      description: |
+        コメントの削除のリクエスト。
+      required:
+        - com_id
+      properties:
+        com_id:
+          type: string
+          description: コメント ID。
+    RequestPostDeleteNote:
+      type: object
+      description: |
+        感想の削除のリクエスト。
+      required:
+        - rec_id
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+    RequestPostDeletePhote:
+      type: object
+      description: |
+        写真の削除のリクエスト。
+      required:
+        - rec_id
+        - pid
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        pid:
+          type: string
+          description: 写真の ID。
+    RequestPostDeleteRec:
+      type: object
+      description: |
+        山行記録の削除のリクエスト。
+      required:
+        - rec_id
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+    RequestPostDeleteTrack:
+      type: object
+      description: |
+        GPS ログの削除のリクエスト。
+      required:
+        - rec_id
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+    RequestPostEditNote:
+      type: object
+      description: |
+        感想の編集のリクエスト。
+      required:
+        - rec_id
+        - text
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        text:
+          type: string
+          description: 感想本文。
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '感想の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。省略時は `0`。'
+    RequestPostEditPhote:
+      type: object
+      description: |
+        写真の編集のリクエスト。
+      required:
+        - rec_id
+        - pid
+        - order
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        pid:
+          type: string
+          description: 写真の ID。
+        order:
+          type: integer
+          minimum: 1
+          description: 写真の並び順 (小さい値から順に表示される)。
+        comment:
+          type: string
+          description: 写真のコメント。
+        private:
+          $ref: '#/components/schemas/EnumPrivate'
+          description: '写真の公開範囲。`0`: 公開、`1`: 参加メンバーのみに公開 (非公開)。'
+        picked:
+          $ref: '#/components/schemas/EnumPicked'
+          description: '代表写真。`0`: 代表写真ではない、`1`: 代表写真。'
+    RequestPostEditRec:
+      allOf:
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+        - $ref: '#/components/schemas/RequestPostCreateRec'
+      description: |
+        山行記録の編集リクエスト。`rec_id` 以外のフィールドは `RequestPostCreateRec` と同じ。
+    RequestPostNearbyPoi:
+      type: object
+      description: |
+        近傍の地名 (POI) データ検索のリクエスト。
+      required:
+        - page
+        - range
+        - type_id
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: 一覧のページ番号。1 ページあたり 20 件。
+        range:
+          type: integer
+          minimum: 1
+          maximum: 30
+          description: 検索したい範囲 (km、1〜30)。
+        lat:
+          type: number
+          format: float
+          description: 緯度。
+        lon:
+          type: number
+          format: float
+          description: 経度。
+        type_id:
+          type: integer
+          description: '検索したい地名のデータ種別。`0`: 検索条件に入れない、`1` 以上: 該当するデータ種別。'
+    RequestPostOauthAccessToken:
+      type: object
+      description: |
+        OAuth アクセストークンの取得のリクエスト。
+      required:
+        - client_id
+        - client_secret
+        - redirect_uri
+        - code
+        - grant_type
+      properties:
+        client_id:
+          type: string
+          description: アプリケーション登録時に取得したクライアント ID。
+        client_secret:
+          type: string
+          description: アプリケーション登録時に取得したクライアントシークレット。
+        redirect_uri:
+          type: string
+          format: uri
+          description: 登録済みのリダイレクト先 URL。
+        code:
+          type: string
+          description: 認可コード取得ステップで受け取った値。
+        grant_type:
+          $ref: '#/components/schemas/EnumGrantType'
+          description: 固定文字列 `authorization_code`。
+    RequestPostRelatePlanAndRec:
+      type: object
+      description: |
+        山行記録と山行計画の関連付けのリクエスト。
+      required:
+        - rec_id
+        - plan_id
+      properties:
+        rec_id:
+          type: integer
+          description: 記録の ID。
+        plan_id:
+          type: integer
+          description: 計画の ID。
+    RequestPostSearchPlan:
+      type: object
+      description: |
+        山行計画の検索のリクエスト。
+      required:
+        - page
+        - place
+        - area_id
+        - genre_id
+        - is_track
+        - ptid
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: 一覧のページ番号。1 ページあたり 20 件。
+        place:
+          type: string
+          description: 検索したい計画の名称 (部分一致)。検索対象にしたくない場合は空欄。
+        area_id:
+          type: integer
+          description: '検索したい計画のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。'
+        genre_id:
+          type: integer
+          description: '検索したい計画のジャンル ID。`0`: 検索条件に入れない、`1` 以上: 該当ジャンル。'
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'ルートの有無。`0`: 検索条件に入れない、`1`: ルートがある計画。'
+        ptid:
+          type: integer
+          description: '地名 ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名の場所を通る計画。'
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 検索条件に入れない、`1` 以上: 該当グループに所属する山行計画。省略時は `0`。'
+    RequestPostSearchPoi:
+      type: object
+      description: |
+        地名 (POI) データの検索のリクエスト。
+      required:
+        - page
+        - type_id
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: 一覧のページ番号。1 ページあたり 20 件。
+        name:
+          type: string
+          description: '検索したい地名の名称。空: 検索条件に入れない、2 文字以上: 部分一致で文字列検索。'
+        type_id:
+          type: integer
+          description: '検索したい地名のデータ種別。`0`: 検索条件に入れない、`1` 以上: 該当するデータ種別。'
+        area_id:
+          type: integer
+          description: |-
+            検索したい地名のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。
+            エリア ID が 100 の倍数 (関東などの大枠のエリア) の場合は、その配下の全エリアが検索対象になる。
+        ptid:
+          type: integer
+          description: '表示したい地名の ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名。'
+    RequestPostSearchRec:
+      type: object
+      description: |
+        山行記録の検索のリクエスト。
+      required:
+        - page
+        - place
+        - area_id
+        - genre_id
+        - is_photo
+        - is_track
+        - ptid
+      properties:
+        page:
+          type: integer
+          minimum: 1
+          description: 一覧のページ番号。1 ページあたり 20 件。
+        place:
+          type: string
+          description: 検索したい記録の名称 (部分一致)。検索対象にしたくない場合は空欄。
+        area_id:
+          type: integer
+          description: '検索したい記録のエリア ID。`0`: 検索条件に入れない、`1` 以上: 該当エリア。'
+        genre_id:
+          type: integer
+          description: '検索したい記録のジャンル ID。`0`: 検索条件に入れない、`1` 以上: 該当ジャンル。'
+        is_photo:
+          $ref: '#/components/schemas/EnumIsPhoto'
+          description: '写真の有無。`0`: 検索条件に入れない、`1`: 写真がある記録。'
+        is_track:
+          $ref: '#/components/schemas/EnumIsTrack'
+          description: 'ルートの有無。`0`: 検索条件に入れない、`1`: ルートがある記録。'
+        with_child:
+          $ref: '#/components/schemas/EnumWithChild'
+          description: '子連れ登山。`0`: 検索条件に入れない、`1`: 子連れの記録。省略時は `0`。'
+        guestok:
+          $ref: '#/components/schemas/EnumGuestok'
+          description: |-
+            ゲスト閲覧可の記録。`0`: 検索条件に入れない、`1`: ゲスト閲覧可の記録のみ。
+            `0` の場合は「ヤマレコ内部のみに公開」の記録も取得対象になり、`1` の場合は除外される。省略時は `0`。
+        min_days:
+          type: integer
+          description: '最小日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以上の記録。省略時は `0`。'
+        max_days:
+          type: integer
+          description: '最大日数。`0`: 検索条件に入れない、`1` 以上: 指定した日数以内の記録。省略時は `0`。'
+        ptid:
+          type: integer
+          description: '地名 ID。`0`: 検索条件に入れない、`1` 以上: 該当する地名の場所を通る記録。'
+        group_id:
+          type: integer
+          description: 'グループ ID。`0`: 検索条件に入れない、`1` 以上: 該当グループに所属する山行記録。省略時は `0`。'
+        rec_id:
+          type: integer
+          description: '記録の ID。`0`: 検索条件に入れない、`1` 以上: 該当 ID の山行記録。省略時は `0`。'
+    ResponseBase:
+      type: object
+      description: |
+        ヤマレコ API の処理成功時レスポンス共通基底。
+
+        HTTP ステータスコードは処理の成否によらず `200` が返り、`err` フィールドで成否を判定する。
+        処理失敗時は本スキーマではなく `ResponseError` (`err: 1`) が返る。
+      required:
+        - err
+      properties:
+        err:
+          $ref: '#/components/schemas/EnumResponseBaseErr'
+          description: エラーの有無。処理成功時は常に `0`。
+    ResponseError:
+      type: object
+      description: |
+        ヤマレコ API のエラーレスポンス。
+
+        サーバ処理失敗時は HTTP ステータス `200` で返り、`err: 1` と `errcode` でエラー要因を示す。
+        OAuth 認証エラー時のみ HTTP ステータス `403` が返る。
+      required:
+        - err
+        - errcode
+      properties:
+        err:
+          $ref: '#/components/schemas/EnumResponseErrorErr'
+          description: エラーの有無 (常に `1`)。
+        errcode:
+          type: string
+          description: エラー要因のコード (文字列)。
+    ResponseGetArealist:
+      description: |
+        エリア定義一覧の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - arealist
+          properties:
+            arealist:
+              type: array
+              description: エリアの定義一覧。
+              items:
+                $ref: '#/components/schemas/Area'
+    ResponseGetArealistOrError:
+      description: |
+        エリア定義一覧の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetArealist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetCheerlist:
+      description: |
+        拍手数の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - total
+            - userinfo
+          properties:
+            total:
+              type: integer
+              description: 拍手数 (こっそり拍手も含む合計)。
+            userinfo:
+              type: array
+              description: 拍手者の一覧。
+              items:
+                $ref: '#/components/schemas/CheerUser'
+    ResponseGetCheerlistOrError:
+      description: |
+        拍手数の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetCheerlist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetCommentlist:
+      description: |
+        コメントリストの取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - total
+            - comment
+          properties:
+            total:
+              type: integer
+              description: コメント数。
+            comment:
+              type: array
+              description: コメントの一覧。
+              items:
+                $ref: '#/components/schemas/Comment'
+    ResponseGetCommentlistOrError:
+      description: |
+        コメントリストの取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetCommentlist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetGenrelist:
+      description: |
+        ジャンル定義一覧の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - genrelist
+          properties:
+            genrelist:
+              type: array
+              description: ジャンルの定義一覧。
+              items:
+                $ref: '#/components/schemas/Genre'
+    ResponseGetGenrelistOrError:
+      description: |
+        ジャンル定義一覧の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetGenrelist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetOauthSignOut:
+      type: string
+      description: |
+        OAuth サインアウトのレスポンス。
+    ResponseGetPlan:
+      description: |
+        山行計画の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - plan
+          properties:
+            plan:
+              $ref: '#/components/schemas/PlanDetail'
+    ResponseGetPlanCommentlist:
+      $ref: '#/components/schemas/ResponseGetCommentlist'
+    ResponseGetPlanCommentlistOrError:
+      description: |
+        山行計画コメントリストの取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetCommentlist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetPlanOrError:
+      description: |
+        山行計画の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetPlan'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetPlanlist:
+      description: |
+        山行計画一覧 (全体・ユーザ別) の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - total
+            - planlist
+          properties:
+            total:
+              type: integer
+              description: 全件数。
+            planlist:
+              type: array
+              description: 山行計画の一覧。
+              items:
+                $ref: '#/components/schemas/PlanSummary'
+    ResponseGetPlanlistOrError:
+      description: |
+        山行計画一覧 (全体・ユーザ別) の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetPlanlist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetRec:
+      description: |
+        山行記録の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec
+          properties:
+            rec:
+              $ref: '#/components/schemas/RecDetail'
+    ResponseGetRecOrError:
+      description: |
+        山行記録の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetRec'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetReclist:
+      description: |
+        山行記録一覧 (全体・ユーザ別・グループ別) の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - reclist
+          properties:
+            reclist:
+              type: array
+              description: 山行記録の一覧。
+              items:
+                $ref: '#/components/schemas/RecSummary'
+    ResponseGetReclistOrError:
+      description: |
+        山行記録一覧 (全体・ユーザ別・グループ別) の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetReclist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetTypelist:
+      description: |
+        地名データ種別定義一覧の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - typelist
+          properties:
+            typelist:
+              type: array
+              description: データ種別の定義一覧。
+              items:
+                $ref: '#/components/schemas/PoiType'
+    ResponseGetTypelistOrError:
+      description: |
+        地名データ種別定義一覧の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetTypelist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseGetUserInfo:
+      description: |
+        ユーザプロフィール情報の取得の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - userinfo
+          properties:
+            userinfo:
+              $ref: '#/components/schemas/UserInfo'
+    ResponseGetUserInfoOrError:
+      description: |
+        ユーザプロフィール情報の取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetUserInfo'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponseOAuthError:
+      type: object
+      description: |
+        OAuth エンドポイント失敗時レスポンス。
+
+        HTTP ステータスは `200` で返り、`error` フィールド (`1`) で失敗を示す。
+        通常 API のエラー形式 (`ResponseError`、`err`/`errcode`) とはフィールド名が異なる点に注意。
+      required:
+        - access_token
+        - error
+        - error_message
+      properties:
+        access_token:
+          type: string
+          description: 失敗時は空文字。
+        error:
+          $ref: '#/components/schemas/EnumResponseOAuthErrorError'
+          description: エラーの有無 (常に `1`)。
+        error_message:
+          type: string
+          description: エラー要因の説明メッセージ。
+    ResponsePostAddCheer:
+      $ref: '#/components/schemas/ResponseBase'
+    ResponsePostAddCheerOrError:
+      description: |
+        拍手の登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostAddComment:
+      description: |
+        コメントの登録の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - com_id
+          properties:
+            com_id:
+              type: integer
+              description: コメント ID。
+    ResponsePostAddCommentOrError:
+      description: |
+        コメントの登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostAddComment'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostAddNote:
+      description: |
+        感想の登録の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+    ResponsePostAddNoteOrError:
+      description: |
+        感想の登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostAddNote'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostAddPhoto:
+      description: |
+        写真の追加登録の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+            - pid
+            - order
+            - photo_url
+            - thumb_url
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+            pid:
+              type: string
+              description: 写真の ID。
+            order:
+              type: integer
+              description: 写真の並び順。
+            photo_url:
+              type: string
+              format: uri
+              description: 登録された写真のアドレス (オリジナルサイズ)。
+            thumb_url:
+              type: string
+              format: uri
+              description: 登録された写真のアドレス (小サイズ、最大辺の長さ 160px)。
+            thumb80_url:
+              type: string
+              format: uri
+              description: 登録された写真のアドレス (最大辺の長さ 80px)。
+            thumb450_url:
+              type: string
+              format: uri
+              description: 登録された写真のアドレス (最大辺の長さ 450px)。
+            thumb800_url:
+              type: string
+              format: uri
+              description: 登録された写真のアドレス (最大辺の長さ 800px)。
+    ResponsePostAddPhotoOrError:
+      description: |
+        写真の追加登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostAddPhoto'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostAddTrack:
+      description: |
+        GPS ログの登録の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+            gpx:
+              type: string
+              format: uri
+              description: GPX ログファイルのアドレス (間引き等の処理後のファイル)。
+    ResponsePostAddTrackOrError:
+      description: |
+        GPS ログの登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostAddTrack'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostCreateRec:
+      description: |
+        山行記録の新規登録の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。全く同じ内容のデータを登録しようとした場合は、データを作成せず、見つかった山行記録の ID を応答する。
+    ResponsePostCreateRecOrError:
+      description: |
+        山行記録の新規登録のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostCreateRec'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeleteCheer:
+      $ref: '#/components/schemas/ResponseBase'
+    ResponsePostDeleteCheerOrError:
+      description: |
+        拍手の削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeleteComment:
+      $ref: '#/components/schemas/ResponseBase'
+    ResponsePostDeleteCommentOrError:
+      description: |
+        コメントの削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeleteNote:
+      description: |
+        感想の削除の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+    ResponsePostDeleteNoteOrError:
+      description: |
+        感想の削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostDeleteNote'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeletePhote:
+      description: |
+        写真の削除の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+            - pid
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+            pid:
+              type: string
+              description: 写真の ID。
+    ResponsePostDeletePhoteOrError:
+      description: |
+        写真の削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostDeletePhote'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeleteRec:
+      description: |
+        山行記録の削除の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 削除した記録の ID。
+    ResponsePostDeleteRecOrError:
+      description: |
+        山行記録の削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostDeleteRec'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostDeleteTrack:
+      description: |
+        GPS ログの削除の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+    ResponsePostDeleteTrackOrError:
+      description: |
+        GPS ログの削除のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostDeleteTrack'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostEditNote:
+      description: |
+        感想の編集の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+    ResponsePostEditNoteOrError:
+      description: |
+        感想の編集のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostEditNote'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostEditPhote:
+      description: |
+        写真の編集の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+            - pid
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+            pid:
+              type: string
+              description: 写真の ID。
+    ResponsePostEditPhoteOrError:
+      description: |
+        写真の編集のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostEditPhote'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostEditRec:
+      description: |
+        山行記録の編集の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - rec_id
+          properties:
+            rec_id:
+              type: integer
+              description: 記録の ID。
+    ResponsePostEditRecOrError:
+      description: |
+        山行記録の編集のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostEditRec'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostNearbyPoi:
+      $ref: '#/components/schemas/ResponsePostSearchPoi'
+    ResponsePostNearbyPoiOrError:
+      description: |
+        近傍の地名 (POI) データ検索のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostSearchPoi'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostOauthAccessToken:
+      type: object
+      description: |
+        OAuth アクセストークン取得の成功時レスポンス。
+
+        HTTP ステータスコードは処理の成否によらず `200` が返り、`error` フィールドで成否を判定する。
+        処理失敗時は本スキーマではなく `ResponseOAuthError` (`error: 1`) が返る。
+      required:
+        - access_token
+        - error
+        - error_message
+      properties:
+        access_token:
+          type: string
+          description: 成功時のアクセストークン値。
+        error:
+          $ref: '#/components/schemas/EnumResponsePostOauthAccessTokenError'
+          description: エラーの有無。処理成功時は常に `0`。
+        error_message:
+          type: string
+          description: エラー時のメッセージ (成功時は空文字)。
+    ResponsePostOauthAccessTokenOrError:
+      description: |
+        OAuth アクセストークンの取得のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostOauthAccessToken'
+        - $ref: '#/components/schemas/ResponseOAuthError'
+    ResponsePostRelatePlanAndRec:
+      $ref: '#/components/schemas/ResponseBase'
+    ResponsePostRelatePlanAndRecOrError:
+      description: |
+        山行記録と山行計画の関連付けのレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostSearchPlan:
+      $ref: '#/components/schemas/ResponseGetPlanlist'
+    ResponsePostSearchPlanOrError:
+      description: |
+        山行計画の検索のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetPlanlist'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostSearchPoi:
+      description: |
+        地名 (POI) データの検索の成功時のレスポンス。
+      allOf:
+        - $ref: '#/components/schemas/ResponseBase'
+        - type: object
+          required:
+            - poilist
+          properties:
+            poilist:
+              type: array
+              description: 地名データの一覧。
+              items:
+                $ref: '#/components/schemas/Poi'
+    ResponsePostSearchPoiOrError:
+      description: |
+        地名 (POI) データの検索のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponsePostSearchPoi'
+        - $ref: '#/components/schemas/ResponseError'
+    ResponsePostSearchRec:
+      $ref: '#/components/schemas/ResponseGetReclist'
+    ResponsePostSearchRecOrError:
+      description: |
+        山行記録の検索のレスポンス。
+      oneOf:
+        - $ref: '#/components/schemas/ResponseGetReclist'
+        - $ref: '#/components/schemas/ResponseError'
+  securitySchemes:
+    oauthToken:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |
+        OAuth 認証フローで取得した access token を `OAuth <access_token>` 形式で `Authorization` ヘッダに付与する。
+
+        例: `Authorization: OAuth 5d393ec8c36122523baf7a966c21a647faeba8aa`
+
+        OAuth 2.0 の Bearer 形式ではなく、独自の `OAuth` プレフィックス付き形式である点に注意。
